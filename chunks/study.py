@@ -97,15 +97,25 @@ def to_json() -> str:
             "defaults": c.defaults,
             "note": c.note,
             "de": c.de,
-            # Saída esperada: o app web testa se o motor em TS gera o mesmo.
-            "demos": [
-                {"en": d.en, "pt": d.pt, "cloze": d.cloze, "de": d.de, "de_cloze": d.de_cloze}
-                for d in c.demos()
-            ],
         }
         for c in registry().values()
     ]
     return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+
+
+def expected_json() -> str:
+    """Frases montadas pelo Python: os testes do app conferem se o TS gera igual.
+
+    Fica num arquivo separado (``chunks.expected.json``) para não pesar no app.
+    """
+    data = {
+        c.name: [
+            {"en": d.en, "pt": d.pt, "cloze": d.cloze, "de": d.de, "de_cloze": d.de_cloze}
+            for d in c.demos()
+        ]
+        for c in registry().values()
+    }
+    return json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n"
 
 
 def interviews_json() -> str:

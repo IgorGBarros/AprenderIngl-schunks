@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import expected from "../data/chunks.expected.json";
 import { ankiText } from "./anki";
 import {
   BUILTIN,
@@ -17,12 +18,15 @@ import { dueChunks, record } from "./srs";
 
 const byName = (name: string) => BUILTIN.find((c) => c.name === name)!;
 
+/** O que o Python gera para cada exemplo (python -m chunks json). */
+const EXPECTED = expected as Record<string, unknown[]>;
+
 describe("render", () => {
   it.each(BUILTIN.map((c) => [c.name, c] as const))("%s gera o mesmo que o Python", (_, c) => {
     const phrases = demos(c);
     expect(
       phrases.map((p) => ({ en: p.en, pt: p.pt, cloze: p.cloze, de: p.de?.text ?? "", de_cloze: p.de?.cloze ?? "" })),
-    ).toEqual(c.demos);
+    ).toEqual(EXPECTED[c.name]);
     for (const p of phrases) {
       expect(p.parts.map((x) => x.text).join("")).toBe(p.en);
       if (p.de) expect(p.de.parts.map((x) => x.text).join("")).toBe(p.de.text);

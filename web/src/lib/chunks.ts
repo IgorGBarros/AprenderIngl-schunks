@@ -30,8 +30,6 @@ export interface Chunk {
   note: string;
   /** Template em alemão ("" ou ausente: o chunk não tem alemão). */
   de?: string;
-  /** Saída gerada pelo Python para cada exemplo (usada nos testes). */
-  demos?: { en: string; pt: string; cloze: string; de: string; de_cloze: string }[];
 }
 
 /** Variável preenchida pelo usuário; `pt` e `de` são opcionais. */

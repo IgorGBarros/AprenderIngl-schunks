@@ -158,6 +158,7 @@ def cmd_anki(args) -> None:
 def cmd_json(args) -> None:
     folder = Path(args.folder)
     (folder / "chunks.json").write_text(study.to_json(), encoding="utf-8")
+    (folder / "chunks.expected.json").write_text(study.expected_json(), encoding="utf-8")
     (folder / "interviews.json").write_text(study.interviews_json(), encoding="utf-8")
     (folder / "interview_prompts.json").write_text(study.prompts_json(), encoding="utf-8")
     print(f"{len(chunks.registry())} chunks e as entrevistas exportados para {folder}.")

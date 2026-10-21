@@ -182,6 +182,7 @@ class TestStudy(unittest.TestCase):
         folder = Path(__file__).resolve().parent.parent / "web" / "src" / "data"
         files = (
             ("chunks.json", study.to_json()),
+            ("chunks.expected.json", study.expected_json()),
             ("interviews.json", study.interviews_json()),
             ("interview_prompts.json", study.prompts_json()),
         )
