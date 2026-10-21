@@ -8,7 +8,8 @@ Comandos:
     search <termo>               procura por inglês, português ou nome
     quiz   [categoria] [-n N]    treino com repetição espaçada
     anki   <arquivo.txt> [cat]   exporta cards Cloze para o Anki
-    json   [arquivo]             exporta a biblioteca para o app web
+    json   [pasta]               exporta biblioteca e entrevistas para o app web
+    entrevista [sessão] [etapa]  simulação de entrevista (perguntas + respostas modelo)
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ from pathlib import Path
 import chunks
 from chunks import study
 
-WEB_DATA = Path(__file__).resolve().parent.parent / "web" / "src" / "data" / "chunks.json"
+WEB_DATA = Path(__file__).resolve().parent.parent / "web" / "src" / "data"
 
 
 def cmd_list(args) -> None:
@@ -105,8 +106,43 @@ def cmd_anki(args) -> None:
 
 
 def cmd_json(args) -> None:
-    Path(args.file).write_text(study.to_json(), encoding="utf-8")
-    print(f"{len(chunks.registry())} chunks exportados para {args.file}.")
+    folder = Path(args.folder)
+    (folder / "chunks.json").write_text(study.to_json(), encoding="utf-8")
+    (folder / "interviews.json").write_text(study.interviews_json(), encoding="utf-8")
+    print(f"{len(chunks.registry())} chunks e as entrevistas exportados para {folder}.")
+
+
+def cmd_interview(args) -> None:
+    from chunks import interviews
+
+    all_sessions = interviews.sessions()
+    if args.session not in all_sessions:
+        sys.exit("Sessões: " + ", ".join(all_sessions))
+    session = all_sessions[args.session]
+    stages = [s for s in session.stages if args.stage in (None, s.id)]
+    if not stages:
+        sys.exit("Etapas: " + ", ".join(s.id for s in session.stages))
+
+    print(f"{session.title} — {session.company}\n{session.summary}\n")
+    print("Leia a pergunta, responda EM VOZ ALTA e depois aperte Enter para ver a resposta modelo.")
+    print("[entre colchetes] = troque pelo seu fato real. Ctrl+C para sair.\n")
+    try:
+        for stage in stages:
+            print(f"=== {stage.title} ===\n{stage.description}\n")
+            for q in session.by_stage(stage.id):
+                input(f"🎤 {q.en}\n   (Enter para ver a resposta) ")
+                print(f"\n   O que querem saber: {q.goal}\n")
+                print(f"   {interviews.plain(q.answer)}\n")
+                found = interviews.chunks_in(q.answer)
+                if found:
+                    print("   Chunks: " + " · ".join(found))
+                for tip in q.tips:
+                    print(f"   Dica: {tip}")
+                for f in q.follow_ups:
+                    print(f"   Pode vir em seguida: {f}")
+                print()
+    except (KeyboardInterrupt, EOFError):
+        print()
 
 
 def _parse_value(raw: str):
@@ -132,8 +168,10 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("-n", type=int, default=10); p.set_defaults(fn=cmd_quiz)
     p = sub.add_parser("anki"); p.add_argument("file"); p.add_argument("category", nargs="?")
     p.set_defaults(fn=cmd_anki)
-    p = sub.add_parser("json"); p.add_argument("file", nargs="?", default=str(WEB_DATA))
+    p = sub.add_parser("json"); p.add_argument("folder", nargs="?", default=str(WEB_DATA))
     p.set_defaults(fn=cmd_json)
+    p = sub.add_parser("entrevista"); p.add_argument("session", nargs="?", default="vendor_data_platform")
+    p.add_argument("stage", nargs="?"); p.set_defaults(fn=cmd_interview)
 
     args = parser.parse_args(argv)
     try:

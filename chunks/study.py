@@ -82,6 +82,14 @@ def to_json() -> str:
     return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
 
 
+def interviews_json() -> str:
+    """Sessões de entrevista para o app web (``web/src/data/interviews.json``)."""
+    from chunks import interviews
+
+    data = [interviews.to_dict(s) for s in interviews.sessions().values()]
+    return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+
+
 # ------------------------------------------------------------------- Anki
 def anki_export(path: Path, category: str | None = None) -> int:
     """Gera um arquivo .txt para importar no Anki (tipo de nota *Cloze*).

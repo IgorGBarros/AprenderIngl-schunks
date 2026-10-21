@@ -308,6 +308,197 @@
     }
   },
   {
+    "name": "deduplicate",
+    "template": "[[We need to deduplicate]] {records} [[before]] {step}.",
+    "pt": "Precisamos deduplicar {records} antes de {step}.",
+    "category": "data",
+    "slots": [
+      "records",
+      "step"
+    ],
+    "example": {
+      "records": "the vendor records",
+      "step": [
+        "sending them to the API",
+        "enviar para a API"
+      ]
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "We need to deduplicate the vendor records before sending them to the API.",
+      "pt": "Precisamos deduplicar the vendor records antes de enviar para a API.",
+      "cloze": "{{c1::We need to deduplicate}} the vendor records {{c1::before}} sending them to the API."
+    }
+  },
+  {
+    "name": "match_against",
+    "template": "[[Each new record is matched against]] {target}.",
+    "pt": "Cada registro novo é comparado com {target}.",
+    "category": "data",
+    "slots": [
+      "target"
+    ],
+    "example": {
+      "target": "the existing master records"
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "Each new record is matched against the existing master records.",
+      "pt": "Cada registro novo é comparado com the existing master records.",
+      "cloze": "{{c1::Each new record is matched against}} the existing master records."
+    }
+  },
+  {
+    "name": "reconcile_with",
+    "template": "[[We reconcile]] {source} [[with]] {other} [[every]] {period}.",
+    "pt": "Reconciliamos {source} com {other} todo(a) {period}.",
+    "category": "data",
+    "slots": [
+      "source",
+      "other",
+      "period"
+    ],
+    "example": {
+      "source": "our vendor list",
+      "other": "the client's ERP",
+      "period": [
+        "night",
+        "noite"
+      ]
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "We reconcile our vendor list with the client's ERP every night.",
+      "pt": "Reconciliamos our vendor list com the client's ERP todo(a) noite.",
+      "cloze": "{{c1::We reconcile}} our vendor list {{c1::with}} the client's ERP {{c1::every}} night."
+    }
+  },
+  {
+    "name": "golden_record",
+    "template": "[[The golden record is built from]] {sources}.",
+    "pt": "O registro mestre (golden record) é montado a partir de {sources}.",
+    "category": "data",
+    "slots": [
+      "sources"
+    ],
+    "example": {
+      "sources": "the most reliable source for each field"
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "The golden record is built from the most reliable source for each field.",
+      "pt": "O registro mestre (golden record) é montado a partir de the most reliable source for each field.",
+      "cloze": "{{c1::The golden record is built from}} the most reliable source for each field."
+    }
+  },
+  {
+    "name": "flag_for_review",
+    "template": "{items} [[are flagged for human review]].",
+    "pt": "{items} são marcados para revisão humana.",
+    "category": "data",
+    "slots": [
+      "items"
+    ],
+    "example": {
+      "items": "Matches with a score between 0.7 and 0.9"
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "Matches with a score between 0.7 and 0.9 are flagged for human review.",
+      "pt": "Matches with a score between 0.7 and 0.9 são marcados para revisão humana.",
+      "cloze": "Matches with a score between 0.7 and 0.9 {{c1::are flagged for human review}}."
+    }
+  },
+  {
+    "name": "is_idempotent",
+    "template": "{component} [[is idempotent, so processing the same]] {thing} [[twice is safe]].",
+    "pt": "{component} é idempotente, então processar o(a) mesmo(a) {thing} duas vezes é seguro.",
+    "category": "data",
+    "slots": [
+      "component",
+      "thing"
+    ],
+    "example": {
+      "component": "The consumer",
+      "thing": [
+        "message",
+        "mensagem"
+      ]
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "The consumer is idempotent, so processing the same message twice is safe.",
+      "pt": "The consumer é idempotente, então processar o(a) mesmo(a) mensagem duas vezes é seguro.",
+      "cloze": "The consumer {{c1::is idempotent, so processing the same}} message {{c1::twice is safe}}."
+    }
+  },
+  {
+    "name": "scoped_to_the_tenant",
+    "template": "[[Every]] {thing} [[is scoped to the tenant]].",
+    "pt": "Todo(a) {thing} é restrito(a) ao cliente (tenant).",
+    "category": "data",
+    "slots": [
+      "thing"
+    ],
+    "example": {
+      "thing": [
+        "query",
+        "consulta"
+      ]
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "Every query is scoped to the tenant.",
+      "pt": "Todo(a) consulta é restrito(a) ao cliente (tenant).",
+      "cloze": "{{c1::Every}} query {{c1::is scoped to the tenant}}."
+    }
+  },
+  {
+    "name": "goes_to_the_dead_letter_queue",
+    "template": "[[After]] {n} [[retries, the message goes to the dead-letter queue]].",
+    "pt": "Depois de {n} tentativas, a mensagem vai para a dead-letter queue.",
+    "category": "data",
+    "slots": [
+      "n"
+    ],
+    "example": {
+      "n": "five"
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "After five retries, the message goes to the dead-letter queue.",
+      "pt": "Depois de five tentativas, a mensagem vai para a dead-letter queue.",
+      "cloze": "{{c1::After}} five {{c1::retries, the message goes to the dead-letter queue}}."
+    }
+  },
+  {
+    "name": "garbage_in_garbage_out",
+    "template": "[[Garbage in, garbage out]]: {consequence}.",
+    "pt": "Entra lixo, sai lixo: {consequence}.",
+    "category": "data",
+    "slots": [
+      "consequence"
+    ],
+    "example": {
+      "consequence": "if the input data is bad, the payments will be wrong"
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "Garbage in, garbage out: if the input data is bad, the payments will be wrong.",
+      "pt": "Entra lixo, sai lixo: if the input data is bad, the payments will be wrong.",
+      "cloze": "{{c1::Garbage in, garbage out}}: if the input data is bad, the payments will be wrong."
+    }
+  },
+  {
     "name": "time_to",
     "template": "[[Time to]] {action}!",
     "pt": "Hora de {action}!",
@@ -903,6 +1094,155 @@
       "en": "Thank you for the opportunity. It was great chatting with you.",
       "pt": "Obrigado pela oportunidade. Foi ótimo conversar com você.",
       "cloze": "{{c1::Thank you for the opportunity. It was great chatting with you}}."
+    }
+  },
+  {
+    "name": "could_you_rephrase",
+    "template": "[[Sorry, could you rephrase]] {what}[[?]]",
+    "pt": "Desculpe, você pode reformular {what}?",
+    "category": "interview",
+    "slots": [
+      "what"
+    ],
+    "example": {
+      "what": [
+        "the question",
+        "a pergunta"
+      ]
+    },
+    "defaults": {},
+    "note": "Muito melhor do que responder outra coisa. Ninguém perde pontos por isso.",
+    "demo": {
+      "en": "Sorry, could you rephrase the question?",
+      "pt": "Desculpe, você pode reformular a pergunta?",
+      "cloze": "{{c1::Sorry, could you rephrase}} the question?"
+    }
+  },
+  {
+    "name": "just_to_make_sure_i_understood",
+    "template": "[[Just to make sure I understood, you're asking about]] {topic}[[?]]",
+    "pt": "Só para ter certeza de que entendi, você está perguntando sobre {topic}?",
+    "category": "interview",
+    "slots": [
+      "topic"
+    ],
+    "example": {
+      "topic": "how we handle duplicate vendors"
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "Just to make sure I understood, you're asking about how we handle duplicate vendors?",
+      "pt": "Só para ter certeza de que entendi, você está perguntando sobre how we handle duplicate vendors?",
+      "cloze": "{{c1::Just to make sure I understood, you're asking about}} how we handle duplicate vendors?"
+    }
+  },
+  {
+    "name": "thats_a_great_question",
+    "template": "[[That's a great question. Let me think about]] {topic} [[for a second]].",
+    "pt": "Ótima pergunta. Deixa eu pensar um segundo sobre {topic}.",
+    "category": "interview",
+    "slots": [
+      "topic"
+    ],
+    "example": {
+      "topic": "the trade-offs"
+    },
+    "defaults": {},
+    "note": "Ganha 3 segundos para organizar a resposta.",
+    "demo": {
+      "en": "That's a great question. Let me think about the trade-offs for a second.",
+      "pt": "Ótima pergunta. Deixa eu pensar um segundo sobre the trade-offs.",
+      "cloze": "{{c1::That's a great question. Let me think about}} the trade-offs {{c1::for a second}}."
+    }
+  },
+  {
+    "name": "i_havent_used_but",
+    "template": "[[I haven't used]] {tool} [[in production, but]] {bridge}.",
+    "pt": "Não usei {tool} em produção, mas {bridge}.",
+    "category": "interview",
+    "slots": [
+      "tool",
+      "bridge"
+    ],
+    "example": {
+      "tool": "Azure",
+      "bridge": [
+        "I've used the equivalent services on AWS",
+        "usei os serviços equivalentes na AWS"
+      ]
+    },
+    "defaults": {},
+    "note": "Honestidade + ponte para o que você sabe. Nunca finja.",
+    "demo": {
+      "en": "I haven't used Azure in production, but I've used the equivalent services on AWS.",
+      "pt": "Não usei Azure em produção, mas usei os serviços equivalentes na AWS.",
+      "cloze": "{{c1::I haven't used}} Azure {{c1::in production, but}} I've used the equivalent services on AWS."
+    }
+  },
+  {
+    "name": "the_trade_off_is",
+    "template": "[[The trade-off is]] {a} [[versus]] {b}.",
+    "pt": "O trade-off é {a} versus {b}.",
+    "category": "interview",
+    "slots": [
+      "a",
+      "b"
+    ],
+    "example": {
+      "a": [
+        "isolation",
+        "isolamento"
+      ],
+      "b": [
+        "cost",
+        "custo"
+      ]
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "The trade-off is isolation versus cost.",
+      "pt": "O trade-off é isolamento versus custo.",
+      "cloze": "{{c1::The trade-off is}} isolation {{c1::versus}} cost."
+    }
+  },
+  {
+    "name": "before_i_start_can_i_ask",
+    "template": "[[Before I start, can I ask]] {question}[[?]]",
+    "pt": "Antes de começar, posso perguntar {question}?",
+    "category": "interview",
+    "slots": [
+      "question"
+    ],
+    "example": {
+      "question": "how many records we're talking about"
+    },
+    "defaults": {},
+    "note": "Em system design, sempre pergunte antes de desenhar.",
+    "demo": {
+      "en": "Before I start, can I ask how many records we're talking about?",
+      "pt": "Antes de começar, posso perguntar how many records we're talking about?",
+      "cloze": "{{c1::Before I start, can I ask}} how many records we're talking about?"
+    }
+  },
+  {
+    "name": "lets_start_with_the_big_picture",
+    "template": "[[Let me start with the big picture, and then we can zoom in on]] {part}.",
+    "pt": "Deixa eu começar pela visão geral, e depois a gente detalha {part}.",
+    "category": "interview",
+    "slots": [
+      "part"
+    ],
+    "example": {
+      "part": "the matching step"
+    },
+    "defaults": {},
+    "note": "",
+    "demo": {
+      "en": "Let me start with the big picture, and then we can zoom in on the matching step.",
+      "pt": "Deixa eu começar pela visão geral, e depois a gente detalha the matching step.",
+      "cloze": "{{c1::Let me start with the big picture, and then we can zoom in on}} the matching step."
     }
   },
   {

@@ -145,7 +145,7 @@ h2 {
   position: fixed;
   inset: auto 0 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom, 0px);
   padding-left: env(safe-area-inset-left, 0px);
@@ -649,4 +649,177 @@ mark.fixed {
   margin: 0;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+/* ------------------------------------------------------------- entrevista */
+.job {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.job-company {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.job-title {
+  font-size: 1.15rem;
+  text-wrap: balance;
+}
+
+.meter {
+  height: 8px;
+  margin-top: 4px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ok);
+  transition: width 0.3s ease;
+}
+
+.meter-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.stage-description {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.question-list {
+  margin-top: 12px;
+}
+
+.question-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.question-row:active {
+  background: var(--surface-2);
+}
+
+.question-text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.check {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.check.done {
+  border-color: var(--ok);
+  background: var(--ok);
+  color: var(--surface);
+}
+
+.legend {
+  margin-top: 16px;
+  font-size: 0.9rem;
+}
+
+.fill {
+  padding: 0 2px;
+  border-bottom: 2px dashed var(--bad);
+  color: var(--bad);
+  font-style: italic;
+}
+
+.interviewer .label {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.goal {
+  display: grid;
+  gap: 4px;
+  margin-top: 20px;
+}
+
+.goal p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.answer {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.answer-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.answer-text {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.tips h2,
+.follow-ups h2 {
+  margin-bottom: 8px;
+}
+
+.tips ul {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+}
+
+.follow-ups {
+  margin-top: 20px;
+}
+
+.follow-up {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px 10px 16px;
+}
+
+.pager {
+  margin-top: 24px;
+}
+
+.pager button:disabled {
+  opacity: 0.4;
+  cursor: default;
 }

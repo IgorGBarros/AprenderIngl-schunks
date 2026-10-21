@@ -104,11 +104,38 @@ class TestStudy(unittest.TestCase):
         self.assertEqual(lines[4].count("\t"), 2)
 
     def test_web_data_is_up_to_date(self):
-        path = Path(__file__).resolve().parent.parent / "web" / "src" / "data" / "chunks.json"
+        folder = Path(__file__).resolve().parent.parent / "web" / "src" / "data"
+        for name, expected in (("chunks.json", study.to_json()), ("interviews.json", study.interviews_json())):
+            with self.subTest(file=name):
+                self.assertEqual(
+                    (folder / name).read_text(encoding="utf-8"),
+                    expected,
+                    "Rode `python -m chunks json` para atualizar o app web.",
+                )
+
+
+class TestInterviews(unittest.TestCase):
+    def test_sessions_are_well_formed(self):
+        from chunks import interviews
+
+        for session in interviews.sessions().values():
+            stages = {s.id for s in session.stages}
+            self.assertEqual(stages, {q.stage for q in session.questions}, "etapa sem perguntas")
+            for q in session.questions:
+                with self.subTest(question=q.id):
+                    self.assertTrue(q.en.strip() and q.goal.strip() and q.answer.strip())
+                    plain = interviews.plain(q.answer)
+                    self.assertNotIn("[[", plain)
+                    self.assertNotIn("((", plain)
+                    self.assertEqual(q.answer.count("[["), q.answer.count("]]"))
+                    self.assertEqual(q.answer.count("(("), q.answer.count("))"))
+
+    def test_plain_marks_what_to_fill(self):
+        from chunks import interviews
+
         self.assertEqual(
-            path.read_text(encoding="utf-8"),
-            study.to_json(),
-            "Rode `python -m chunks json` para atualizar o app web.",
+            interviews.plain("[[I currently work as]] a Data Analyst ((at X))."),
+            "I currently work as a Data Analyst [at X].",
         )
 
 

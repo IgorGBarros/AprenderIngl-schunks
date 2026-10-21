@@ -127,3 +127,61 @@ thank_you_for_the_opportunity = chunk(
     "Obrigado pela oportunidade. Foi ótimo conversar com você.",
     category=C,
 )
+
+# --- Sobrevivência: ganhar tempo, pedir para repetir, ser honesto -----------
+could_you_rephrase = chunk(
+    "could_you_rephrase",
+    "[[Sorry, could you rephrase]] {what}[[?]]",
+    "Desculpe, você pode reformular {what}?",
+    category=C,
+    example={"what": ("the question", "a pergunta")},
+    note="Muito melhor do que responder outra coisa. Ninguém perde pontos por isso.",
+)
+just_to_make_sure_i_understood = chunk(
+    "just_to_make_sure_i_understood",
+    "[[Just to make sure I understood, you're asking about]] {topic}[[?]]",
+    "Só para ter certeza de que entendi, você está perguntando sobre {topic}?",
+    category=C,
+    example={"topic": "how we handle duplicate vendors"},
+)
+thats_a_great_question = chunk(
+    "thats_a_great_question",
+    "[[That's a great question. Let me think about]] {topic} [[for a second]].",
+    "Ótima pergunta. Deixa eu pensar um segundo sobre {topic}.",
+    category=C,
+    example={"topic": "the trade-offs"},
+    note="Ganha 3 segundos para organizar a resposta.",
+)
+i_havent_used_but = chunk(
+    "i_havent_used_but",
+    "[[I haven't used]] {tool} [[in production, but]] {bridge}.",
+    "Não usei {tool} em produção, mas {bridge}.",
+    category=C,
+    example={
+        "tool": "Azure",
+        "bridge": ("I've used the equivalent services on AWS", "usei os serviços equivalentes na AWS"),
+    },
+    note="Honestidade + ponte para o que você sabe. Nunca finja.",
+)
+the_trade_off_is = chunk(
+    "the_trade_off_is",
+    "[[The trade-off is]] {a} [[versus]] {b}.",
+    "O trade-off é {a} versus {b}.",
+    category=C,
+    example={"a": ("isolation", "isolamento"), "b": ("cost", "custo")},
+)
+before_i_start_can_i_ask = chunk(
+    "before_i_start_can_i_ask",
+    "[[Before I start, can I ask]] {question}[[?]]",
+    "Antes de começar, posso perguntar {question}?",
+    category=C,
+    example={"question": "how many records we're talking about"},
+    note="Em system design, sempre pergunte antes de desenhar.",
+)
+lets_start_with_the_big_picture = chunk(
+    "lets_start_with_the_big_picture",
+    "[[Let me start with the big picture, and then we can zoom in on]] {part}.",
+    "Deixa eu começar pela visão geral, e depois a gente detalha {part}.",
+    category=C,
+    example={"part": "the matching step"},
+)

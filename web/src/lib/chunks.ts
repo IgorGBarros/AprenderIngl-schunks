@@ -45,6 +45,7 @@ export const CATEGORY_LABELS: Record<string, string> = {
   tech: "Tech",
   business: "Negócios",
   interview: "Entrevista",
+  data: "Dados",
   mine: "Meus",
 };
 

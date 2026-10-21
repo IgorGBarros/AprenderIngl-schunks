@@ -13,6 +13,7 @@ recebe a frase pronta:
 
 from chunks.core import Chunk, Phrase, a, categories, chunk, get, registry, search
 from chunks.library.business import *  # noqa: F401,F403
+from chunks.library.data import *  # noqa: F401,F403
 from chunks.library.home import *  # noqa: F401,F403
 from chunks.library.interview import *  # noqa: F401,F403
 from chunks.library.meetings import *  # noqa: F401,F403

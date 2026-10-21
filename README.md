@@ -108,7 +108,7 @@ A parte fixa do chunk fica escondida e a variável continua visível, que é
 exatamente o que você precisa memorizar. No Anki: *Arquivo > Importar*. As
 tags (`chunks::meetings` etc.) já vêm no arquivo.
 
-## Categorias incluídas (105 chunks)
+## Categorias incluídas (121 chunks)
 
 | Categoria   | Conteúdo                                                        |
 |-------------|-----------------------------------------------------------------|
@@ -117,8 +117,33 @@ tags (`chunks::meetings` etc.) já vêm no arquivo.
 | `meetings`  | reuniões, apresentações, e-mail e Slack                         |
 | `tech`      | dev, dados, IA, troubleshooting                                 |
 | `business`  | negócios, SaaS, networking                                      |
-| `interview` | entrevista tech, respostas no método STAR                       |
+| `interview` | entrevista tech, STAR e frases para ganhar tempo ou pedir para repetir |
+| `data`      | matching, deduplicação, reconciliação, multi-tenant, eventos    |
 | `mine`      | os seus chunks                                                  |
+
+## Preparação para entrevista
+
+Uma sessão completa para a vaga **Senior Software Engineer, Vendor Data
+Platform** (DistantJob): 38 perguntas prováveis, em 6 etapas (recrutador,
+experiência STAR, técnica, dados de fornecedores, system design e
+encerramento). Cada pergunta tem:
+
+- o que o entrevistador quer descobrir (em português);
+- uma resposta modelo em inglês com os chunks marcados;
+- dicas e perguntas que podem vir em seguida.
+
+Nas respostas, `((...))` marca o que **você precisa trocar por um fato real
+seu** (números, empresa, datas). Nunca diga algo que não consegue sustentar
+com um exemplo.
+
+```bash
+python -m chunks entrevista                              # sessão completa
+python -m chunks entrevista vendor_data_platform domain  # só uma etapa
+```
+
+Etapas: `screen`, `experience`, `technical`, `domain`, `design`, `closing`.
+As perguntas ficam em `chunks/interviews/vendor_data_platform.py`. Para
+preparar outra vaga, crie um arquivo parecido na mesma pasta.
 
 ## App web para o celular (`web/`)
 
@@ -130,6 +155,9 @@ Um app em React + TypeScript + Vite com a mesma biblioteca e o mesmo motor:
   tradução, pronúncia (🔊, voz do próprio celular) e o card do Anki para copiar.
 - **Treinar:** o mesmo quiz com repetição espaçada. O progresso fica salvo no
   celular.
+- **Entrevista:** simulação da entrevista. O app lê a pergunta em voz alta, você
+  responde falando e depois compara com a resposta modelo (que também pode ser
+  ouvida, para treinar *shadowing*).
 - **Meus:** crie chunks pelo celular (`[[fixo]] {variável}`) e baixe o
   arquivo do Anki.
 - Funciona offline e pode ser instalado na tela inicial ("Adicionar à tela de

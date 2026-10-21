@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChunkView } from "./components/ChunkView";
+import { Interview } from "./components/Interview";
 import { Library } from "./components/Library";
 import { MyChunks } from "./components/MyChunks";
 import { Quiz } from "./components/Quiz";
@@ -7,11 +8,12 @@ import { BUILTIN, type Chunk } from "./lib/chunks";
 import type { Progress } from "./lib/srs";
 import { load, save } from "./lib/storage";
 
-type Tab = "library" | "quiz" | "mine";
+type Tab = "library" | "quiz" | "interview" | "mine";
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: "library", label: "Biblioteca", icon: "{ }" },
   { id: "quiz", label: "Treinar", icon: "▶" },
+  { id: "interview", label: "Entrevista", icon: "?" },
   { id: "mine", label: "Meus", icon: "+" },
 ];
 
@@ -37,7 +39,8 @@ export default function App() {
 
   const all = useMemo(() => [...BUILTIN, ...mine], [mine]);
   const [section, param] = route;
-  const tab: Tab = section === "quiz" || section === "mine" ? section : "library";
+  const tab: Tab =
+    section === "quiz" || section === "mine" || section === "interview" ? section : "library";
   const opened = section === "c" ? all.find((c) => c.name === param) : undefined;
 
   return (
@@ -45,6 +48,8 @@ export default function App() {
       <main className="screen">
         {opened ? (
           <ChunkView key={opened.name} chunk={opened} onBack={() => (window.history.length > 1 ? window.history.back() : go(""))} />
+        ) : tab === "interview" ? (
+          <Interview openId={param} onOpen={(id) => go(id ? `interview/${id}` : "interview")} />
         ) : tab === "quiz" ? (
           <Quiz chunks={all} progress={progress} onProgress={setProgress} />
         ) : tab === "mine" ? (
