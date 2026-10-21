@@ -103,6 +103,14 @@ class TestStudy(unittest.TestCase):
         self.assertEqual(len(lines), n + 4)
         self.assertEqual(lines[4].count("\t"), 2)
 
+    def test_web_data_is_up_to_date(self):
+        path = Path(__file__).resolve().parent.parent / "web" / "src" / "data" / "chunks.json"
+        self.assertEqual(
+            path.read_text(encoding="utf-8"),
+            study.to_json(),
+            "Rode `python -m chunks json` para atualizar o app web.",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

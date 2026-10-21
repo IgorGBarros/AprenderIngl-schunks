@@ -120,6 +120,43 @@ tags (`chunks::meetings` etc.) já vêm no arquivo.
 | `interview` | entrevista tech, respostas no método STAR                       |
 | `mine`      | os seus chunks                                                  |
 
+## App web para o celular (`web/`)
+
+Um app em React + TypeScript + Vite com a mesma biblioteca e o mesmo motor:
+
+- **Biblioteca:** busca (com ou sem acento), filtro por categoria e a parte
+  fixa de cada chunk destacada.
+- **Chunk:** você digita as variáveis e vê a frase montada na hora, com
+  tradução, pronúncia (🔊, voz do próprio celular) e o card do Anki para copiar.
+- **Treinar:** o mesmo quiz com repetição espaçada. O progresso fica salvo no
+  celular.
+- **Meus:** crie chunks pelo celular (`[[fixo]] {variável}`) e baixe o
+  arquivo do Anki.
+- Funciona offline e pode ser instalado na tela inicial ("Adicionar à tela de
+  início" no Safari ou Chrome).
+
+```bash
+cd web
+npm ci
+npm run dev        # abre em http://localhost:5173 (e na rede local, para testar no celular)
+npm test           # testes (inclui conferir que o TS gera o mesmo que o Python)
+npm run build      # gera web/dist
+```
+
+A biblioteca do app vem de `web/src/data/chunks.json`, gerado a partir do
+Python. Depois de criar ou editar chunks em Python, rode:
+
+```bash
+python -m chunks json
+```
+
+(Os testes do Python falham se você esquecer.)
+
+**Publicar no GitHub Pages:** o workflow `.github/workflows/web.yml` testa e
+publica o app a cada push na branch `main`. Antes, ative em *Settings › Pages ›
+Source: GitHub Actions*. O endereço fica
+`https://<seu-usuário>.github.io/AprenderIngl-schunks/`.
+
 ## Criando os seus chunks
 
 Encontrou uma frase boa num vídeo, numa reunião ou numa documentação? Crie a

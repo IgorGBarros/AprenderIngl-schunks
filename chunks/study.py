@@ -61,6 +61,27 @@ def check(answer: str, expected: Phrase) -> bool:
     return normalize(answer) == normalize(expected.en)
 
 
+# ------------------------------------------------------------------- JSON
+def to_json() -> str:
+    """Serializa a biblioteca para o app web (``web/src/data/chunks.json``)."""
+    data = [
+        {
+            "name": c.name,
+            "template": c.template,
+            "pt": c.pt,
+            "category": c.category,
+            "slots": c.slots,
+            "example": {k: list(v) if isinstance(v, tuple) else v for k, v in c.example.items()},
+            "defaults": c.defaults,
+            "note": c.note,
+            # Saída esperada: o app web testa se o motor em TS gera o mesmo.
+            "demo": {"en": (d := c.demo()).en, "pt": d.pt, "cloze": d.cloze},
+        }
+        for c in registry().values()
+    ]
+    return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+
+
 # ------------------------------------------------------------------- Anki
 def anki_export(path: Path, category: str | None = None) -> int:
     """Gera um arquivo .txt para importar no Anki (tipo de nota *Cloze*).

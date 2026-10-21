@@ -8,6 +8,7 @@ Comandos:
     search <termo>               procura por inglês, português ou nome
     quiz   [categoria] [-n N]    treino com repetição espaçada
     anki   <arquivo.txt> [cat]   exporta cards Cloze para o Anki
+    json   [arquivo]             exporta a biblioteca para o app web
 """
 
 from __future__ import annotations
@@ -18,6 +19,8 @@ from pathlib import Path
 
 import chunks
 from chunks import study
+
+WEB_DATA = Path(__file__).resolve().parent.parent / "web" / "src" / "data" / "chunks.json"
 
 
 def cmd_list(args) -> None:
@@ -101,6 +104,11 @@ def cmd_anki(args) -> None:
     print("No Anki: Arquivo > Importar > escolha o arquivo (tipo de nota: Cloze).")
 
 
+def cmd_json(args) -> None:
+    Path(args.file).write_text(study.to_json(), encoding="utf-8")
+    print(f"{len(chunks.registry())} chunks exportados para {args.file}.")
+
+
 def _parse_value(raw: str):
     """``'a coffee|um café'`` vira ``('a coffee', 'um café')``."""
     if "|" in raw:
@@ -124,6 +132,8 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("-n", type=int, default=10); p.set_defaults(fn=cmd_quiz)
     p = sub.add_parser("anki"); p.add_argument("file"); p.add_argument("category", nargs="?")
     p.set_defaults(fn=cmd_anki)
+    p = sub.add_parser("json"); p.add_argument("file", nargs="?", default=str(WEB_DATA))
+    p.set_defaults(fn=cmd_json)
 
     args = parser.parse_args(argv)
     try:
