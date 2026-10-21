@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chunks"
+version = "0.1.0"
+description = "Aprenda inglês como programação: cada chunk é uma função."
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.scripts]
+chunks = "chunks.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["chunks*"]
