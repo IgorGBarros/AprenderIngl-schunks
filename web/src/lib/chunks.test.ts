@@ -4,8 +4,9 @@ import {
   BUILTIN,
   type Chunk,
   a,
+  blanks,
+  demos,
   core,
-  exampleValues,
   nameFrom,
   normalizeAnswer,
   render,
@@ -18,9 +19,20 @@ const byName = (name: string) => BUILTIN.find((c) => c.name === name)!;
 
 describe("render", () => {
   it.each(BUILTIN.map((c) => [c.name, c] as const))("%s gera o mesmo que o Python", (_, c) => {
-    const p = render(c, exampleValues(c));
-    expect({ en: p.en, pt: p.pt, cloze: p.cloze }).toEqual(c.demo);
-    expect(p.parts.map((x) => x.text).join("")).toBe(p.en);
+    const phrases = demos(c);
+    expect(phrases.map((p) => ({ en: p.en, pt: p.pt, cloze: p.cloze }))).toEqual(c.demos);
+    for (const p of phrases) expect(p.parts.map((x) => x.text).join("")).toBe(p.en);
+  });
+
+  it("aceita chunks salvos no formato antigo (example)", () => {
+    const old = { ...byName("could_i_get"), examples: undefined, example: { item: "tea" } } as unknown as Chunk;
+    expect(demos(old).map((p) => p.en)).toEqual(["Could I get tea, please?"]);
+  });
+
+  it("dica mostra só o tamanho da parte fixa", () => {
+    expect(blanks(render(byName("could_i_get"), { item: { en: "a glass of water" } }))).toBe(
+      "_____ _ ___ a glass of water, ______?",
+    );
   });
 
   it("usa as variáveis do usuário", () => {
@@ -31,7 +43,7 @@ describe("render", () => {
 
   it("traduz a variável quando há pt", () => {
     const p = render(byName("could_i_get"), { item: { en: "a coffee", pt: "um café" } });
-    expect(p.pt).toBe("Pode me ver um café, por favor?");
+    expect(p.pt).toBe("Pode me trazer um café, por favor?");
   });
 
   it("variável vazia usa o default sem deixar espaço sobrando", () => {
@@ -70,7 +82,8 @@ describe("helpers", () => {
 
   it("busca ignora acentos e acha pelo exemplo", () => {
     expect(search(BUILTIN, "glass of water").map((c) => c.name)).toContain("could_i_get");
-    expect(search(BUILTIN, "alergico").map((c) => c.name)).toContain("im_allergic_to");
+    expect(search(BUILTIN, "alergia").map((c) => c.name)).toContain("im_allergic_to");
+    expect(search(BUILTIN, "cardapio").map((c) => c.name)).toContain("could_i_get");
   });
 
   it("corrige ignorando maiúsculas e pontuação", () => {
@@ -106,7 +119,7 @@ describe("anki", () => {
     const lines = ankiText([byName("could_i_get")]).trim().split("\n");
     expect(lines[2]).toBe("#notetype:Cloze");
     expect(lines[4]).toBe(
-      "{{c1::Could I get}} a glass of water{{c1::, please}}?\tPode me ver a glass of water, por favor? | could_i_get(item)\tchunks::survival",
+      "{{c1::Could I get}} a glass of water{{c1::, please}}?\tPode me trazer um copo de água, por favor? | could_i_get(item)\tchunks::survival",
     );
   });
 });

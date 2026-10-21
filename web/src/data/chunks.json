@@ -2,61 +2,159 @@
   {
     "name": "wont_move_the_needle",
     "template": "{thing} [[won't move the needle on]] {metric}.",
-    "pt": "{thing} não vai fazer diferença real em {metric}.",
+    "pt": "{thing} não vai fazer diferença de verdade {metric}.",
     "category": "business",
     "slots": [
       "thing",
       "metric"
     ],
-    "example": {
-      "thing": "That small feature",
-      "metric": "our revenue"
-    },
+    "examples": [
+      {
+        "thing": [
+          "That small feature",
+          "Essa funcionalidade pequena"
+        ],
+        "metric": [
+          "our revenue",
+          "no nosso faturamento"
+        ]
+      },
+      {
+        "thing": [
+          "A new logo",
+          "Um logo novo"
+        ],
+        "metric": [
+          "sales",
+          "nas vendas"
+        ]
+      },
+      {
+        "thing": [
+          "Another meeting",
+          "Mais uma reunião"
+        ],
+        "metric": [
+          "this problem",
+          "nesse problema"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "That small feature won't move the needle on our revenue.",
-      "pt": "That small feature não vai fazer diferença real em our revenue.",
-      "cloze": "That small feature {{c1::won't move the needle on}} our revenue."
-    }
+    "demos": [
+      {
+        "en": "That small feature won't move the needle on our revenue.",
+        "pt": "Essa funcionalidade pequena não vai fazer diferença de verdade no nosso faturamento.",
+        "cloze": "That small feature {{c1::won't move the needle on}} our revenue."
+      },
+      {
+        "en": "A new logo won't move the needle on sales.",
+        "pt": "Um logo novo não vai fazer diferença de verdade nas vendas.",
+        "cloze": "A new logo {{c1::won't move the needle on}} sales."
+      },
+      {
+        "en": "Another meeting won't move the needle on this problem.",
+        "pt": "Mais uma reunião não vai fazer diferença de verdade nesse problema.",
+        "cloze": "Another meeting {{c1::won't move the needle on}} this problem."
+      }
+    ]
   },
   {
     "name": "dont_have_the_bandwidth",
     "template": "[[I'd love to help, but I don't have the bandwidth]] {when}.",
-    "pt": "Adoraria ajudar, mas não tenho tempo/capacidade {when}.",
+    "pt": "Eu adoraria ajudar, mas não tenho tempo {when}.",
     "category": "business",
     "slots": [
       "when"
     ],
-    "example": {
-      "when": "this week"
-    },
+    "examples": [
+      {
+        "when": [
+          "this week",
+          "esta semana"
+        ]
+      },
+      {
+        "when": [
+          "right now",
+          "agora"
+        ]
+      },
+      {
+        "when": [
+          "until the launch",
+          "até o lançamento"
+        ]
+      }
+    ],
     "defaults": {},
-    "note": "",
-    "demo": {
-      "en": "I'd love to help, but I don't have the bandwidth this week.",
-      "pt": "Adoraria ajudar, mas não tenho tempo/capacidade this week.",
-      "cloze": "{{c1::I'd love to help, but I don't have the bandwidth}} this week."
-    }
+    "note": "'Bandwidth' aqui é tempo ou capacidade, não internet.",
+    "demos": [
+      {
+        "en": "I'd love to help, but I don't have the bandwidth this week.",
+        "pt": "Eu adoraria ajudar, mas não tenho tempo esta semana.",
+        "cloze": "{{c1::I'd love to help, but I don't have the bandwidth}} this week."
+      },
+      {
+        "en": "I'd love to help, but I don't have the bandwidth right now.",
+        "pt": "Eu adoraria ajudar, mas não tenho tempo agora.",
+        "cloze": "{{c1::I'd love to help, but I don't have the bandwidth}} right now."
+      },
+      {
+        "en": "I'd love to help, but I don't have the bandwidth until the launch.",
+        "pt": "Eu adoraria ajudar, mas não tenho tempo até o lançamento.",
+        "cloze": "{{c1::I'd love to help, but I don't have the bandwidth}} until the launch."
+      }
+    ]
   },
   {
     "name": "the_bottom_line_is",
     "template": "[[The bottom line is that]] {conclusion}.",
-    "pt": "O que importa no fim é que {conclusion}.",
+    "pt": "Resumindo, o que importa é que {conclusion}.",
     "category": "business",
     "slots": [
       "conclusion"
     ],
-    "example": {
-      "conclusion": "the server costs are too high"
-    },
+    "examples": [
+      {
+        "conclusion": [
+          "the server costs are too high",
+          "o custo dos servidores está alto demais"
+        ]
+      },
+      {
+        "conclusion": [
+          "we need more clients",
+          "precisamos de mais clientes"
+        ]
+      },
+      {
+        "conclusion": [
+          "the product works",
+          "o produto funciona"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "The bottom line is that the server costs are too high.",
-      "pt": "O que importa no fim é que the server costs are too high.",
-      "cloze": "{{c1::The bottom line is that}} the server costs are too high."
-    }
+    "demos": [
+      {
+        "en": "The bottom line is that the server costs are too high.",
+        "pt": "Resumindo, o que importa é que o custo dos servidores está alto demais.",
+        "cloze": "{{c1::The bottom line is that}} the server costs are too high."
+      },
+      {
+        "en": "The bottom line is that we need more clients.",
+        "pt": "Resumindo, o que importa é que precisamos de mais clientes.",
+        "cloze": "{{c1::The bottom line is that}} we need more clients."
+      },
+      {
+        "en": "The bottom line is that the product works.",
+        "pt": "Resumindo, o que importa é que o produto funciona.",
+        "cloze": "{{c1::The bottom line is that}} the product works."
+      }
+    ]
   },
   {
     "name": "is_a_low_hanging_fruit",
@@ -66,75 +164,202 @@
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "Optimizing the database queries"
-    },
+    "examples": [
+      {
+        "thing": [
+          "Optimizing the database queries",
+          "Otimizar as consultas do banco"
+        ]
+      },
+      {
+        "thing": [
+          "Fixing the signup form",
+          "Arrumar o formulário de cadastro"
+        ]
+      },
+      {
+        "thing": [
+          "Adding a cache",
+          "Colocar um cache"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Optimizing the database queries is a low-hanging fruit.",
-      "pt": "Optimizing the database queries é uma vitória fácil.",
-      "cloze": "Optimizing the database queries {{c1::is a low-hanging fruit}}."
-    }
+    "demos": [
+      {
+        "en": "Optimizing the database queries is a low-hanging fruit.",
+        "pt": "Otimizar as consultas do banco é uma vitória fácil.",
+        "cloze": "Optimizing the database queries {{c1::is a low-hanging fruit}}."
+      },
+      {
+        "en": "Fixing the signup form is a low-hanging fruit.",
+        "pt": "Arrumar o formulário de cadastro é uma vitória fácil.",
+        "cloze": "Fixing the signup form {{c1::is a low-hanging fruit}}."
+      },
+      {
+        "en": "Adding a cache is a low-hanging fruit.",
+        "pt": "Colocar um cache é uma vitória fácil.",
+        "cloze": "Adding a cache {{c1::is a low-hanging fruit}}."
+      }
+    ]
   },
   {
     "name": "addresses_a_pain_point",
     "template": "{product} [[addresses a major pain point for]] {audience}.",
-    "pt": "{product} resolve uma dor importante de {audience}.",
+    "pt": "{product} resolve uma dor importante {audience}.",
     "category": "business",
     "slots": [
       "product",
       "audience"
     ],
-    "example": {
-      "product": "Our SaaS product",
-      "audience": "small businesses"
-    },
+    "examples": [
+      {
+        "product": [
+          "Our SaaS product",
+          "O nosso SaaS"
+        ],
+        "audience": [
+          "small businesses",
+          "das pequenas empresas"
+        ]
+      },
+      {
+        "product": [
+          "This app",
+          "Este app"
+        ],
+        "audience": [
+          "busy parents",
+          "de pais sem tempo"
+        ]
+      },
+      {
+        "product": [
+          "The new report",
+          "O novo relatório"
+        ],
+        "audience": [
+          "the finance team",
+          "do time financeiro"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Our SaaS product addresses a major pain point for small businesses.",
-      "pt": "Our SaaS product resolve uma dor importante de small businesses.",
-      "cloze": "Our SaaS product {{c1::addresses a major pain point for}} small businesses."
-    }
+    "demos": [
+      {
+        "en": "Our SaaS product addresses a major pain point for small businesses.",
+        "pt": "O nosso SaaS resolve uma dor importante das pequenas empresas.",
+        "cloze": "Our SaaS product {{c1::addresses a major pain point for}} small businesses."
+      },
+      {
+        "en": "This app addresses a major pain point for busy parents.",
+        "pt": "Este app resolve uma dor importante de pais sem tempo.",
+        "cloze": "This app {{c1::addresses a major pain point for}} busy parents."
+      },
+      {
+        "en": "The new report addresses a major pain point for the finance team.",
+        "pt": "O novo relatório resolve uma dor importante do time financeiro.",
+        "cloze": "The new report {{c1::addresses a major pain point for}} the finance team."
+      }
+    ]
   },
   {
     "name": "drive_user_adoption",
     "template": "[[We need]] {strategy} [[to drive user adoption]].",
-    "pt": "Precisamos de {strategy} para impulsionar a adoção pelos usuários.",
+    "pt": "Precisamos de {strategy} para fazer os usuários adotarem o produto.",
     "category": "business",
     "slots": [
       "strategy"
     ],
-    "example": {
-      "strategy": "a marketing strategy"
-    },
+    "examples": [
+      {
+        "strategy": [
+          "a marketing strategy",
+          "uma estratégia de marketing"
+        ]
+      },
+      {
+        "strategy": [
+          "better onboarding",
+          "um onboarding melhor"
+        ]
+      },
+      {
+        "strategy": [
+          "a free plan",
+          "um plano gratuito"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We need a marketing strategy to drive user adoption.",
-      "pt": "Precisamos de a marketing strategy para impulsionar a adoção pelos usuários.",
-      "cloze": "{{c1::We need}} a marketing strategy {{c1::to drive user adoption}}."
-    }
+    "demos": [
+      {
+        "en": "We need a marketing strategy to drive user adoption.",
+        "pt": "Precisamos de uma estratégia de marketing para fazer os usuários adotarem o produto.",
+        "cloze": "{{c1::We need}} a marketing strategy {{c1::to drive user adoption}}."
+      },
+      {
+        "en": "We need better onboarding to drive user adoption.",
+        "pt": "Precisamos de um onboarding melhor para fazer os usuários adotarem o produto.",
+        "cloze": "{{c1::We need}} better onboarding {{c1::to drive user adoption}}."
+      },
+      {
+        "en": "We need a free plan to drive user adoption.",
+        "pt": "Precisamos de um plano gratuito para fazer os usuários adotarem o produto.",
+        "cloze": "{{c1::We need}} a free plan {{c1::to drive user adoption}}."
+      }
+    ]
   },
   {
     "name": "reduce_time_to_market",
     "template": "{choice} [[will reduce our time to market]].",
-    "pt": "{choice} vai reduzir nosso tempo de lançamento.",
+    "pt": "{choice} vai reduzir o nosso tempo até o lançamento.",
     "category": "business",
     "slots": [
       "choice"
     ],
-    "example": {
-      "choice": "Using an open-source framework"
-    },
+    "examples": [
+      {
+        "choice": [
+          "Using an open-source framework",
+          "Usar um framework open source"
+        ]
+      },
+      {
+        "choice": [
+          "Cutting this feature",
+          "Cortar essa funcionalidade"
+        ]
+      },
+      {
+        "choice": [
+          "Hiring a second developer",
+          "Contratar mais um desenvolvedor"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Using an open-source framework will reduce our time to market.",
-      "pt": "Using an open-source framework vai reduzir nosso tempo de lançamento.",
-      "cloze": "Using an open-source framework {{c1::will reduce our time to market}}."
-    }
+    "demos": [
+      {
+        "en": "Using an open-source framework will reduce our time to market.",
+        "pt": "Usar um framework open source vai reduzir o nosso tempo até o lançamento.",
+        "cloze": "Using an open-source framework {{c1::will reduce our time to market}}."
+      },
+      {
+        "en": "Cutting this feature will reduce our time to market.",
+        "pt": "Cortar essa funcionalidade vai reduzir o nosso tempo até o lançamento.",
+        "cloze": "Cutting this feature {{c1::will reduce our time to market}}."
+      },
+      {
+        "en": "Hiring a second developer will reduce our time to market.",
+        "pt": "Contratar mais um desenvolvedor vai reduzir o nosso tempo até o lançamento.",
+        "cloze": "Hiring a second developer {{c1::will reduce our time to market}}."
+      }
+    ]
   },
   {
     "name": "align_on_the_requirements",
@@ -145,17 +370,57 @@
       "action",
       "who"
     ],
-    "example": {
-      "action": "start coding",
-      "who": "the stakeholder"
-    },
+    "examples": [
+      {
+        "action": [
+          "start coding",
+          "começar a programar"
+        ],
+        "who": [
+          "the stakeholder",
+          "o stakeholder"
+        ]
+      },
+      {
+        "action": [
+          "sign the contract",
+          "assinar o contrato"
+        ],
+        "who": [
+          "the client",
+          "o cliente"
+        ]
+      },
+      {
+        "action": [
+          "design the screens",
+          "desenhar as telas"
+        ],
+        "who": [
+          "the product team",
+          "o time de produto"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Before we start coding, let's align on the requirements with the stakeholder.",
-      "pt": "Antes de start coding, vamos alinhar os requisitos com the stakeholder.",
-      "cloze": "{{c1::Before we}} start coding{{c1::, let's align on the requirements with}} the stakeholder."
-    }
+    "demos": [
+      {
+        "en": "Before we start coding, let's align on the requirements with the stakeholder.",
+        "pt": "Antes de começar a programar, vamos alinhar os requisitos com o stakeholder.",
+        "cloze": "{{c1::Before we}} start coding{{c1::, let's align on the requirements with}} the stakeholder."
+      },
+      {
+        "en": "Before we sign the contract, let's align on the requirements with the client.",
+        "pt": "Antes de assinar o contrato, vamos alinhar os requisitos com o cliente.",
+        "cloze": "{{c1::Before we}} sign the contract{{c1::, let's align on the requirements with}} the client."
+      },
+      {
+        "en": "Before we design the screens, let's align on the requirements with the product team.",
+        "pt": "Antes de desenhar as telas, vamos alinhar os requisitos com o time de produto.",
+        "cloze": "{{c1::Before we}} design the screens{{c1::, let's align on the requirements with}} the product team."
+      }
+    ]
   },
   {
     "name": "build_a_proof_of_concept",
@@ -165,16 +430,45 @@
     "slots": [
       "hypothesis"
     ],
-    "example": {
-      "hypothesis": "the AI integration works"
-    },
+    "examples": [
+      {
+        "hypothesis": [
+          "the AI integration works",
+          "a integração com IA funciona"
+        ]
+      },
+      {
+        "hypothesis": [
+          "users actually want this",
+          "os usuários querem mesmo isso"
+        ]
+      },
+      {
+        "hypothesis": [
+          "the API is fast enough",
+          "a API é rápida o suficiente"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let's build a quick proof of concept to see if the AI integration works.",
-      "pt": "Vamos fazer uma prova de conceito rápida para ver se the AI integration works.",
-      "cloze": "{{c1::Let's build a quick proof of concept to see if}} the AI integration works."
-    }
+    "demos": [
+      {
+        "en": "Let's build a quick proof of concept to see if the AI integration works.",
+        "pt": "Vamos fazer uma prova de conceito rápida para ver se a integração com IA funciona.",
+        "cloze": "{{c1::Let's build a quick proof of concept to see if}} the AI integration works."
+      },
+      {
+        "en": "Let's build a quick proof of concept to see if users actually want this.",
+        "pt": "Vamos fazer uma prova de conceito rápida para ver se os usuários querem mesmo isso.",
+        "cloze": "{{c1::Let's build a quick proof of concept to see if}} users actually want this."
+      },
+      {
+        "en": "Let's build a quick proof of concept to see if the API is fast enough.",
+        "pt": "Vamos fazer uma prova de conceito rápida para ver se a API é rápida o suficiente.",
+        "cloze": "{{c1::Let's build a quick proof of concept to see if}} the API is fast enough."
+      }
+    ]
   },
   {
     "name": "im_in",
@@ -184,31 +478,62 @@
     "slots": [
       "field"
     ],
-    "example": {
-      "field": "the data analytics space"
-    },
+    "examples": [
+      {
+        "field": [
+          "the data analytics space",
+          "análise de dados"
+        ]
+      },
+      {
+        "field": [
+          "software development",
+          "desenvolvimento de software"
+        ]
+      },
+      {
+        "field": [
+          "fintech",
+          "fintech"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm in the data analytics space.",
-      "pt": "Eu trabalho com the data analytics space.",
-      "cloze": "{{c1::I'm in}} the data analytics space."
-    }
+    "demos": [
+      {
+        "en": "I'm in the data analytics space.",
+        "pt": "Eu trabalho com análise de dados.",
+        "cloze": "{{c1::I'm in}} the data analytics space."
+      },
+      {
+        "en": "I'm in software development.",
+        "pt": "Eu trabalho com desenvolvimento de software.",
+        "cloze": "{{c1::I'm in}} software development."
+      },
+      {
+        "en": "I'm in fintech.",
+        "pt": "Eu trabalho com fintech.",
+        "cloze": "{{c1::I'm in}} fintech."
+      }
+    ]
   },
   {
     "name": "what_do_you_do_for_a_living",
     "template": "[[What do you do for a living?]]",
-    "pt": "O que você faz da vida?",
+    "pt": "Com o que você trabalha?",
     "category": "business",
     "slots": [],
-    "example": {},
+    "examples": [],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "What do you do for a living?",
-      "pt": "O que você faz da vida?",
-      "cloze": "{{c1::What do you do for a living?}}"
-    }
+    "demos": [
+      {
+        "en": "What do you do for a living?",
+        "pt": "Com o que você trabalha?",
+        "cloze": "{{c1::What do you do for a living?}}"
+      }
+    ]
   },
   {
     "name": "lets_grab_a_coffee",
@@ -218,56 +543,143 @@
     "slots": [
       "when"
     ],
-    "example": {
-      "when": "sometime"
-    },
+    "examples": [
+      {
+        "when": [
+          "sometime",
+          "qualquer dia"
+        ]
+      },
+      {
+        "when": [
+          "next week",
+          "semana que vem"
+        ]
+      },
+      {
+        "when": [
+          "after the event",
+          "depois do evento"
+        ]
+      }
+    ],
     "defaults": {
       "when": "sometime"
     },
     "note": "",
-    "demo": {
-      "en": "Let's grab a coffee sometime.",
-      "pt": "Vamos tomar um café sometime.",
-      "cloze": "{{c1::Let's grab a coffee}} sometime."
-    }
+    "demos": [
+      {
+        "en": "Let's grab a coffee sometime.",
+        "pt": "Vamos tomar um café qualquer dia.",
+        "cloze": "{{c1::Let's grab a coffee}} sometime."
+      },
+      {
+        "en": "Let's grab a coffee next week.",
+        "pt": "Vamos tomar um café semana que vem.",
+        "cloze": "{{c1::Let's grab a coffee}} next week."
+      },
+      {
+        "en": "Let's grab a coffee after the event.",
+        "pt": "Vamos tomar um café depois do evento.",
+        "cloze": "{{c1::Let's grab a coffee}} after the event."
+      }
+    ]
   },
   {
     "name": "i_heard_about",
     "template": "[[I heard about]] {thing}[[ and I'd love to know more]].",
-    "pt": "Ouvi falar de {thing} e adoraria saber mais.",
+    "pt": "Ouvi falar {thing} e adoraria saber mais.",
     "category": "business",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "your company"
-    },
+    "examples": [
+      {
+        "thing": [
+          "your company",
+          "da sua empresa"
+        ]
+      },
+      {
+        "thing": [
+          "your new product",
+          "do seu novo produto"
+        ]
+      },
+      {
+        "thing": [
+          "your talk",
+          "da sua palestra"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I heard about your company and I'd love to know more.",
-      "pt": "Ouvi falar de your company e adoraria saber mais.",
-      "cloze": "{{c1::I heard about}} your company{{c1:: and I'd love to know more}}."
-    }
+    "demos": [
+      {
+        "en": "I heard about your company and I'd love to know more.",
+        "pt": "Ouvi falar da sua empresa e adoraria saber mais.",
+        "cloze": "{{c1::I heard about}} your company{{c1:: and I'd love to know more}}."
+      },
+      {
+        "en": "I heard about your new product and I'd love to know more.",
+        "pt": "Ouvi falar do seu novo produto e adoraria saber mais.",
+        "cloze": "{{c1::I heard about}} your new product{{c1:: and I'd love to know more}}."
+      },
+      {
+        "en": "I heard about your talk and I'd love to know more.",
+        "pt": "Ouvi falar da sua palestra e adoraria saber mais.",
+        "cloze": "{{c1::I heard about}} your talk{{c1:: and I'd love to know more}}."
+      }
+    ]
   },
   {
     "name": "set_up_a_quick_demo",
     "template": "[[Can we set up a quick demo]] {when}[[?]]",
-    "pt": "Podemos marcar uma demo rápida {when}?",
+    "pt": "Podemos marcar uma demonstração rápida {when}?",
     "category": "business",
     "slots": [
       "when"
     ],
-    "example": {
-      "when": "next week"
-    },
+    "examples": [
+      {
+        "when": [
+          "next week",
+          "semana que vem"
+        ]
+      },
+      {
+        "when": [
+          "on Thursday",
+          "na quinta"
+        ]
+      },
+      {
+        "when": [
+          "this afternoon",
+          "hoje à tarde"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Can we set up a quick demo next week?",
-      "pt": "Podemos marcar uma demo rápida next week?",
-      "cloze": "{{c1::Can we set up a quick demo}} next week?"
-    }
+    "demos": [
+      {
+        "en": "Can we set up a quick demo next week?",
+        "pt": "Podemos marcar uma demonstração rápida semana que vem?",
+        "cloze": "{{c1::Can we set up a quick demo}} next week?"
+      },
+      {
+        "en": "Can we set up a quick demo on Thursday?",
+        "pt": "Podemos marcar uma demonstração rápida na quinta?",
+        "cloze": "{{c1::Can we set up a quick demo}} on Thursday?"
+      },
+      {
+        "en": "Can we set up a quick demo this afternoon?",
+        "pt": "Podemos marcar uma demonstração rápida hoje à tarde?",
+        "cloze": "{{c1::Can we set up a quick demo}} this afternoon?"
+      }
+    ]
   },
   {
     "name": "as_a_rule_of_thumb",
@@ -277,16 +689,45 @@
     "slots": [
       "rule"
     ],
-    "example": {
-      "rule": "we never deploy on Fridays"
-    },
+    "examples": [
+      {
+        "rule": [
+          "we never deploy on Fridays",
+          "nunca fazemos deploy na sexta"
+        ]
+      },
+      {
+        "rule": [
+          "a page should load in under two seconds",
+          "uma página deve carregar em menos de dois segundos"
+        ]
+      },
+      {
+        "rule": [
+          "reply to clients within a day",
+          "responda aos clientes em até um dia"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "As a rule of thumb, we never deploy on Fridays.",
-      "pt": "Como regra geral, we never deploy on Fridays.",
-      "cloze": "{{c1::As a rule of thumb}}, we never deploy on Fridays."
-    }
+    "demos": [
+      {
+        "en": "As a rule of thumb, we never deploy on Fridays.",
+        "pt": "Como regra geral, nunca fazemos deploy na sexta.",
+        "cloze": "{{c1::As a rule of thumb}}, we never deploy on Fridays."
+      },
+      {
+        "en": "As a rule of thumb, a page should load in under two seconds.",
+        "pt": "Como regra geral, uma página deve carregar em menos de dois segundos.",
+        "cloze": "{{c1::As a rule of thumb}}, a page should load in under two seconds."
+      },
+      {
+        "en": "As a rule of thumb, reply to clients within a day.",
+        "pt": "Como regra geral, responda aos clientes em até um dia.",
+        "cloze": "{{c1::As a rule of thumb}}, reply to clients within a day."
+      }
+    ]
   },
   {
     "name": "at_the_end_of_the_day",
@@ -296,40 +737,106 @@
     "slots": [
       "point"
     ],
-    "example": {
-      "point": "the client just wants it to work"
-    },
+    "examples": [
+      {
+        "point": [
+          "the client just wants it to work",
+          "o cliente só quer que funcione"
+        ]
+      },
+      {
+        "point": [
+          "it's your decision",
+          "a decisão é sua"
+        ]
+      },
+      {
+        "point": [
+          "results matter more than effort",
+          "o resultado importa mais que o esforço"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "At the end of the day, the client just wants it to work.",
-      "pt": "No fim das contas, the client just wants it to work.",
-      "cloze": "{{c1::At the end of the day}}, the client just wants it to work."
-    }
+    "demos": [
+      {
+        "en": "At the end of the day, the client just wants it to work.",
+        "pt": "No fim das contas, o cliente só quer que funcione.",
+        "cloze": "{{c1::At the end of the day}}, the client just wants it to work."
+      },
+      {
+        "en": "At the end of the day, it's your decision.",
+        "pt": "No fim das contas, a decisão é sua.",
+        "cloze": "{{c1::At the end of the day}}, it's your decision."
+      },
+      {
+        "en": "At the end of the day, results matter more than effort.",
+        "pt": "No fim das contas, o resultado importa mais que o esforço.",
+        "cloze": "{{c1::At the end of the day}}, results matter more than effort."
+      }
+    ]
   },
   {
     "name": "deduplicate",
     "template": "[[We need to deduplicate]] {records} [[before]] {step}.",
-    "pt": "Precisamos deduplicar {records} antes de {step}.",
+    "pt": "Precisamos remover as duplicatas {records} antes {step}.",
     "category": "data",
     "slots": [
       "records",
       "step"
     ],
-    "example": {
-      "records": "the vendor records",
-      "step": [
-        "sending them to the API",
-        "enviar para a API"
-      ]
-    },
+    "examples": [
+      {
+        "records": [
+          "the vendor records",
+          "dos registros de fornecedores"
+        ],
+        "step": [
+          "sending them to the API",
+          "de enviar para a API"
+        ]
+      },
+      {
+        "records": [
+          "the customer list",
+          "da lista de clientes"
+        ],
+        "step": [
+          "the campaign",
+          "da campanha"
+        ]
+      },
+      {
+        "records": [
+          "the invoices",
+          "das notas fiscais"
+        ],
+        "step": [
+          "paying them",
+          "de pagar"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We need to deduplicate the vendor records before sending them to the API.",
-      "pt": "Precisamos deduplicar the vendor records antes de enviar para a API.",
-      "cloze": "{{c1::We need to deduplicate}} the vendor records {{c1::before}} sending them to the API."
-    }
+    "demos": [
+      {
+        "en": "We need to deduplicate the vendor records before sending them to the API.",
+        "pt": "Precisamos remover as duplicatas dos registros de fornecedores antes de enviar para a API.",
+        "cloze": "{{c1::We need to deduplicate}} the vendor records {{c1::before}} sending them to the API."
+      },
+      {
+        "en": "We need to deduplicate the customer list before the campaign.",
+        "pt": "Precisamos remover as duplicatas da lista de clientes antes da campanha.",
+        "cloze": "{{c1::We need to deduplicate}} the customer list {{c1::before}} the campaign."
+      },
+      {
+        "en": "We need to deduplicate the invoices before paying them.",
+        "pt": "Precisamos remover as duplicatas das notas fiscais antes de pagar.",
+        "cloze": "{{c1::We need to deduplicate}} the invoices {{c1::before}} paying them."
+      }
+    ]
   },
   {
     "name": "match_against",
@@ -339,145 +846,372 @@
     "slots": [
       "target"
     ],
-    "example": {
-      "target": "the existing master records"
-    },
+    "examples": [
+      {
+        "target": [
+          "the existing master records",
+          "os registros mestres que já existem"
+        ]
+      },
+      {
+        "target": [
+          "the client's vendor list",
+          "a lista de fornecedores do cliente"
+        ]
+      },
+      {
+        "target": [
+          "the records from the last import",
+          "os registros da última importação"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Each new record is matched against the existing master records.",
-      "pt": "Cada registro novo é comparado com the existing master records.",
-      "cloze": "{{c1::Each new record is matched against}} the existing master records."
-    }
+    "demos": [
+      {
+        "en": "Each new record is matched against the existing master records.",
+        "pt": "Cada registro novo é comparado com os registros mestres que já existem.",
+        "cloze": "{{c1::Each new record is matched against}} the existing master records."
+      },
+      {
+        "en": "Each new record is matched against the client's vendor list.",
+        "pt": "Cada registro novo é comparado com a lista de fornecedores do cliente.",
+        "cloze": "{{c1::Each new record is matched against}} the client's vendor list."
+      },
+      {
+        "en": "Each new record is matched against the records from the last import.",
+        "pt": "Cada registro novo é comparado com os registros da última importação.",
+        "cloze": "{{c1::Each new record is matched against}} the records from the last import."
+      }
+    ]
   },
   {
     "name": "reconcile_with",
     "template": "[[We reconcile]] {source} [[with]] {other} [[every]] {period}.",
-    "pt": "Reconciliamos {source} com {other} todo(a) {period}.",
+    "pt": "Conciliamos {source} com {other} {period}.",
     "category": "data",
     "slots": [
       "source",
       "other",
       "period"
     ],
-    "example": {
-      "source": "our vendor list",
-      "other": "the client's ERP",
-      "period": [
-        "night",
-        "noite"
-      ]
-    },
+    "examples": [
+      {
+        "source": [
+          "our vendor list",
+          "a nossa lista de fornecedores"
+        ],
+        "other": [
+          "the client's ERP",
+          "o ERP do cliente"
+        ],
+        "period": [
+          "night",
+          "toda noite"
+        ]
+      },
+      {
+        "source": [
+          "the payments",
+          "os pagamentos"
+        ],
+        "other": [
+          "the bank statement",
+          "o extrato bancário"
+        ],
+        "period": [
+          "day",
+          "todo dia"
+        ]
+      },
+      {
+        "source": [
+          "the stock",
+          "o estoque"
+        ],
+        "other": [
+          "the sales system",
+          "o sistema de vendas"
+        ],
+        "period": [
+          "week",
+          "toda semana"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We reconcile our vendor list with the client's ERP every night.",
-      "pt": "Reconciliamos our vendor list com the client's ERP todo(a) noite.",
-      "cloze": "{{c1::We reconcile}} our vendor list {{c1::with}} the client's ERP {{c1::every}} night."
-    }
+    "demos": [
+      {
+        "en": "We reconcile our vendor list with the client's ERP every night.",
+        "pt": "Conciliamos a nossa lista de fornecedores com o ERP do cliente toda noite.",
+        "cloze": "{{c1::We reconcile}} our vendor list {{c1::with}} the client's ERP {{c1::every}} night."
+      },
+      {
+        "en": "We reconcile the payments with the bank statement every day.",
+        "pt": "Conciliamos os pagamentos com o extrato bancário todo dia.",
+        "cloze": "{{c1::We reconcile}} the payments {{c1::with}} the bank statement {{c1::every}} day."
+      },
+      {
+        "en": "We reconcile the stock with the sales system every week.",
+        "pt": "Conciliamos o estoque com o sistema de vendas toda semana.",
+        "cloze": "{{c1::We reconcile}} the stock {{c1::with}} the sales system {{c1::every}} week."
+      }
+    ]
   },
   {
     "name": "golden_record",
     "template": "[[The golden record is built from]] {sources}.",
-    "pt": "O registro mestre (golden record) é montado a partir de {sources}.",
+    "pt": "O registro mestre é montado a partir {sources}.",
     "category": "data",
     "slots": [
       "sources"
     ],
-    "example": {
-      "sources": "the most reliable source for each field"
-    },
+    "examples": [
+      {
+        "sources": [
+          "the most reliable source for each field",
+          "da fonte mais confiável para cada campo"
+        ]
+      },
+      {
+        "sources": [
+          "three different systems",
+          "de três sistemas diferentes"
+        ]
+      },
+      {
+        "sources": [
+          "the latest verified data",
+          "dos dados verificados mais recentes"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "The golden record is built from the most reliable source for each field.",
-      "pt": "O registro mestre (golden record) é montado a partir de the most reliable source for each field.",
-      "cloze": "{{c1::The golden record is built from}} the most reliable source for each field."
-    }
+    "demos": [
+      {
+        "en": "The golden record is built from the most reliable source for each field.",
+        "pt": "O registro mestre é montado a partir da fonte mais confiável para cada campo.",
+        "cloze": "{{c1::The golden record is built from}} the most reliable source for each field."
+      },
+      {
+        "en": "The golden record is built from three different systems.",
+        "pt": "O registro mestre é montado a partir de três sistemas diferentes.",
+        "cloze": "{{c1::The golden record is built from}} three different systems."
+      },
+      {
+        "en": "The golden record is built from the latest verified data.",
+        "pt": "O registro mestre é montado a partir dos dados verificados mais recentes.",
+        "cloze": "{{c1::The golden record is built from}} the latest verified data."
+      }
+    ]
   },
   {
     "name": "flag_for_review",
     "template": "{items} [[are flagged for human review]].",
-    "pt": "{items} são marcados para revisão humana.",
+    "pt": "{items} vão para revisão humana.",
     "category": "data",
     "slots": [
       "items"
     ],
-    "example": {
-      "items": "Matches with a score between 0.7 and 0.9"
-    },
+    "examples": [
+      {
+        "items": [
+          "Matches with a score between 0.7 and 0.9",
+          "Os matches com pontuação entre 0,7 e 0,9"
+        ]
+      },
+      {
+        "items": [
+          "Bank account changes",
+          "As trocas de conta bancária"
+        ]
+      },
+      {
+        "items": [
+          "Records with missing tax IDs",
+          "Os registros sem CNPJ"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Matches with a score between 0.7 and 0.9 are flagged for human review.",
-      "pt": "Matches with a score between 0.7 and 0.9 são marcados para revisão humana.",
-      "cloze": "Matches with a score between 0.7 and 0.9 {{c1::are flagged for human review}}."
-    }
+    "demos": [
+      {
+        "en": "Matches with a score between 0.7 and 0.9 are flagged for human review.",
+        "pt": "Os matches com pontuação entre 0,7 e 0,9 vão para revisão humana.",
+        "cloze": "Matches with a score between 0.7 and 0.9 {{c1::are flagged for human review}}."
+      },
+      {
+        "en": "Bank account changes are flagged for human review.",
+        "pt": "As trocas de conta bancária vão para revisão humana.",
+        "cloze": "Bank account changes {{c1::are flagged for human review}}."
+      },
+      {
+        "en": "Records with missing tax IDs are flagged for human review.",
+        "pt": "Os registros sem CNPJ vão para revisão humana.",
+        "cloze": "Records with missing tax IDs {{c1::are flagged for human review}}."
+      }
+    ]
   },
   {
     "name": "is_idempotent",
     "template": "{component} [[is idempotent, so processing the same]] {thing} [[twice is safe]].",
-    "pt": "{component} é idempotente, então processar o(a) mesmo(a) {thing} duas vezes é seguro.",
+    "pt": "{component} é idempotente, então processar {thing} duas vezes não causa problema.",
     "category": "data",
     "slots": [
       "component",
       "thing"
     ],
-    "example": {
-      "component": "The consumer",
-      "thing": [
-        "message",
-        "mensagem"
-      ]
-    },
+    "examples": [
+      {
+        "component": [
+          "The consumer",
+          "O consumidor"
+        ],
+        "thing": [
+          "message",
+          "a mesma mensagem"
+        ]
+      },
+      {
+        "component": [
+          "The import job",
+          "A rotina de importação"
+        ],
+        "thing": [
+          "file",
+          "o mesmo arquivo"
+        ]
+      },
+      {
+        "component": [
+          "The payment API",
+          "A API de pagamentos"
+        ],
+        "thing": [
+          "request",
+          "a mesma requisição"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "The consumer is idempotent, so processing the same message twice is safe.",
-      "pt": "The consumer é idempotente, então processar o(a) mesmo(a) mensagem duas vezes é seguro.",
-      "cloze": "The consumer {{c1::is idempotent, so processing the same}} message {{c1::twice is safe}}."
-    }
+    "demos": [
+      {
+        "en": "The consumer is idempotent, so processing the same message twice is safe.",
+        "pt": "O consumidor é idempotente, então processar a mesma mensagem duas vezes não causa problema.",
+        "cloze": "The consumer {{c1::is idempotent, so processing the same}} message {{c1::twice is safe}}."
+      },
+      {
+        "en": "The import job is idempotent, so processing the same file twice is safe.",
+        "pt": "A rotina de importação é idempotente, então processar o mesmo arquivo duas vezes não causa problema.",
+        "cloze": "The import job {{c1::is idempotent, so processing the same}} file {{c1::twice is safe}}."
+      },
+      {
+        "en": "The payment API is idempotent, so processing the same request twice is safe.",
+        "pt": "A API de pagamentos é idempotente, então processar a mesma requisição duas vezes não causa problema.",
+        "cloze": "The payment API {{c1::is idempotent, so processing the same}} request {{c1::twice is safe}}."
+      }
+    ]
   },
   {
     "name": "scoped_to_the_tenant",
     "template": "[[Every]] {thing} [[is scoped to the tenant]].",
-    "pt": "Todo(a) {thing} é restrito(a) ao cliente (tenant).",
+    "pt": "{thing} só enxerga os dados do próprio cliente (tenant).",
     "category": "data",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": [
-        "query",
-        "consulta"
-      ]
-    },
+    "examples": [
+      {
+        "thing": [
+          "query",
+          "Toda consulta"
+        ]
+      },
+      {
+        "thing": [
+          "API key",
+          "Toda chave de API"
+        ]
+      },
+      {
+        "thing": [
+          "report",
+          "Todo relatório"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Every query is scoped to the tenant.",
-      "pt": "Todo(a) consulta é restrito(a) ao cliente (tenant).",
-      "cloze": "{{c1::Every}} query {{c1::is scoped to the tenant}}."
-    }
+    "demos": [
+      {
+        "en": "Every query is scoped to the tenant.",
+        "pt": "Toda consulta só enxerga os dados do próprio cliente (tenant).",
+        "cloze": "{{c1::Every}} query {{c1::is scoped to the tenant}}."
+      },
+      {
+        "en": "Every API key is scoped to the tenant.",
+        "pt": "Toda chave de API só enxerga os dados do próprio cliente (tenant).",
+        "cloze": "{{c1::Every}} API key {{c1::is scoped to the tenant}}."
+      },
+      {
+        "en": "Every report is scoped to the tenant.",
+        "pt": "Todo relatório só enxerga os dados do próprio cliente (tenant).",
+        "cloze": "{{c1::Every}} report {{c1::is scoped to the tenant}}."
+      }
+    ]
   },
   {
     "name": "goes_to_the_dead_letter_queue",
     "template": "[[After]] {n} [[retries, the message goes to the dead-letter queue]].",
-    "pt": "Depois de {n} tentativas, a mensagem vai para a dead-letter queue.",
+    "pt": "Depois de {n} tentativas, a mensagem vai para a fila de mensagens com falha (dead-letter queue).",
     "category": "data",
     "slots": [
       "n"
     ],
-    "example": {
-      "n": "five"
-    },
+    "examples": [
+      {
+        "n": [
+          "five",
+          "cinco"
+        ]
+      },
+      {
+        "n": [
+          "three",
+          "três"
+        ]
+      },
+      {
+        "n": [
+          "ten",
+          "dez"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "After five retries, the message goes to the dead-letter queue.",
-      "pt": "Depois de five tentativas, a mensagem vai para a dead-letter queue.",
-      "cloze": "{{c1::After}} five {{c1::retries, the message goes to the dead-letter queue}}."
-    }
+    "demos": [
+      {
+        "en": "After five retries, the message goes to the dead-letter queue.",
+        "pt": "Depois de cinco tentativas, a mensagem vai para a fila de mensagens com falha (dead-letter queue).",
+        "cloze": "{{c1::After}} five {{c1::retries, the message goes to the dead-letter queue}}."
+      },
+      {
+        "en": "After three retries, the message goes to the dead-letter queue.",
+        "pt": "Depois de três tentativas, a mensagem vai para a fila de mensagens com falha (dead-letter queue).",
+        "cloze": "{{c1::After}} three {{c1::retries, the message goes to the dead-letter queue}}."
+      },
+      {
+        "en": "After ten retries, the message goes to the dead-letter queue.",
+        "pt": "Depois de dez tentativas, a mensagem vai para a fila de mensagens com falha (dead-letter queue).",
+        "cloze": "{{c1::After}} ten {{c1::retries, the message goes to the dead-letter queue}}."
+      }
+    ]
   },
   {
     "name": "garbage_in_garbage_out",
@@ -487,16 +1221,45 @@
     "slots": [
       "consequence"
     ],
-    "example": {
-      "consequence": "if the input data is bad, the payments will be wrong"
-    },
+    "examples": [
+      {
+        "consequence": [
+          "if the input data is bad, the payments will be wrong",
+          "se os dados de entrada forem ruins, os pagamentos vão sair errados"
+        ]
+      },
+      {
+        "consequence": [
+          "the model is only as good as the data",
+          "o modelo só é tão bom quanto os dados"
+        ]
+      },
+      {
+        "consequence": [
+          "we have to validate everything first",
+          "temos que validar tudo antes"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Garbage in, garbage out: if the input data is bad, the payments will be wrong.",
-      "pt": "Entra lixo, sai lixo: if the input data is bad, the payments will be wrong.",
-      "cloze": "{{c1::Garbage in, garbage out}}: if the input data is bad, the payments will be wrong."
-    }
+    "demos": [
+      {
+        "en": "Garbage in, garbage out: if the input data is bad, the payments will be wrong.",
+        "pt": "Entra lixo, sai lixo: se os dados de entrada forem ruins, os pagamentos vão sair errados.",
+        "cloze": "{{c1::Garbage in, garbage out}}: if the input data is bad, the payments will be wrong."
+      },
+      {
+        "en": "Garbage in, garbage out: the model is only as good as the data.",
+        "pt": "Entra lixo, sai lixo: o modelo só é tão bom quanto os dados.",
+        "cloze": "{{c1::Garbage in, garbage out}}: the model is only as good as the data."
+      },
+      {
+        "en": "Garbage in, garbage out: we have to validate everything first.",
+        "pt": "Entra lixo, sai lixo: temos que validar tudo antes.",
+        "cloze": "{{c1::Garbage in, garbage out}}: we have to validate everything first."
+      }
+    ]
   },
   {
     "name": "time_to",
@@ -506,35 +1269,93 @@
     "slots": [
       "action"
     ],
-    "example": {
-      "action": "wake up"
-    },
+    "examples": [
+      {
+        "action": [
+          "wake up",
+          "acordar"
+        ]
+      },
+      {
+        "action": [
+          "brush your teeth",
+          "escovar os dentes"
+        ]
+      },
+      {
+        "action": [
+          "go",
+          "ir"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "Funciona para tudo: 'go', 'eat', 'take a bath', 'brush your teeth'.",
-    "demo": {
-      "en": "Time to wake up!",
-      "pt": "Hora de wake up!",
-      "cloze": "{{c1::Time to}} wake up!"
-    }
+    "demos": [
+      {
+        "en": "Time to wake up!",
+        "pt": "Hora de acordar!",
+        "cloze": "{{c1::Time to}} wake up!"
+      },
+      {
+        "en": "Time to brush your teeth!",
+        "pt": "Hora de escovar os dentes!",
+        "cloze": "{{c1::Time to}} brush your teeth!"
+      },
+      {
+        "en": "Time to go!",
+        "pt": "Hora de ir!",
+        "cloze": "{{c1::Time to}} go!"
+      }
+    ]
   },
   {
     "name": "time_for",
     "template": "[[Time for]] {thing}!",
-    "pt": "Hora do/da {thing}!",
+    "pt": "Hora {thing}!",
     "category": "home",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "bed"
-    },
+    "examples": [
+      {
+        "thing": [
+          "bed",
+          "de dormir"
+        ]
+      },
+      {
+        "thing": [
+          "lunch",
+          "do almoço"
+        ]
+      },
+      {
+        "thing": [
+          "school",
+          "da escola"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Time for bed!",
-      "pt": "Hora do/da bed!",
-      "cloze": "{{c1::Time for}} bed!"
-    }
+    "demos": [
+      {
+        "en": "Time for bed!",
+        "pt": "Hora de dormir!",
+        "cloze": "{{c1::Time for}} bed!"
+      },
+      {
+        "en": "Time for lunch!",
+        "pt": "Hora do almoço!",
+        "cloze": "{{c1::Time for}} lunch!"
+      },
+      {
+        "en": "Time for school!",
+        "pt": "Hora da escola!",
+        "cloze": "{{c1::Time for}} school!"
+      }
+    ]
   },
   {
     "name": "dont_forget_to",
@@ -544,35 +1365,93 @@
     "slots": [
       "action"
     ],
-    "example": {
-      "action": "brush your teeth"
-    },
+    "examples": [
+      {
+        "action": [
+          "brush your teeth",
+          "escovar os dentes"
+        ]
+      },
+      {
+        "action": [
+          "take out the trash",
+          "levar o lixo para fora"
+        ]
+      },
+      {
+        "action": [
+          "lock the door",
+          "trancar a porta"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Don't forget to brush your teeth.",
-      "pt": "Não esqueça de brush your teeth.",
-      "cloze": "{{c1::Don't forget to}} brush your teeth."
-    }
+    "demos": [
+      {
+        "en": "Don't forget to brush your teeth.",
+        "pt": "Não esqueça de escovar os dentes.",
+        "cloze": "{{c1::Don't forget to}} brush your teeth."
+      },
+      {
+        "en": "Don't forget to take out the trash.",
+        "pt": "Não esqueça de levar o lixo para fora.",
+        "cloze": "{{c1::Don't forget to}} take out the trash."
+      },
+      {
+        "en": "Don't forget to lock the door.",
+        "pt": "Não esqueça de trancar a porta.",
+        "cloze": "{{c1::Don't forget to}} lock the door."
+      }
+    ]
   },
   {
     "name": "dont_forget_your",
     "template": "[[Don't forget your]] {thing}!",
-    "pt": "Não esqueça seu/sua {thing}!",
+    "pt": "Não esqueça {thing}!",
     "category": "home",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "backpack"
-    },
+    "examples": [
+      {
+        "thing": [
+          "backpack",
+          "a sua mochila"
+        ]
+      },
+      {
+        "thing": [
+          "jacket",
+          "o seu casaco"
+        ]
+      },
+      {
+        "thing": [
+          "keys",
+          "as suas chaves"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Don't forget your backpack!",
-      "pt": "Não esqueça seu/sua backpack!",
-      "cloze": "{{c1::Don't forget your}} backpack!"
-    }
+    "demos": [
+      {
+        "en": "Don't forget your backpack!",
+        "pt": "Não esqueça a sua mochila!",
+        "cloze": "{{c1::Don't forget your}} backpack!"
+      },
+      {
+        "en": "Don't forget your jacket!",
+        "pt": "Não esqueça o seu casaco!",
+        "cloze": "{{c1::Don't forget your}} jacket!"
+      },
+      {
+        "en": "Don't forget your keys!",
+        "pt": "Não esqueça as suas chaves!",
+        "cloze": "{{c1::Don't forget your}} keys!"
+      }
+    ]
   },
   {
     "name": "could_you_pass_me",
@@ -582,16 +1461,45 @@
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "the salt"
-    },
+    "examples": [
+      {
+        "thing": [
+          "the salt",
+          "o sal"
+        ]
+      },
+      {
+        "thing": [
+          "the remote",
+          "o controle remoto"
+        ]
+      },
+      {
+        "thing": [
+          "a towel",
+          "uma toalha"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Could you pass me the salt, please?",
-      "pt": "Você pode me passar the salt, por favor?",
-      "cloze": "{{c1::Could you pass me}} the salt{{c1::, please}}?"
-    }
+    "demos": [
+      {
+        "en": "Could you pass me the salt, please?",
+        "pt": "Você pode me passar o sal, por favor?",
+        "cloze": "{{c1::Could you pass me}} the salt{{c1::, please}}?"
+      },
+      {
+        "en": "Could you pass me the remote, please?",
+        "pt": "Você pode me passar o controle remoto, por favor?",
+        "cloze": "{{c1::Could you pass me}} the remote{{c1::, please}}?"
+      },
+      {
+        "en": "Could you pass me a towel, please?",
+        "pt": "Você pode me passar uma toalha, por favor?",
+        "cloze": "{{c1::Could you pass me}} a towel{{c1::, please}}?"
+      }
+    ]
   },
   {
     "name": "could_you_help_me_with",
@@ -601,73 +1509,189 @@
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "the dishes"
-    },
+    "examples": [
+      {
+        "thing": [
+          "the dishes",
+          "a louça"
+        ]
+      },
+      {
+        "thing": [
+          "these bags",
+          "estas sacolas"
+        ]
+      },
+      {
+        "thing": [
+          "my homework",
+          "a minha lição de casa"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Could you help me with the dishes?",
-      "pt": "Você pode me ajudar com the dishes?",
-      "cloze": "{{c1::Could you help me with}} the dishes?"
-    }
+    "demos": [
+      {
+        "en": "Could you help me with the dishes?",
+        "pt": "Você pode me ajudar com a louça?",
+        "cloze": "{{c1::Could you help me with}} the dishes?"
+      },
+      {
+        "en": "Could you help me with these bags?",
+        "pt": "Você pode me ajudar com estas sacolas?",
+        "cloze": "{{c1::Could you help me with}} these bags?"
+      },
+      {
+        "en": "Could you help me with my homework?",
+        "pt": "Você pode me ajudar com a minha lição de casa?",
+        "cloze": "{{c1::Could you help me with}} my homework?"
+      }
+    ]
   },
   {
     "name": "what_do_you_want_for",
     "template": "[[What do you want for]] {meal}[[?]]",
-    "pt": "O que você quer de {meal}?",
+    "pt": "O que você quer {meal}?",
     "category": "home",
     "slots": [
       "meal"
     ],
-    "example": {
-      "meal": "dinner"
-    },
+    "examples": [
+      {
+        "meal": [
+          "dinner",
+          "para o jantar"
+        ]
+      },
+      {
+        "meal": [
+          "breakfast",
+          "no café da manhã"
+        ]
+      },
+      {
+        "meal": [
+          "your birthday",
+          "de aniversário"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "What do you want for dinner?",
-      "pt": "O que você quer de dinner?",
-      "cloze": "{{c1::What do you want for}} dinner?"
-    }
+    "demos": [
+      {
+        "en": "What do you want for dinner?",
+        "pt": "O que você quer para o jantar?",
+        "cloze": "{{c1::What do you want for}} dinner?"
+      },
+      {
+        "en": "What do you want for breakfast?",
+        "pt": "O que você quer no café da manhã?",
+        "cloze": "{{c1::What do you want for}} breakfast?"
+      },
+      {
+        "en": "What do you want for your birthday?",
+        "pt": "O que você quer de aniversário?",
+        "cloze": "{{c1::What do you want for}} your birthday?"
+      }
+    ]
   },
   {
     "name": "lets_go_to",
     "template": "[[Let's go to]] {place}!",
-    "pt": "Vamos para {place}!",
+    "pt": "Vamos {place}!",
     "category": "home",
     "slots": [
       "place"
     ],
-    "example": {
-      "place": "the park"
-    },
+    "examples": [
+      {
+        "place": [
+          "the park",
+          "ao parque"
+        ]
+      },
+      {
+        "place": [
+          "the beach",
+          "à praia"
+        ]
+      },
+      {
+        "place": [
+          "Grandma's house",
+          "para a casa da vovó"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let's go to the park!",
-      "pt": "Vamos para the park!",
-      "cloze": "{{c1::Let's go to}} the park!"
-    }
+    "demos": [
+      {
+        "en": "Let's go to the park!",
+        "pt": "Vamos ao parque!",
+        "cloze": "{{c1::Let's go to}} the park!"
+      },
+      {
+        "en": "Let's go to the beach!",
+        "pt": "Vamos à praia!",
+        "cloze": "{{c1::Let's go to}} the beach!"
+      },
+      {
+        "en": "Let's go to Grandma's house!",
+        "pt": "Vamos para a casa da vovó!",
+        "cloze": "{{c1::Let's go to}} Grandma's house!"
+      }
+    ]
   },
   {
     "name": "ill_pick_you_up_at",
     "template": "[[I'll pick you up at]] {time}.",
-    "pt": "Eu te pego às {time}.",
+    "pt": "Eu te pego {time}.",
     "category": "home",
     "slots": [
       "time"
     ],
-    "example": {
-      "time": "five"
-    },
+    "examples": [
+      {
+        "time": [
+          "five",
+          "às cinco"
+        ]
+      },
+      {
+        "time": [
+          "noon",
+          "ao meio-dia"
+        ]
+      },
+      {
+        "time": [
+          "the school gate",
+          "no portão da escola"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'll pick you up at five.",
-      "pt": "Eu te pego às five.",
-      "cloze": "{{c1::I'll pick you up at}} five."
-    }
+    "demos": [
+      {
+        "en": "I'll pick you up at five.",
+        "pt": "Eu te pego às cinco.",
+        "cloze": "{{c1::I'll pick you up at}} five."
+      },
+      {
+        "en": "I'll pick you up at noon.",
+        "pt": "Eu te pego ao meio-dia.",
+        "cloze": "{{c1::I'll pick you up at}} noon."
+      },
+      {
+        "en": "I'll pick you up at the school gate.",
+        "pt": "Eu te pego no portão da escola.",
+        "cloze": "{{c1::I'll pick you up at}} the school gate."
+      }
+    ]
   },
   {
     "name": "im_running_late",
@@ -677,43 +1701,106 @@
     "slots": [
       "time"
     ],
-    "example": {
-      "time": "ten minutes"
-    },
+    "examples": [
+      {
+        "time": [
+          "ten minutes",
+          "dez minutos"
+        ]
+      },
+      {
+        "time": [
+          "half an hour",
+          "meia hora"
+        ]
+      },
+      {
+        "time": [
+          "five",
+          "cinco minutos"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm running late, I'll be there in ten minutes.",
-      "pt": "Estou atrasado, chego em ten minutes.",
-      "cloze": "{{c1::I'm running late, I'll be there in}} ten minutes."
-    }
+    "demos": [
+      {
+        "en": "I'm running late, I'll be there in ten minutes.",
+        "pt": "Estou atrasado, chego em dez minutos.",
+        "cloze": "{{c1::I'm running late, I'll be there in}} ten minutes."
+      },
+      {
+        "en": "I'm running late, I'll be there in half an hour.",
+        "pt": "Estou atrasado, chego em meia hora.",
+        "cloze": "{{c1::I'm running late, I'll be there in}} half an hour."
+      },
+      {
+        "en": "I'm running late, I'll be there in five.",
+        "pt": "Estou atrasado, chego em cinco minutos.",
+        "cloze": "{{c1::I'm running late, I'll be there in}} five."
+      }
+    ]
   },
   {
     "name": "can_you_turn",
     "template": "[[Can you turn]] {state} [[the]] {device}[[?]]",
-    "pt": "Você pode {state} o/a {device}?",
+    "pt": "Você pode {state} {device}?",
     "category": "home",
     "slots": [
       "state",
       "device"
     ],
-    "example": {
-      "state": [
-        "off",
-        "desligar"
-      ],
-      "device": [
-        "TV",
-        "TV"
-      ]
-    },
+    "examples": [
+      {
+        "state": [
+          "off",
+          "desligar"
+        ],
+        "device": [
+          "TV",
+          "a TV"
+        ]
+      },
+      {
+        "state": [
+          "on",
+          "ligar"
+        ],
+        "device": [
+          "lights",
+          "a luz"
+        ]
+      },
+      {
+        "state": [
+          "down",
+          "abaixar"
+        ],
+        "device": [
+          "music",
+          "a música"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "state: 'on' (ligar), 'off' (desligar), 'up' (aumentar), 'down' (abaixar).",
-    "demo": {
-      "en": "Can you turn off the TV?",
-      "pt": "Você pode desligar o/a TV?",
-      "cloze": "{{c1::Can you turn}} off {{c1::the}} TV?"
-    }
+    "demos": [
+      {
+        "en": "Can you turn off the TV?",
+        "pt": "Você pode desligar a TV?",
+        "cloze": "{{c1::Can you turn}} off {{c1::the}} TV?"
+      },
+      {
+        "en": "Can you turn on the lights?",
+        "pt": "Você pode ligar a luz?",
+        "cloze": "{{c1::Can you turn}} on {{c1::the}} lights?"
+      },
+      {
+        "en": "Can you turn down the music?",
+        "pt": "Você pode abaixar a música?",
+        "cloze": "{{c1::Can you turn}} down {{c1::the}} music?"
+      }
+    ]
   },
   {
     "name": "where_did_you_put",
@@ -723,16 +1810,45 @@
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "the keys"
-    },
+    "examples": [
+      {
+        "thing": [
+          "the keys",
+          "as chaves"
+        ]
+      },
+      {
+        "thing": [
+          "my charger",
+          "o meu carregador"
+        ]
+      },
+      {
+        "thing": [
+          "the remote",
+          "o controle remoto"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Where did you put the keys?",
-      "pt": "Onde você colocou the keys?",
-      "cloze": "{{c1::Where did you put}} the keys?"
-    }
+    "demos": [
+      {
+        "en": "Where did you put the keys?",
+        "pt": "Onde você colocou as chaves?",
+        "cloze": "{{c1::Where did you put}} the keys?"
+      },
+      {
+        "en": "Where did you put my charger?",
+        "pt": "Onde você colocou o meu carregador?",
+        "cloze": "{{c1::Where did you put}} my charger?"
+      },
+      {
+        "en": "Where did you put the remote?",
+        "pt": "Onde você colocou o controle remoto?",
+        "cloze": "{{c1::Where did you put}} the remote?"
+      }
+    ]
   },
   {
     "name": "did_you",
@@ -742,19 +1858,45 @@
     "slots": [
       "action"
     ],
-    "example": {
-      "action": [
-        "sleep well",
-        "dormiu bem"
-      ]
-    },
+    "examples": [
+      {
+        "action": [
+          "sleep well",
+          "dormiu bem"
+        ]
+      },
+      {
+        "action": [
+          "eat already",
+          "já comeu"
+        ]
+      },
+      {
+        "action": [
+          "finish your homework",
+          "terminou a lição de casa"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Did you sleep well?",
-      "pt": "Você dormiu bem?",
-      "cloze": "{{c1::Did you}} sleep well?"
-    }
+    "demos": [
+      {
+        "en": "Did you sleep well?",
+        "pt": "Você dormiu bem?",
+        "cloze": "{{c1::Did you}} sleep well?"
+      },
+      {
+        "en": "Did you eat already?",
+        "pt": "Você já comeu?",
+        "cloze": "{{c1::Did you}} eat already?"
+      },
+      {
+        "en": "Did you finish your homework?",
+        "pt": "Você terminou a lição de casa?",
+        "cloze": "{{c1::Did you}} finish your homework?"
+      }
+    ]
   },
   {
     "name": "lets_read",
@@ -764,37 +1906,106 @@
     "slots": [
       "story"
     ],
-    "example": {
-      "story": "a story"
-    },
+    "examples": [
+      {
+        "story": [
+          "a story",
+          "uma história"
+        ]
+      },
+      {
+        "story": [
+          "this book",
+          "este livro"
+        ]
+      },
+      {
+        "story": [
+          "one more page",
+          "mais uma página"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let me read you a story.",
-      "pt": "Deixa eu ler a story para você.",
-      "cloze": "{{c1::Let me read you}} a story."
-    }
+    "demos": [
+      {
+        "en": "Let me read you a story.",
+        "pt": "Deixa eu ler uma história para você.",
+        "cloze": "{{c1::Let me read you}} a story."
+      },
+      {
+        "en": "Let me read you this book.",
+        "pt": "Deixa eu ler este livro para você.",
+        "cloze": "{{c1::Let me read you}} this book."
+      },
+      {
+        "en": "Let me read you one more page.",
+        "pt": "Deixa eu ler mais uma página para você.",
+        "cloze": "{{c1::Let me read you}} one more page."
+      }
+    ]
   },
   {
     "name": "i_currently_work_as",
     "template": "[[I currently work as]] {role} [[at]] {company}.",
-    "pt": "Atualmente trabalho como {role} na {company}.",
+    "pt": "Atualmente trabalho como {role} {company}.",
     "category": "interview",
     "slots": [
       "role",
       "company"
     ],
-    "example": {
-      "role": "a Data Analyst",
-      "company": "PGBA"
-    },
+    "examples": [
+      {
+        "role": [
+          "a Data Analyst",
+          "analista de dados"
+        ],
+        "company": [
+          "PGBA",
+          "na PGBA"
+        ]
+      },
+      {
+        "role": [
+          "a backend developer",
+          "desenvolvedor backend"
+        ],
+        "company": [
+          "a fintech",
+          "numa fintech"
+        ]
+      },
+      {
+        "role": [
+          "a team lead",
+          "líder de equipe"
+        ],
+        "company": [
+          "an oil company",
+          "numa petroleira"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I currently work as a Data Analyst at PGBA.",
-      "pt": "Atualmente trabalho como a Data Analyst na PGBA.",
-      "cloze": "{{c1::I currently work as}} a Data Analyst {{c1::at}} PGBA."
-    }
+    "demos": [
+      {
+        "en": "I currently work as a Data Analyst at PGBA.",
+        "pt": "Atualmente trabalho como analista de dados na PGBA.",
+        "cloze": "{{c1::I currently work as}} a Data Analyst {{c1::at}} PGBA."
+      },
+      {
+        "en": "I currently work as a backend developer at a fintech.",
+        "pt": "Atualmente trabalho como desenvolvedor backend numa fintech.",
+        "cloze": "{{c1::I currently work as}} a backend developer {{c1::at}} a fintech."
+      },
+      {
+        "en": "I currently work as a team lead at an oil company.",
+        "pt": "Atualmente trabalho como líder de equipe numa petroleira.",
+        "cloze": "{{c1::I currently work as}} a team lead {{c1::at}} an oil company."
+      }
+    ]
   },
   {
     "name": "ive_been_working_in",
@@ -805,17 +2016,57 @@
       "field",
       "years"
     ],
-    "example": {
-      "field": "data and software development",
-      "years": "ten years"
-    },
+    "examples": [
+      {
+        "field": [
+          "data and software development",
+          "dados e desenvolvimento de software"
+        ],
+        "years": [
+          "ten years",
+          "dez anos"
+        ]
+      },
+      {
+        "field": [
+          "tech",
+          "tecnologia"
+        ],
+        "years": [
+          "about six years",
+          "uns seis anos"
+        ]
+      },
+      {
+        "field": [
+          "finance",
+          "finanças"
+        ],
+        "years": [
+          "a long time",
+          "bastante tempo"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I've been working in data and software development for ten years.",
-      "pt": "Trabalho com data and software development há ten years.",
-      "cloze": "{{c1::I've been working in}} data and software development {{c1::for}} ten years."
-    }
+    "demos": [
+      {
+        "en": "I've been working in data and software development for ten years.",
+        "pt": "Trabalho com dados e desenvolvimento de software há dez anos.",
+        "cloze": "{{c1::I've been working in}} data and software development {{c1::for}} ten years."
+      },
+      {
+        "en": "I've been working in tech for about six years.",
+        "pt": "Trabalho com tecnologia há uns seis anos.",
+        "cloze": "{{c1::I've been working in}} tech {{c1::for}} about six years."
+      },
+      {
+        "en": "I've been working in finance for a long time.",
+        "pt": "Trabalho com finanças há bastante tempo.",
+        "cloze": "{{c1::I've been working in}} finance {{c1::for}} a long time."
+      }
+    ]
   },
   {
     "name": "ive_been_using_extensively_for",
@@ -826,55 +2077,153 @@
       "tool",
       "purpose"
     ],
-    "example": {
-      "tool": "Python",
-      "purpose": "data pipelines"
-    },
+    "examples": [
+      {
+        "tool": [
+          "Python",
+          "Python"
+        ],
+        "purpose": [
+          "data pipelines",
+          "pipelines de dados"
+        ]
+      },
+      {
+        "tool": [
+          "Django",
+          "Django"
+        ],
+        "purpose": [
+          "web applications",
+          "aplicações web"
+        ]
+      },
+      {
+        "tool": [
+          "Power BI",
+          "Power BI"
+        ],
+        "purpose": [
+          "dashboards",
+          "dashboards"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I've been using Python extensively for data pipelines.",
-      "pt": "Tenho usado Python bastante para data pipelines.",
-      "cloze": "{{c1::I've been using}} Python {{c1::extensively for}} data pipelines."
-    }
+    "demos": [
+      {
+        "en": "I've been using Python extensively for data pipelines.",
+        "pt": "Tenho usado Python bastante para pipelines de dados.",
+        "cloze": "{{c1::I've been using}} Python {{c1::extensively for}} data pipelines."
+      },
+      {
+        "en": "I've been using Django extensively for web applications.",
+        "pt": "Tenho usado Django bastante para aplicações web.",
+        "cloze": "{{c1::I've been using}} Django {{c1::extensively for}} web applications."
+      },
+      {
+        "en": "I've been using Power BI extensively for dashboards.",
+        "pt": "Tenho usado Power BI bastante para dashboards.",
+        "cloze": "{{c1::I've been using}} Power BI {{c1::extensively for}} dashboards."
+      }
+    ]
   },
   {
     "name": "im_particularly_comfortable_with",
     "template": "[[I'm particularly comfortable with]] {skill}.",
-    "pt": "Tenho bastante facilidade com {skill}.",
+    "pt": "Tenho bastante facilidade {skill}.",
     "category": "interview",
     "slots": [
       "skill"
     ],
-    "example": {
-      "skill": "SQL and Django"
-    },
+    "examples": [
+      {
+        "skill": [
+          "SQL and Django",
+          "com SQL e Django"
+        ]
+      },
+      {
+        "skill": [
+          "data modeling",
+          "com modelagem de dados"
+        ]
+      },
+      {
+        "skill": [
+          "talking to clients",
+          "para conversar com clientes"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm particularly comfortable with SQL and Django.",
-      "pt": "Tenho bastante facilidade com SQL and Django.",
-      "cloze": "{{c1::I'm particularly comfortable with}} SQL and Django."
-    }
+    "demos": [
+      {
+        "en": "I'm particularly comfortable with SQL and Django.",
+        "pt": "Tenho bastante facilidade com SQL e Django.",
+        "cloze": "{{c1::I'm particularly comfortable with}} SQL and Django."
+      },
+      {
+        "en": "I'm particularly comfortable with data modeling.",
+        "pt": "Tenho bastante facilidade com modelagem de dados.",
+        "cloze": "{{c1::I'm particularly comfortable with}} data modeling."
+      },
+      {
+        "en": "I'm particularly comfortable with talking to clients.",
+        "pt": "Tenho bastante facilidade para conversar com clientes.",
+        "cloze": "{{c1::I'm particularly comfortable with}} talking to clients."
+      }
+    ]
   },
   {
     "name": "im_now_looking_to",
     "template": "[[I'm now looking to]] {goal}[[, and that's what brought me here today]].",
-    "pt": "Agora estou buscando {goal}, e foi isso que me trouxe aqui hoje.",
+    "pt": "Agora quero {goal}, e foi isso que me trouxe aqui hoje.",
     "category": "interview",
     "slots": [
       "goal"
     ],
-    "example": {
-      "goal": "take the next step in my career"
-    },
+    "examples": [
+      {
+        "goal": [
+          "take the next step in my career",
+          "dar o próximo passo na carreira"
+        ]
+      },
+      {
+        "goal": [
+          "work with an international team",
+          "trabalhar com um time internacional"
+        ]
+      },
+      {
+        "goal": [
+          "focus on one product",
+          "me dedicar a um produto"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm now looking to take the next step in my career, and that's what brought me here today.",
-      "pt": "Agora estou buscando take the next step in my career, e foi isso que me trouxe aqui hoje.",
-      "cloze": "{{c1::I'm now looking to}} take the next step in my career{{c1::, and that's what brought me here today}}."
-    }
+    "demos": [
+      {
+        "en": "I'm now looking to take the next step in my career, and that's what brought me here today.",
+        "pt": "Agora quero dar o próximo passo na carreira, e foi isso que me trouxe aqui hoje.",
+        "cloze": "{{c1::I'm now looking to}} take the next step in my career{{c1::, and that's what brought me here today}}."
+      },
+      {
+        "en": "I'm now looking to work with an international team, and that's what brought me here today.",
+        "pt": "Agora quero trabalhar com um time internacional, e foi isso que me trouxe aqui hoje.",
+        "cloze": "{{c1::I'm now looking to}} work with an international team{{c1::, and that's what brought me here today}}."
+      },
+      {
+        "en": "I'm now looking to focus on one product, and that's what brought me here today.",
+        "pt": "Agora quero me dedicar a um produto, e foi isso que me trouxe aqui hoje.",
+        "cloze": "{{c1::I'm now looking to}} focus on one product{{c1::, and that's what brought me here today}}."
+      }
+    ]
   },
   {
     "name": "what_really_drives_me_is",
@@ -884,73 +2233,189 @@
     "slots": [
       "motivation"
     ],
-    "example": {
-      "motivation": "solving real business problems with data"
-    },
+    "examples": [
+      {
+        "motivation": [
+          "solving real business problems with data",
+          "resolver problemas reais de negócio com dados"
+        ]
+      },
+      {
+        "motivation": [
+          "building products from scratch",
+          "criar produtos do zero"
+        ]
+      },
+      {
+        "motivation": [
+          "seeing people use what I built",
+          "ver as pessoas usando o que eu construí"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "What really drives me is solving real business problems with data.",
-      "pt": "O que realmente me motiva é solving real business problems with data.",
-      "cloze": "{{c1::What really drives me is}} solving real business problems with data."
-    }
+    "demos": [
+      {
+        "en": "What really drives me is solving real business problems with data.",
+        "pt": "O que realmente me motiva é resolver problemas reais de negócio com dados.",
+        "cloze": "{{c1::What really drives me is}} solving real business problems with data."
+      },
+      {
+        "en": "What really drives me is building products from scratch.",
+        "pt": "O que realmente me motiva é criar produtos do zero.",
+        "cloze": "{{c1::What really drives me is}} building products from scratch."
+      },
+      {
+        "en": "What really drives me is seeing people use what I built.",
+        "pt": "O que realmente me motiva é ver as pessoas usando o que eu construí.",
+        "cloze": "{{c1::What really drives me is}} seeing people use what I built."
+      }
+    ]
   },
   {
     "name": "im_a_big_believer_in",
     "template": "[[I'm a big believer in]] {idea}.",
-    "pt": "Eu acredito muito em {idea}.",
+    "pt": "Eu acredito muito {idea}.",
     "category": "interview",
     "slots": [
       "idea"
     ],
-    "example": {
-      "idea": "automated testing"
-    },
+    "examples": [
+      {
+        "idea": [
+          "automated testing",
+          "em testes automatizados"
+        ]
+      },
+      {
+        "idea": [
+          "learning by doing",
+          "em aprender fazendo"
+        ]
+      },
+      {
+        "idea": [
+          "small, frequent releases",
+          "em entregas pequenas e frequentes"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm a big believer in automated testing.",
-      "pt": "Eu acredito muito em automated testing.",
-      "cloze": "{{c1::I'm a big believer in}} automated testing."
-    }
+    "demos": [
+      {
+        "en": "I'm a big believer in automated testing.",
+        "pt": "Eu acredito muito em testes automatizados.",
+        "cloze": "{{c1::I'm a big believer in}} automated testing."
+      },
+      {
+        "en": "I'm a big believer in learning by doing.",
+        "pt": "Eu acredito muito em aprender fazendo.",
+        "cloze": "{{c1::I'm a big believer in}} learning by doing."
+      },
+      {
+        "en": "I'm a big believer in small, frequent releases.",
+        "pt": "Eu acredito muito em entregas pequenas e frequentes.",
+        "cloze": "{{c1::I'm a big believer in}} small, frequent releases."
+      }
+    ]
   },
   {
     "name": "the_situation_was",
     "template": "[[The situation was that]] {context}.",
-    "pt": "A situação era que {context}.",
+    "pt": "A situação era a seguinte: {context}.",
     "category": "interview",
     "slots": [
       "context"
     ],
-    "example": {
-      "context": "our reports took two days to generate"
-    },
+    "examples": [
+      {
+        "context": [
+          "our reports took two days to generate",
+          "os nossos relatórios levavam dois dias para sair"
+        ]
+      },
+      {
+        "context": [
+          "the client was about to cancel",
+          "o cliente estava prestes a cancelar"
+        ]
+      },
+      {
+        "context": [
+          "we had no tests at all",
+          "não tínhamos nenhum teste"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "STAR — S (Situation).",
-    "demo": {
-      "en": "The situation was that our reports took two days to generate.",
-      "pt": "A situação era que our reports took two days to generate.",
-      "cloze": "{{c1::The situation was that}} our reports took two days to generate."
-    }
+    "demos": [
+      {
+        "en": "The situation was that our reports took two days to generate.",
+        "pt": "A situação era a seguinte: os nossos relatórios levavam dois dias para sair.",
+        "cloze": "{{c1::The situation was that}} our reports took two days to generate."
+      },
+      {
+        "en": "The situation was that the client was about to cancel.",
+        "pt": "A situação era a seguinte: o cliente estava prestes a cancelar.",
+        "cloze": "{{c1::The situation was that}} the client was about to cancel."
+      },
+      {
+        "en": "The situation was that we had no tests at all.",
+        "pt": "A situação era a seguinte: não tínhamos nenhum teste.",
+        "cloze": "{{c1::The situation was that}} we had no tests at all."
+      }
+    ]
   },
   {
     "name": "my_task_was_to",
     "template": "[[My task was to]] {task}.",
-    "pt": "Minha tarefa era {task}.",
+    "pt": "A minha tarefa era {task}.",
     "category": "interview",
     "slots": [
       "task"
     ],
-    "example": {
-      "task": "automate the whole pipeline"
-    },
+    "examples": [
+      {
+        "task": [
+          "automate the whole pipeline",
+          "automatizar o pipeline inteiro"
+        ]
+      },
+      {
+        "task": [
+          "find the bottleneck",
+          "encontrar o gargalo"
+        ]
+      },
+      {
+        "task": [
+          "migrate the data without downtime",
+          "migrar os dados sem deixar o sistema fora do ar"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "STAR — T (Task).",
-    "demo": {
-      "en": "My task was to automate the whole pipeline.",
-      "pt": "Minha tarefa era automate the whole pipeline.",
-      "cloze": "{{c1::My task was to}} automate the whole pipeline."
-    }
+    "demos": [
+      {
+        "en": "My task was to automate the whole pipeline.",
+        "pt": "A minha tarefa era automatizar o pipeline inteiro.",
+        "cloze": "{{c1::My task was to}} automate the whole pipeline."
+      },
+      {
+        "en": "My task was to find the bottleneck.",
+        "pt": "A minha tarefa era encontrar o gargalo.",
+        "cloze": "{{c1::My task was to}} find the bottleneck."
+      },
+      {
+        "en": "My task was to migrate the data without downtime.",
+        "pt": "A minha tarefa era migrar os dados sem deixar o sistema fora do ar.",
+        "cloze": "{{c1::My task was to}} migrate the data without downtime."
+      }
+    ]
   },
   {
     "name": "what_i_did_was",
@@ -960,16 +2425,45 @@
     "slots": [
       "action"
     ],
-    "example": {
-      "action": "build an ETL with Airflow"
-    },
+    "examples": [
+      {
+        "action": [
+          "build an ETL with Airflow",
+          "montar um ETL com Airflow"
+        ]
+      },
+      {
+        "action": [
+          "talk to each user first",
+          "conversar com cada usuário antes"
+        ]
+      },
+      {
+        "action": [
+          "split the problem into smaller parts",
+          "dividir o problema em partes menores"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "STAR — A (Action).",
-    "demo": {
-      "en": "What I did was build an ETL with Airflow.",
-      "pt": "O que eu fiz foi build an ETL with Airflow.",
-      "cloze": "{{c1::What I did was}} build an ETL with Airflow."
-    }
+    "demos": [
+      {
+        "en": "What I did was build an ETL with Airflow.",
+        "pt": "O que eu fiz foi montar um ETL com Airflow.",
+        "cloze": "{{c1::What I did was}} build an ETL with Airflow."
+      },
+      {
+        "en": "What I did was talk to each user first.",
+        "pt": "O que eu fiz foi conversar com cada usuário antes.",
+        "cloze": "{{c1::What I did was}} talk to each user first."
+      },
+      {
+        "en": "What I did was split the problem into smaller parts.",
+        "pt": "O que eu fiz foi dividir o problema em partes menores.",
+        "cloze": "{{c1::What I did was}} split the problem into smaller parts."
+      }
+    ]
   },
   {
     "name": "as_a_result",
@@ -979,50 +2473,110 @@
     "slots": [
       "result"
     ],
-    "example": {
-      "result": "we cut the processing time by 80%"
-    },
+    "examples": [
+      {
+        "result": [
+          "we cut the processing time by 80%",
+          "reduzimos o tempo de processamento em 80%"
+        ]
+      },
+      {
+        "result": [
+          "the client renewed the contract",
+          "o cliente renovou o contrato"
+        ]
+      },
+      {
+        "result": [
+          "errors dropped to almost zero",
+          "os erros caíram quase a zero"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "STAR — R (Result).",
-    "demo": {
-      "en": "As a result, we cut the processing time by 80%.",
-      "pt": "Como resultado, we cut the processing time by 80%.",
-      "cloze": "{{c1::As a result}}, we cut the processing time by 80%."
-    }
+    "demos": [
+      {
+        "en": "As a result, we cut the processing time by 80%.",
+        "pt": "Como resultado, reduzimos o tempo de processamento em 80%.",
+        "cloze": "{{c1::As a result}}, we cut the processing time by 80%."
+      },
+      {
+        "en": "As a result, the client renewed the contract.",
+        "pt": "Como resultado, o cliente renovou o contrato.",
+        "cloze": "{{c1::As a result}}, the client renewed the contract."
+      },
+      {
+        "en": "As a result, errors dropped to almost zero.",
+        "pt": "Como resultado, os erros caíram quase a zero.",
+        "cloze": "{{c1::As a result}}, errors dropped to almost zero."
+      }
+    ]
   },
   {
     "name": "can_you_tell_me_about_a_time_when",
     "template": "[[Can you tell me about a time when]] {situation}[[?]]",
-    "pt": "Pode me contar sobre uma vez em que {situation}?",
+    "pt": "Você pode me contar de uma vez em que {situation}?",
     "category": "interview",
     "slots": [
       "situation"
     ],
-    "example": {
-      "situation": "you had to deal with a difficult stakeholder"
-    },
+    "examples": [
+      {
+        "situation": [
+          "you had to deal with a difficult stakeholder",
+          "teve que lidar com um stakeholder difícil"
+        ]
+      },
+      {
+        "situation": [
+          "you made a mistake",
+          "cometeu um erro"
+        ]
+      },
+      {
+        "situation": [
+          "you had to learn something quickly",
+          "precisou aprender algo rápido"
+        ]
+      }
+    ],
     "defaults": {},
-    "note": "Pergunta clássica do entrevistador — reconheça e responda com STAR.",
-    "demo": {
-      "en": "Can you tell me about a time when you had to deal with a difficult stakeholder?",
-      "pt": "Pode me contar sobre uma vez em que you had to deal with a difficult stakeholder?",
-      "cloze": "{{c1::Can you tell me about a time when}} you had to deal with a difficult stakeholder?"
-    }
+    "note": "Pergunta clássica do entrevistador. Reconheça e responda com STAR.",
+    "demos": [
+      {
+        "en": "Can you tell me about a time when you had to deal with a difficult stakeholder?",
+        "pt": "Você pode me contar de uma vez em que teve que lidar com um stakeholder difícil?",
+        "cloze": "{{c1::Can you tell me about a time when}} you had to deal with a difficult stakeholder?"
+      },
+      {
+        "en": "Can you tell me about a time when you made a mistake?",
+        "pt": "Você pode me contar de uma vez em que cometeu um erro?",
+        "cloze": "{{c1::Can you tell me about a time when}} you made a mistake?"
+      },
+      {
+        "en": "Can you tell me about a time when you had to learn something quickly?",
+        "pt": "Você pode me contar de uma vez em que precisou aprender algo rápido?",
+        "cloze": "{{c1::Can you tell me about a time when}} you had to learn something quickly?"
+      }
+    ]
   },
   {
     "name": "sure_let_me_think_of_a_good_example",
     "template": "[[Sure, let me think of a good example.]]",
-    "pt": "Claro, deixa eu pensar em um bom exemplo.",
+    "pt": "Claro, deixa eu pensar num bom exemplo.",
     "category": "interview",
     "slots": [],
-    "example": {},
+    "examples": [],
     "defaults": {},
     "note": "Ganha tempo sem parecer travado.",
-    "demo": {
-      "en": "Sure, let me think of a good example.",
-      "pt": "Claro, deixa eu pensar em um bom exemplo.",
-      "cloze": "{{c1::Sure, let me think of a good example.}}"
-    }
+    "demos": [
+      {
+        "en": "Sure, let me think of a good example.",
+        "pt": "Claro, deixa eu pensar num bom exemplo.",
+        "cloze": "{{c1::Sure, let me think of a good example.}}"
+      }
+    ]
   },
   {
     "name": "whats_your_experience_with",
@@ -1032,35 +2586,93 @@
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "cloud platforms"
-    },
+    "examples": [
+      {
+        "thing": [
+          "cloud platforms",
+          "plataformas de nuvem"
+        ]
+      },
+      {
+        "thing": [
+          "React",
+          "React"
+        ]
+      },
+      {
+        "thing": [
+          "remote work",
+          "trabalho remoto"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "What's your experience with cloud platforms?",
-      "pt": "Qual é a sua experiência com cloud platforms?",
-      "cloze": "{{c1::What's your experience with}} cloud platforms?"
-    }
+    "demos": [
+      {
+        "en": "What's your experience with cloud platforms?",
+        "pt": "Qual é a sua experiência com plataformas de nuvem?",
+        "cloze": "{{c1::What's your experience with}} cloud platforms?"
+      },
+      {
+        "en": "What's your experience with React?",
+        "pt": "Qual é a sua experiência com React?",
+        "cloze": "{{c1::What's your experience with}} React?"
+      },
+      {
+        "en": "What's your experience with remote work?",
+        "pt": "Qual é a sua experiência com trabalho remoto?",
+        "cloze": "{{c1::What's your experience with}} remote work?"
+      }
+    ]
   },
   {
     "name": "how_do_you_stay_up_to_date_with",
     "template": "[[How do you stay up to date with]] {topic}[[?]]",
-    "pt": "Como você se mantém atualizado em {topic}?",
+    "pt": "Como você se mantém atualizado {topic}?",
     "category": "interview",
     "slots": [
       "topic"
     ],
-    "example": {
-      "topic": "new AI tools"
-    },
+    "examples": [
+      {
+        "topic": [
+          "new AI tools",
+          "sobre as novas ferramentas de IA"
+        ]
+      },
+      {
+        "topic": [
+          "the industry",
+          "no mercado"
+        ]
+      },
+      {
+        "topic": [
+          "Python",
+          "em Python"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "How do you stay up to date with new AI tools?",
-      "pt": "Como você se mantém atualizado em new AI tools?",
-      "cloze": "{{c1::How do you stay up to date with}} new AI tools?"
-    }
+    "demos": [
+      {
+        "en": "How do you stay up to date with new AI tools?",
+        "pt": "Como você se mantém atualizado sobre as novas ferramentas de IA?",
+        "cloze": "{{c1::How do you stay up to date with}} new AI tools?"
+      },
+      {
+        "en": "How do you stay up to date with the industry?",
+        "pt": "Como você se mantém atualizado no mercado?",
+        "cloze": "{{c1::How do you stay up to date with}} the industry?"
+      },
+      {
+        "en": "How do you stay up to date with Python?",
+        "pt": "Como você se mantém atualizado em Python?",
+        "cloze": "{{c1::How do you stay up to date with}} Python?"
+      }
+    ]
   },
   {
     "name": "im_curious_to_know",
@@ -1070,16 +2682,45 @@
     "slots": [
       "question"
     ],
-    "example": {
-      "question": "what success looks like in this role"
-    },
+    "examples": [
+      {
+        "question": [
+          "what success looks like in this role",
+          "o que seria sucesso nesta função"
+        ]
+      },
+      {
+        "question": [
+          "how the team is organized",
+          "como o time é organizado"
+        ]
+      },
+      {
+        "question": [
+          "what the biggest challenge is right now",
+          "qual é o maior desafio agora"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm curious to know what success looks like in this role.",
-      "pt": "Tenho curiosidade de saber what success looks like in this role.",
-      "cloze": "{{c1::I'm curious to know}} what success looks like in this role."
-    }
+    "demos": [
+      {
+        "en": "I'm curious to know what success looks like in this role.",
+        "pt": "Tenho curiosidade de saber o que seria sucesso nesta função.",
+        "cloze": "{{c1::I'm curious to know}} what success looks like in this role."
+      },
+      {
+        "en": "I'm curious to know how the team is organized.",
+        "pt": "Tenho curiosidade de saber como o time é organizado.",
+        "cloze": "{{c1::I'm curious to know}} how the team is organized."
+      },
+      {
+        "en": "I'm curious to know what the biggest challenge is right now.",
+        "pt": "Tenho curiosidade de saber qual é o maior desafio agora.",
+        "cloze": "{{c1::I'm curious to know}} what the biggest challenge is right now."
+      }
+    ]
   },
   {
     "name": "thank_you_for_the_opportunity",
@@ -1087,14 +2728,16 @@
     "pt": "Obrigado pela oportunidade. Foi ótimo conversar com você.",
     "category": "interview",
     "slots": [],
-    "example": {},
+    "examples": [],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Thank you for the opportunity. It was great chatting with you.",
-      "pt": "Obrigado pela oportunidade. Foi ótimo conversar com você.",
-      "cloze": "{{c1::Thank you for the opportunity. It was great chatting with you}}."
-    }
+    "demos": [
+      {
+        "en": "Thank you for the opportunity. It was great chatting with you.",
+        "pt": "Obrigado pela oportunidade. Foi ótimo conversar com você.",
+        "cloze": "{{c1::Thank you for the opportunity. It was great chatting with you}}."
+      }
+    ]
   },
   {
     "name": "could_you_rephrase",
@@ -1104,19 +2747,45 @@
     "slots": [
       "what"
     ],
-    "example": {
-      "what": [
-        "the question",
-        "a pergunta"
-      ]
-    },
+    "examples": [
+      {
+        "what": [
+          "the question",
+          "a pergunta"
+        ]
+      },
+      {
+        "what": [
+          "that",
+          "isso"
+        ]
+      },
+      {
+        "what": [
+          "the last part",
+          "a última parte"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "Muito melhor do que responder outra coisa. Ninguém perde pontos por isso.",
-    "demo": {
-      "en": "Sorry, could you rephrase the question?",
-      "pt": "Desculpe, você pode reformular a pergunta?",
-      "cloze": "{{c1::Sorry, could you rephrase}} the question?"
-    }
+    "demos": [
+      {
+        "en": "Sorry, could you rephrase the question?",
+        "pt": "Desculpe, você pode reformular a pergunta?",
+        "cloze": "{{c1::Sorry, could you rephrase}} the question?"
+      },
+      {
+        "en": "Sorry, could you rephrase that?",
+        "pt": "Desculpe, você pode reformular isso?",
+        "cloze": "{{c1::Sorry, could you rephrase}} that?"
+      },
+      {
+        "en": "Sorry, could you rephrase the last part?",
+        "pt": "Desculpe, você pode reformular a última parte?",
+        "cloze": "{{c1::Sorry, could you rephrase}} the last part?"
+      }
+    ]
   },
   {
     "name": "just_to_make_sure_i_understood",
@@ -1126,35 +2795,93 @@
     "slots": [
       "topic"
     ],
-    "example": {
-      "topic": "how we handle duplicate vendors"
-    },
+    "examples": [
+      {
+        "topic": [
+          "how we handle duplicate vendors",
+          "como tratamos fornecedores duplicados"
+        ]
+      },
+      {
+        "topic": [
+          "my last project",
+          "o meu último projeto"
+        ]
+      },
+      {
+        "topic": [
+          "the database design",
+          "a modelagem do banco"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Just to make sure I understood, you're asking about how we handle duplicate vendors?",
-      "pt": "Só para ter certeza de que entendi, você está perguntando sobre how we handle duplicate vendors?",
-      "cloze": "{{c1::Just to make sure I understood, you're asking about}} how we handle duplicate vendors?"
-    }
+    "demos": [
+      {
+        "en": "Just to make sure I understood, you're asking about how we handle duplicate vendors?",
+        "pt": "Só para ter certeza de que entendi, você está perguntando sobre como tratamos fornecedores duplicados?",
+        "cloze": "{{c1::Just to make sure I understood, you're asking about}} how we handle duplicate vendors?"
+      },
+      {
+        "en": "Just to make sure I understood, you're asking about my last project?",
+        "pt": "Só para ter certeza de que entendi, você está perguntando sobre o meu último projeto?",
+        "cloze": "{{c1::Just to make sure I understood, you're asking about}} my last project?"
+      },
+      {
+        "en": "Just to make sure I understood, you're asking about the database design?",
+        "pt": "Só para ter certeza de que entendi, você está perguntando sobre a modelagem do banco?",
+        "cloze": "{{c1::Just to make sure I understood, you're asking about}} the database design?"
+      }
+    ]
   },
   {
     "name": "thats_a_great_question",
     "template": "[[That's a great question. Let me think about]] {topic} [[for a second]].",
-    "pt": "Ótima pergunta. Deixa eu pensar um segundo sobre {topic}.",
+    "pt": "Ótima pergunta. Deixa eu pensar um segundo {topic}.",
     "category": "interview",
     "slots": [
       "topic"
     ],
-    "example": {
-      "topic": "the trade-offs"
-    },
+    "examples": [
+      {
+        "topic": [
+          "the trade-offs",
+          "nos prós e contras"
+        ]
+      },
+      {
+        "topic": [
+          "it",
+          "nisso"
+        ]
+      },
+      {
+        "topic": [
+          "the best example",
+          "no melhor exemplo"
+        ]
+      }
+    ],
     "defaults": {},
-    "note": "Ganha 3 segundos para organizar a resposta.",
-    "demo": {
-      "en": "That's a great question. Let me think about the trade-offs for a second.",
-      "pt": "Ótima pergunta. Deixa eu pensar um segundo sobre the trade-offs.",
-      "cloze": "{{c1::That's a great question. Let me think about}} the trade-offs {{c1::for a second}}."
-    }
+    "note": "Ganha três segundos para organizar a resposta.",
+    "demos": [
+      {
+        "en": "That's a great question. Let me think about the trade-offs for a second.",
+        "pt": "Ótima pergunta. Deixa eu pensar um segundo nos prós e contras.",
+        "cloze": "{{c1::That's a great question. Let me think about}} the trade-offs {{c1::for a second}}."
+      },
+      {
+        "en": "That's a great question. Let me think about it for a second.",
+        "pt": "Ótima pergunta. Deixa eu pensar um segundo nisso.",
+        "cloze": "{{c1::That's a great question. Let me think about}} it {{c1::for a second}}."
+      },
+      {
+        "en": "That's a great question. Let me think about the best example for a second.",
+        "pt": "Ótima pergunta. Deixa eu pensar um segundo no melhor exemplo.",
+        "cloze": "{{c1::That's a great question. Let me think about}} the best example {{c1::for a second}}."
+      }
+    ]
   },
   {
     "name": "i_havent_used_but",
@@ -1165,47 +2892,118 @@
       "tool",
       "bridge"
     ],
-    "example": {
-      "tool": "Azure",
-      "bridge": [
-        "I've used the equivalent services on AWS",
-        "usei os serviços equivalentes na AWS"
-      ]
-    },
+    "examples": [
+      {
+        "tool": [
+          "Azure",
+          "Azure"
+        ],
+        "bridge": [
+          "I've used the equivalent services on AWS",
+          "já usei os serviços equivalentes na AWS"
+        ]
+      },
+      {
+        "tool": [
+          "Angular",
+          "Angular"
+        ],
+        "bridge": [
+          "I work with React and TypeScript every day",
+          "trabalho com React e TypeScript todo dia"
+        ]
+      },
+      {
+        "tool": [
+          "Kafka",
+          "Kafka"
+        ],
+        "bridge": [
+          "I've built queues with RabbitMQ",
+          "já montei filas com RabbitMQ"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "Honestidade + ponte para o que você sabe. Nunca finja.",
-    "demo": {
-      "en": "I haven't used Azure in production, but I've used the equivalent services on AWS.",
-      "pt": "Não usei Azure em produção, mas usei os serviços equivalentes na AWS.",
-      "cloze": "{{c1::I haven't used}} Azure {{c1::in production, but}} I've used the equivalent services on AWS."
-    }
+    "demos": [
+      {
+        "en": "I haven't used Azure in production, but I've used the equivalent services on AWS.",
+        "pt": "Não usei Azure em produção, mas já usei os serviços equivalentes na AWS.",
+        "cloze": "{{c1::I haven't used}} Azure {{c1::in production, but}} I've used the equivalent services on AWS."
+      },
+      {
+        "en": "I haven't used Angular in production, but I work with React and TypeScript every day.",
+        "pt": "Não usei Angular em produção, mas trabalho com React e TypeScript todo dia.",
+        "cloze": "{{c1::I haven't used}} Angular {{c1::in production, but}} I work with React and TypeScript every day."
+      },
+      {
+        "en": "I haven't used Kafka in production, but I've built queues with RabbitMQ.",
+        "pt": "Não usei Kafka em produção, mas já montei filas com RabbitMQ.",
+        "cloze": "{{c1::I haven't used}} Kafka {{c1::in production, but}} I've built queues with RabbitMQ."
+      }
+    ]
   },
   {
     "name": "the_trade_off_is",
     "template": "[[The trade-off is]] {a} [[versus]] {b}.",
-    "pt": "O trade-off é {a} versus {b}.",
+    "pt": "O dilema é {a} versus {b}.",
     "category": "interview",
     "slots": [
       "a",
       "b"
     ],
-    "example": {
-      "a": [
-        "isolation",
-        "isolamento"
-      ],
-      "b": [
-        "cost",
-        "custo"
-      ]
-    },
+    "examples": [
+      {
+        "a": [
+          "isolation",
+          "isolamento"
+        ],
+        "b": [
+          "cost",
+          "custo"
+        ]
+      },
+      {
+        "a": [
+          "speed",
+          "velocidade"
+        ],
+        "b": [
+          "accuracy",
+          "precisão"
+        ]
+      },
+      {
+        "a": [
+          "flexibility",
+          "flexibilidade"
+        ],
+        "b": [
+          "simplicity",
+          "simplicidade"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "The trade-off is isolation versus cost.",
-      "pt": "O trade-off é isolamento versus custo.",
-      "cloze": "{{c1::The trade-off is}} isolation {{c1::versus}} cost."
-    }
+    "demos": [
+      {
+        "en": "The trade-off is isolation versus cost.",
+        "pt": "O dilema é isolamento versus custo.",
+        "cloze": "{{c1::The trade-off is}} isolation {{c1::versus}} cost."
+      },
+      {
+        "en": "The trade-off is speed versus accuracy.",
+        "pt": "O dilema é velocidade versus precisão.",
+        "cloze": "{{c1::The trade-off is}} speed {{c1::versus}} accuracy."
+      },
+      {
+        "en": "The trade-off is flexibility versus simplicity.",
+        "pt": "O dilema é flexibilidade versus simplicidade.",
+        "cloze": "{{c1::The trade-off is}} flexibility {{c1::versus}} simplicity."
+      }
+    ]
   },
   {
     "name": "before_i_start_can_i_ask",
@@ -1215,16 +3013,45 @@
     "slots": [
       "question"
     ],
-    "example": {
-      "question": "how many records we're talking about"
-    },
+    "examples": [
+      {
+        "question": [
+          "how many records we're talking about",
+          "de quantos registros estamos falando"
+        ]
+      },
+      {
+        "question": [
+          "who the users are",
+          "quem são os usuários"
+        ]
+      },
+      {
+        "question": [
+          "what the budget is",
+          "qual é o orçamento"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "Em system design, sempre pergunte antes de desenhar.",
-    "demo": {
-      "en": "Before I start, can I ask how many records we're talking about?",
-      "pt": "Antes de começar, posso perguntar how many records we're talking about?",
-      "cloze": "{{c1::Before I start, can I ask}} how many records we're talking about?"
-    }
+    "demos": [
+      {
+        "en": "Before I start, can I ask how many records we're talking about?",
+        "pt": "Antes de começar, posso perguntar de quantos registros estamos falando?",
+        "cloze": "{{c1::Before I start, can I ask}} how many records we're talking about?"
+      },
+      {
+        "en": "Before I start, can I ask who the users are?",
+        "pt": "Antes de começar, posso perguntar quem são os usuários?",
+        "cloze": "{{c1::Before I start, can I ask}} who the users are?"
+      },
+      {
+        "en": "Before I start, can I ask what the budget is?",
+        "pt": "Antes de começar, posso perguntar qual é o orçamento?",
+        "cloze": "{{c1::Before I start, can I ask}} what the budget is?"
+      }
+    ]
   },
   {
     "name": "lets_start_with_the_big_picture",
@@ -1234,54 +3061,141 @@
     "slots": [
       "part"
     ],
-    "example": {
-      "part": "the matching step"
-    },
+    "examples": [
+      {
+        "part": [
+          "the matching step",
+          "a etapa de matching"
+        ]
+      },
+      {
+        "part": [
+          "the database",
+          "o banco de dados"
+        ]
+      },
+      {
+        "part": [
+          "whatever you prefer",
+          "o que você preferir"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let me start with the big picture, and then we can zoom in on the matching step.",
-      "pt": "Deixa eu começar pela visão geral, e depois a gente detalha the matching step.",
-      "cloze": "{{c1::Let me start with the big picture, and then we can zoom in on}} the matching step."
-    }
+    "demos": [
+      {
+        "en": "Let me start with the big picture, and then we can zoom in on the matching step.",
+        "pt": "Deixa eu começar pela visão geral, e depois a gente detalha a etapa de matching.",
+        "cloze": "{{c1::Let me start with the big picture, and then we can zoom in on}} the matching step."
+      },
+      {
+        "en": "Let me start with the big picture, and then we can zoom in on the database.",
+        "pt": "Deixa eu começar pela visão geral, e depois a gente detalha o banco de dados.",
+        "cloze": "{{c1::Let me start with the big picture, and then we can zoom in on}} the database."
+      },
+      {
+        "en": "Let me start with the big picture, and then we can zoom in on whatever you prefer.",
+        "pt": "Deixa eu começar pela visão geral, e depois a gente detalha o que você preferir.",
+        "cloze": "{{c1::Let me start with the big picture, and then we can zoom in on}} whatever you prefer."
+      }
+    ]
   },
   {
     "name": "lets_dive_into",
     "template": "[[Let's dive into]] {topic}.",
-    "pt": "Vamos mergulhar em {topic}.",
+    "pt": "Vamos entrar direto {topic}.",
     "category": "meetings",
     "slots": [
       "topic"
     ],
-    "example": {
-      "topic": "the Q3 numbers"
-    },
+    "examples": [
+      {
+        "topic": [
+          "the Q3 numbers",
+          "nos números do terceiro trimestre"
+        ]
+      },
+      {
+        "topic": [
+          "the demo",
+          "na demonstração"
+        ]
+      },
+      {
+        "topic": [
+          "today's agenda",
+          "na pauta de hoje"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let's dive into the Q3 numbers.",
-      "pt": "Vamos mergulhar em the Q3 numbers.",
-      "cloze": "{{c1::Let's dive into}} the Q3 numbers."
-    }
+    "demos": [
+      {
+        "en": "Let's dive into the Q3 numbers.",
+        "pt": "Vamos entrar direto nos números do terceiro trimestre.",
+        "cloze": "{{c1::Let's dive into}} the Q3 numbers."
+      },
+      {
+        "en": "Let's dive into the demo.",
+        "pt": "Vamos entrar direto na demonstração.",
+        "cloze": "{{c1::Let's dive into}} the demo."
+      },
+      {
+        "en": "Let's dive into today's agenda.",
+        "pt": "Vamos entrar direto na pauta de hoje.",
+        "cloze": "{{c1::Let's dive into}} today's agenda."
+      }
+    ]
   },
   {
     "name": "just_to_give_you_a_quick_overview_of",
     "template": "[[Just to give you a quick overview of]] {topic}...",
-    "pt": "Só para dar uma visão geral rápida de {topic}...",
+    "pt": "Só para dar uma visão geral rápida {topic}...",
     "category": "meetings",
     "slots": [
       "topic"
     ],
-    "example": {
-      "topic": "the architecture"
-    },
+    "examples": [
+      {
+        "topic": [
+          "the architecture",
+          "da arquitetura"
+        ]
+      },
+      {
+        "topic": [
+          "where we are",
+          "de onde estamos"
+        ]
+      },
+      {
+        "topic": [
+          "the project",
+          "do projeto"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Just to give you a quick overview of the architecture...",
-      "pt": "Só para dar uma visão geral rápida de the architecture...",
-      "cloze": "{{c1::Just to give you a quick overview of}} the architecture..."
-    }
+    "demos": [
+      {
+        "en": "Just to give you a quick overview of the architecture...",
+        "pt": "Só para dar uma visão geral rápida da arquitetura...",
+        "cloze": "{{c1::Just to give you a quick overview of}} the architecture..."
+      },
+      {
+        "en": "Just to give you a quick overview of where we are...",
+        "pt": "Só para dar uma visão geral rápida de onde estamos...",
+        "cloze": "{{c1::Just to give you a quick overview of}} where we are..."
+      },
+      {
+        "en": "Just to give you a quick overview of the project...",
+        "pt": "Só para dar uma visão geral rápida do projeto...",
+        "cloze": "{{c1::Just to give you a quick overview of}} the project..."
+      }
+    ]
   },
   {
     "name": "walk_me_through",
@@ -1291,16 +3205,45 @@
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "the deployment process"
-    },
+    "examples": [
+      {
+        "thing": [
+          "the deployment process",
+          "o processo de deploy"
+        ]
+      },
+      {
+        "thing": [
+          "your background",
+          "a sua trajetória"
+        ]
+      },
+      {
+        "thing": [
+          "the numbers",
+          "os números"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Could you walk me through the deployment process?",
-      "pt": "Você pode me explicar the deployment process passo a passo?",
-      "cloze": "{{c1::Could you walk me through}} the deployment process?"
-    }
+    "demos": [
+      {
+        "en": "Could you walk me through the deployment process?",
+        "pt": "Você pode me explicar o processo de deploy passo a passo?",
+        "cloze": "{{c1::Could you walk me through}} the deployment process?"
+      },
+      {
+        "en": "Could you walk me through your background?",
+        "pt": "Você pode me explicar a sua trajetória passo a passo?",
+        "cloze": "{{c1::Could you walk me through}} your background?"
+      },
+      {
+        "en": "Could you walk me through the numbers?",
+        "pt": "Você pode me explicar os números passo a passo?",
+        "cloze": "{{c1::Could you walk me through}} the numbers?"
+      }
+    ]
   },
   {
     "name": "thanks_for_walking_me_through",
@@ -1310,16 +3253,45 @@
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "that"
-    },
+    "examples": [
+      {
+        "thing": [
+          "that",
+          "isso"
+        ]
+      },
+      {
+        "thing": [
+          "the codebase",
+          "o código"
+        ]
+      },
+      {
+        "thing": [
+          "the new process",
+          "o novo processo"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Thanks for walking me through that.",
-      "pt": "Obrigado por me explicar that.",
-      "cloze": "{{c1::Thanks for walking me through}} that."
-    }
+    "demos": [
+      {
+        "en": "Thanks for walking me through that.",
+        "pt": "Obrigado por me explicar isso.",
+        "cloze": "{{c1::Thanks for walking me through}} that."
+      },
+      {
+        "en": "Thanks for walking me through the codebase.",
+        "pt": "Obrigado por me explicar o código.",
+        "cloze": "{{c1::Thanks for walking me through}} the codebase."
+      },
+      {
+        "en": "Thanks for walking me through the new process.",
+        "pt": "Obrigado por me explicar o novo processo.",
+        "cloze": "{{c1::Thanks for walking me through}} the new process."
+      }
+    ]
   },
   {
     "name": "lets_touch_base",
@@ -1330,23 +3302,57 @@
       "when",
       "goal"
     ],
-    "example": {
-      "when": [
-        "next Monday",
-        "segunda que vem"
-      ],
-      "goal": [
-        "review the sprint",
-        "revisar a sprint"
-      ]
-    },
+    "examples": [
+      {
+        "when": [
+          "next Monday",
+          "na segunda que vem"
+        ],
+        "goal": [
+          "review the sprint",
+          "revisar a sprint"
+        ]
+      },
+      {
+        "when": [
+          "tomorrow",
+          "amanhã"
+        ],
+        "goal": [
+          "check the results",
+          "ver os resultados"
+        ]
+      },
+      {
+        "when": [
+          "after lunch",
+          "depois do almoço"
+        ],
+        "goal": [
+          "decide the next steps",
+          "decidir os próximos passos"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let's touch base next Monday to review the sprint.",
-      "pt": "Vamos conversar rapidinho segunda que vem para revisar a sprint.",
-      "cloze": "{{c1::Let's touch base}} next Monday{{c1:: to}} review the sprint."
-    }
+    "demos": [
+      {
+        "en": "Let's touch base next Monday to review the sprint.",
+        "pt": "Vamos conversar rapidinho na segunda que vem para revisar a sprint.",
+        "cloze": "{{c1::Let's touch base}} next Monday{{c1:: to}} review the sprint."
+      },
+      {
+        "en": "Let's touch base tomorrow to check the results.",
+        "pt": "Vamos conversar rapidinho amanhã para ver os resultados.",
+        "cloze": "{{c1::Let's touch base}} tomorrow{{c1:: to}} check the results."
+      },
+      {
+        "en": "Let's touch base after lunch to decide the next steps.",
+        "pt": "Vamos conversar rapidinho depois do almoço para decidir os próximos passos.",
+        "cloze": "{{c1::Let's touch base}} after lunch{{c1:: to}} decide the next steps."
+      }
+    ]
   },
   {
     "name": "lets_sync_up_on",
@@ -1357,61 +3363,170 @@
       "topic",
       "when"
     ],
-    "example": {
-      "topic": "the roadmap",
-      "when": "tomorrow"
-    },
+    "examples": [
+      {
+        "topic": [
+          "the roadmap",
+          "o roadmap"
+        ],
+        "when": [
+          "tomorrow",
+          "amanhã"
+        ]
+      },
+      {
+        "topic": [
+          "the migration",
+          "a migração"
+        ],
+        "when": [
+          "on Friday",
+          "na sexta"
+        ]
+      },
+      {
+        "topic": [
+          "this",
+          "isso"
+        ],
+        "when": [
+          "later",
+          "mais tarde"
+        ]
+      }
+    ],
     "defaults": {
       "when": "later"
     },
     "note": "",
-    "demo": {
-      "en": "Let's sync up on the roadmap tomorrow.",
-      "pt": "Vamos nos alinhar sobre the roadmap tomorrow.",
-      "cloze": "{{c1::Let's sync up on}} the roadmap tomorrow."
-    }
+    "demos": [
+      {
+        "en": "Let's sync up on the roadmap tomorrow.",
+        "pt": "Vamos nos alinhar sobre o roadmap amanhã.",
+        "cloze": "{{c1::Let's sync up on}} the roadmap tomorrow."
+      },
+      {
+        "en": "Let's sync up on the migration on Friday.",
+        "pt": "Vamos nos alinhar sobre a migração na sexta.",
+        "cloze": "{{c1::Let's sync up on}} the migration on Friday."
+      },
+      {
+        "en": "Let's sync up on this later.",
+        "pt": "Vamos nos alinhar sobre isso mais tarde.",
+        "cloze": "{{c1::Let's sync up on}} this later."
+      }
+    ]
   },
   {
     "name": "ill_get_back_to_you_on",
     "template": "[[I'll get back to you on]] {topic} {deadline}.",
-    "pt": "Eu te retorno sobre {topic} {deadline}.",
+    "pt": "Eu te dou um retorno sobre {topic} {deadline}.",
     "category": "meetings",
     "slots": [
       "topic",
       "deadline"
     ],
-    "example": {
-      "topic": "this",
-      "deadline": "by end of day"
-    },
+    "examples": [
+      {
+        "topic": [
+          "this",
+          "isso"
+        ],
+        "deadline": [
+          "by end of day",
+          "até o fim do dia"
+        ]
+      },
+      {
+        "topic": [
+          "the budget",
+          "o orçamento"
+        ],
+        "deadline": [
+          "tomorrow",
+          "amanhã"
+        ]
+      },
+      {
+        "topic": [
+          "your question",
+          "a sua pergunta"
+        ],
+        "deadline": [
+          "this week",
+          "esta semana"
+        ]
+      }
+    ],
     "defaults": {
       "deadline": "soon"
     },
     "note": "",
-    "demo": {
-      "en": "I'll get back to you on this by end of day.",
-      "pt": "Eu te retorno sobre this by end of day.",
-      "cloze": "{{c1::I'll get back to you on}} this by end of day."
-    }
+    "demos": [
+      {
+        "en": "I'll get back to you on this by end of day.",
+        "pt": "Eu te dou um retorno sobre isso até o fim do dia.",
+        "cloze": "{{c1::I'll get back to you on}} this by end of day."
+      },
+      {
+        "en": "I'll get back to you on the budget tomorrow.",
+        "pt": "Eu te dou um retorno sobre o orçamento amanhã.",
+        "cloze": "{{c1::I'll get back to you on}} the budget tomorrow."
+      },
+      {
+        "en": "I'll get back to you on your question this week.",
+        "pt": "Eu te dou um retorno sobre a sua pergunta esta semana.",
+        "cloze": "{{c1::I'll get back to you on}} your question this week."
+      }
+    ]
   },
   {
     "name": "just_following_up_on",
     "template": "[[Just following up on]] {thing}.",
-    "pt": "Só acompanhando/cobrando {thing}.",
+    "pt": "Só passando para retomar {thing}.",
     "category": "meetings",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "the proposal I sent last Tuesday"
-    },
+    "examples": [
+      {
+        "thing": [
+          "the proposal I sent last Tuesday",
+          "a proposta que enviei na terça passada"
+        ]
+      },
+      {
+        "thing": [
+          "my previous email",
+          "o meu e-mail anterior"
+        ]
+      },
+      {
+        "thing": [
+          "our conversation",
+          "a nossa conversa"
+        ]
+      }
+    ],
     "defaults": {},
-    "note": "",
-    "demo": {
-      "en": "Just following up on the proposal I sent last Tuesday.",
-      "pt": "Só acompanhando/cobrando the proposal I sent last Tuesday.",
-      "cloze": "{{c1::Just following up on}} the proposal I sent last Tuesday."
-    }
+    "note": "Jeito educado de cobrar uma resposta.",
+    "demos": [
+      {
+        "en": "Just following up on the proposal I sent last Tuesday.",
+        "pt": "Só passando para retomar a proposta que enviei na terça passada.",
+        "cloze": "{{c1::Just following up on}} the proposal I sent last Tuesday."
+      },
+      {
+        "en": "Just following up on my previous email.",
+        "pt": "Só passando para retomar o meu e-mail anterior.",
+        "cloze": "{{c1::Just following up on}} my previous email."
+      },
+      {
+        "en": "Just following up on our conversation.",
+        "pt": "Só passando para retomar a nossa conversa.",
+        "cloze": "{{c1::Just following up on}} our conversation."
+      }
+    ]
   },
   {
     "name": "keep_me_in_the_loop",
@@ -1421,18 +3536,47 @@
     "slots": [
       "about"
     ],
-    "example": {
-      "about": "about the migration"
-    },
+    "examples": [
+      {
+        "about": [
+          "about the migration",
+          "sobre a migração"
+        ]
+      },
+      {
+        "about": [
+          "on any changes",
+          "sobre qualquer mudança"
+        ]
+      },
+      {
+        "about": [
+          "",
+          ""
+        ]
+      }
+    ],
     "defaults": {
       "about": ""
     },
     "note": "",
-    "demo": {
-      "en": "Please keep me in the loop about the migration.",
-      "pt": "Por favor, me mantenha informado about the migration.",
-      "cloze": "{{c1::Please keep me in the loop}} about the migration."
-    }
+    "demos": [
+      {
+        "en": "Please keep me in the loop about the migration.",
+        "pt": "Por favor, me mantenha informado sobre a migração.",
+        "cloze": "{{c1::Please keep me in the loop}} about the migration."
+      },
+      {
+        "en": "Please keep me in the loop on any changes.",
+        "pt": "Por favor, me mantenha informado sobre qualquer mudança.",
+        "cloze": "{{c1::Please keep me in the loop}} on any changes."
+      },
+      {
+        "en": "Please keep me in the loop.",
+        "pt": "Por favor, me mantenha informado.",
+        "cloze": "{{c1::Please keep me in the loop}}."
+      }
+    ]
   },
   {
     "name": "let_me_loop_in",
@@ -1443,55 +3587,153 @@
       "person",
       "topic"
     ],
-    "example": {
-      "person": "John",
-      "topic": "the backend issue"
-    },
+    "examples": [
+      {
+        "person": [
+          "John",
+          "o John"
+        ],
+        "topic": [
+          "the backend issue",
+          "o problema do backend"
+        ]
+      },
+      {
+        "person": [
+          "our designer",
+          "a nossa designer"
+        ],
+        "topic": [
+          "the layout",
+          "o layout"
+        ]
+      },
+      {
+        "person": [
+          "Maria from finance",
+          "a Maria do financeiro"
+        ],
+        "topic": [
+          "the invoices",
+          "as notas fiscais"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let me loop in John to help us with the backend issue.",
-      "pt": "Deixa eu incluir John para nos ajudar com the backend issue.",
-      "cloze": "{{c1::Let me loop in}} John {{c1::to help us with}} the backend issue."
-    }
+    "demos": [
+      {
+        "en": "Let me loop in John to help us with the backend issue.",
+        "pt": "Deixa eu incluir o John para nos ajudar com o problema do backend.",
+        "cloze": "{{c1::Let me loop in}} John {{c1::to help us with}} the backend issue."
+      },
+      {
+        "en": "Let me loop in our designer to help us with the layout.",
+        "pt": "Deixa eu incluir a nossa designer para nos ajudar com o layout.",
+        "cloze": "{{c1::Let me loop in}} our designer {{c1::to help us with}} the layout."
+      },
+      {
+        "en": "Let me loop in Maria from finance to help us with the invoices.",
+        "pt": "Deixa eu incluir a Maria do financeiro para nos ajudar com as notas fiscais.",
+        "cloze": "{{c1::Let me loop in}} Maria from finance {{c1::to help us with}} the invoices."
+      }
+    ]
   },
   {
     "name": "i_have_a_blocker",
     "template": "[[I'm blocked by]] {blocker}.",
-    "pt": "Estou travado por causa de {blocker}.",
+    "pt": "Estou travado por causa {blocker}.",
     "category": "meetings",
     "slots": [
       "blocker"
     ],
-    "example": {
-      "blocker": "the API credentials"
-    },
+    "examples": [
+      {
+        "blocker": [
+          "the API credentials",
+          "das credenciais da API"
+        ]
+      },
+      {
+        "blocker": [
+          "a failing test",
+          "de um teste quebrando"
+        ]
+      },
+      {
+        "blocker": [
+          "missing data",
+          "de dados faltando"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm blocked by the API credentials.",
-      "pt": "Estou travado por causa de the API credentials.",
-      "cloze": "{{c1::I'm blocked by}} the API credentials."
-    }
+    "demos": [
+      {
+        "en": "I'm blocked by the API credentials.",
+        "pt": "Estou travado por causa das credenciais da API.",
+        "cloze": "{{c1::I'm blocked by}} the API credentials."
+      },
+      {
+        "en": "I'm blocked by a failing test.",
+        "pt": "Estou travado por causa de um teste quebrando.",
+        "cloze": "{{c1::I'm blocked by}} a failing test."
+      },
+      {
+        "en": "I'm blocked by missing data.",
+        "pt": "Estou travado por causa de dados faltando.",
+        "cloze": "{{c1::I'm blocked by}} missing data."
+      }
+    ]
   },
   {
     "name": "ill_pick_this_up",
     "template": "[[I'll pick up]] {task}.",
-    "pt": "Eu pego {task}.",
+    "pt": "Eu assumo {task}.",
     "category": "meetings",
     "slots": [
       "task"
     ],
-    "example": {
-      "task": "the login bug"
-    },
+    "examples": [
+      {
+        "task": [
+          "the login bug",
+          "o bug do login"
+        ]
+      },
+      {
+        "task": [
+          "this ticket",
+          "este ticket"
+        ]
+      },
+      {
+        "task": [
+          "the code review",
+          "o code review"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'll pick up the login bug.",
-      "pt": "Eu pego the login bug.",
-      "cloze": "{{c1::I'll pick up}} the login bug."
-    }
+    "demos": [
+      {
+        "en": "I'll pick up the login bug.",
+        "pt": "Eu assumo o bug do login.",
+        "cloze": "{{c1::I'll pick up}} the login bug."
+      },
+      {
+        "en": "I'll pick up this ticket.",
+        "pt": "Eu assumo este ticket.",
+        "cloze": "{{c1::I'll pick up}} this ticket."
+      },
+      {
+        "en": "I'll pick up the code review.",
+        "pt": "Eu assumo o code review.",
+        "cloze": "{{c1::I'll pick up}} the code review."
+      }
+    ]
   },
   {
     "name": "can_you_hear_me",
@@ -1499,14 +3741,16 @@
     "pt": "Vocês estão me ouvindo bem?",
     "category": "meetings",
     "slots": [],
-    "example": {},
+    "examples": [],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Can you hear me okay?",
-      "pt": "Vocês estão me ouvindo bem?",
-      "cloze": "{{c1::Can you hear me okay?}}"
-    }
+    "demos": [
+      {
+        "en": "Can you hear me okay?",
+        "pt": "Vocês estão me ouvindo bem?",
+        "cloze": "{{c1::Can you hear me okay?}}"
+      }
+    ]
   },
   {
     "name": "let_me_share_my_screen",
@@ -1516,38 +3760,93 @@
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "the dashboard"
-    },
+    "examples": [
+      {
+        "thing": [
+          "the dashboard",
+          "o dashboard"
+        ]
+      },
+      {
+        "thing": [
+          "what I mean",
+          "o que eu quero dizer"
+        ]
+      },
+      {
+        "thing": [
+          "the error",
+          "o erro"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let me share my screen and show you the dashboard.",
-      "pt": "Deixa eu compartilhar a tela e te mostrar the dashboard.",
-      "cloze": "{{c1::Let me share my screen and show you}} the dashboard."
-    }
+    "demos": [
+      {
+        "en": "Let me share my screen and show you the dashboard.",
+        "pt": "Deixa eu compartilhar a tela e te mostrar o dashboard.",
+        "cloze": "{{c1::Let me share my screen and show you}} the dashboard."
+      },
+      {
+        "en": "Let me share my screen and show you what I mean.",
+        "pt": "Deixa eu compartilhar a tela e te mostrar o que eu quero dizer.",
+        "cloze": "{{c1::Let me share my screen and show you}} what I mean."
+      },
+      {
+        "en": "Let me share my screen and show you the error.",
+        "pt": "Deixa eu compartilhar a tela e te mostrar o erro.",
+        "cloze": "{{c1::Let me share my screen and show you}} the error."
+      }
+    ]
   },
   {
     "name": "sounds_like_a_plan",
     "template": "{plan}. [[Sounds like a plan?]]",
-    "pt": "{plan}. Fechado?",
+    "pt": "{plan}. Combinado?",
     "category": "meetings",
     "slots": [
       "plan"
     ],
-    "example": {
-      "plan": [
-        "We ship on Friday",
-        "Lançamos na sexta"
-      ]
-    },
+    "examples": [
+      {
+        "plan": [
+          "We ship on Friday",
+          "A gente lança na sexta"
+        ]
+      },
+      {
+        "plan": [
+          "I'll write the docs and you review them",
+          "Eu escrevo a documentação e você revisa"
+        ]
+      },
+      {
+        "plan": [
+          "Let's meet again next week",
+          "Vamos nos reunir de novo semana que vem"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We ship on Friday. Sounds like a plan?",
-      "pt": "Lançamos na sexta. Fechado?",
-      "cloze": "We ship on Friday. {{c1::Sounds like a plan?}}"
-    }
+    "demos": [
+      {
+        "en": "We ship on Friday. Sounds like a plan?",
+        "pt": "A gente lança na sexta. Combinado?",
+        "cloze": "We ship on Friday. {{c1::Sounds like a plan?}}"
+      },
+      {
+        "en": "I'll write the docs and you review them. Sounds like a plan?",
+        "pt": "Eu escrevo a documentação e você revisa. Combinado?",
+        "cloze": "I'll write the docs and you review them. {{c1::Sounds like a plan?}}"
+      },
+      {
+        "en": "Let's meet again next week. Sounds like a plan?",
+        "pt": "Vamos nos reunir de novo semana que vem. Combinado?",
+        "cloze": "Let's meet again next week. {{c1::Sounds like a plan?}}"
+      }
+    ]
   },
   {
     "name": "the_action_items_are",
@@ -1557,73 +3856,189 @@
     "slots": [
       "items"
     ],
-    "example": {
-      "items": "fix the bug, update the docs and schedule the demo"
-    },
+    "examples": [
+      {
+        "items": [
+          "fix the bug, update the docs and schedule the demo",
+          "corrigir o bug, atualizar a documentação e marcar a demo"
+        ]
+      },
+      {
+        "items": [
+          "send the proposal and wait for feedback",
+          "enviar a proposta e esperar o retorno"
+        ]
+      },
+      {
+        "items": [
+          "test the new version on Monday",
+          "testar a nova versão na segunda"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "So the action items are: fix the bug, update the docs and schedule the demo.",
-      "pt": "Então os próximos passos são: fix the bug, update the docs and schedule the demo.",
-      "cloze": "{{c1::So the action items are}}: fix the bug, update the docs and schedule the demo."
-    }
+    "demos": [
+      {
+        "en": "So the action items are: fix the bug, update the docs and schedule the demo.",
+        "pt": "Então os próximos passos são: corrigir o bug, atualizar a documentação e marcar a demo.",
+        "cloze": "{{c1::So the action items are}}: fix the bug, update the docs and schedule the demo."
+      },
+      {
+        "en": "So the action items are: send the proposal and wait for feedback.",
+        "pt": "Então os próximos passos são: enviar a proposta e esperar o retorno.",
+        "cloze": "{{c1::So the action items are}}: send the proposal and wait for feedback."
+      },
+      {
+        "en": "So the action items are: test the new version on Monday.",
+        "pt": "Então os próximos passos são: testar a nova versão na segunda.",
+        "cloze": "{{c1::So the action items are}}: test the new version on Monday."
+      }
+    ]
   },
   {
     "name": "im_not_sure_i_follow",
     "template": "[[Sorry, I'm not sure I follow. Could you elaborate on]] {thing}[[?]]",
-    "pt": "Desculpe, não sei se entendi. Você pode detalhar {thing}?",
+    "pt": "Desculpe, não sei se entendi. Você pode explicar melhor {thing}?",
     "category": "meetings",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "the second point"
-    },
+    "examples": [
+      {
+        "thing": [
+          "the second point",
+          "o segundo ponto"
+        ]
+      },
+      {
+        "thing": [
+          "that last part",
+          "essa última parte"
+        ]
+      },
+      {
+        "thing": [
+          "what you mean by 'scalable'",
+          "o que você quer dizer com 'escalável'"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "Salva vidas quando você não entendeu algo na reunião.",
-    "demo": {
-      "en": "Sorry, I'm not sure I follow. Could you elaborate on the second point?",
-      "pt": "Desculpe, não sei se entendi. Você pode detalhar the second point?",
-      "cloze": "{{c1::Sorry, I'm not sure I follow. Could you elaborate on}} the second point?"
-    }
+    "demos": [
+      {
+        "en": "Sorry, I'm not sure I follow. Could you elaborate on the second point?",
+        "pt": "Desculpe, não sei se entendi. Você pode explicar melhor o segundo ponto?",
+        "cloze": "{{c1::Sorry, I'm not sure I follow. Could you elaborate on}} the second point?"
+      },
+      {
+        "en": "Sorry, I'm not sure I follow. Could you elaborate on that last part?",
+        "pt": "Desculpe, não sei se entendi. Você pode explicar melhor essa última parte?",
+        "cloze": "{{c1::Sorry, I'm not sure I follow. Could you elaborate on}} that last part?"
+      },
+      {
+        "en": "Sorry, I'm not sure I follow. Could you elaborate on what you mean by 'scalable'?",
+        "pt": "Desculpe, não sei se entendi. Você pode explicar melhor o que você quer dizer com 'escalável'?",
+        "cloze": "{{c1::Sorry, I'm not sure I follow. Could you elaborate on}} what you mean by 'scalable'?"
+      }
+    ]
   },
   {
     "name": "lets_take_this_offline",
     "template": "[[Let's take]] {topic} [[offline]].",
-    "pt": "Vamos discutir {topic} fora da reunião.",
+    "pt": "Vamos conversar sobre {topic} fora da reunião.",
     "category": "meetings",
     "slots": [
       "topic"
     ],
-    "example": {
-      "topic": "the pricing discussion"
-    },
+    "examples": [
+      {
+        "topic": [
+          "the pricing discussion",
+          "o preço"
+        ]
+      },
+      {
+        "topic": [
+          "this",
+          "isso"
+        ]
+      },
+      {
+        "topic": [
+          "the technical details",
+          "os detalhes técnicos"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let's take the pricing discussion offline.",
-      "pt": "Vamos discutir the pricing discussion fora da reunião.",
-      "cloze": "{{c1::Let's take}} the pricing discussion {{c1::offline}}."
-    }
+    "demos": [
+      {
+        "en": "Let's take the pricing discussion offline.",
+        "pt": "Vamos conversar sobre o preço fora da reunião.",
+        "cloze": "{{c1::Let's take}} the pricing discussion {{c1::offline}}."
+      },
+      {
+        "en": "Let's take this offline.",
+        "pt": "Vamos conversar sobre isso fora da reunião.",
+        "cloze": "{{c1::Let's take}} this {{c1::offline}}."
+      },
+      {
+        "en": "Let's take the technical details offline.",
+        "pt": "Vamos conversar sobre os detalhes técnicos fora da reunião.",
+        "cloze": "{{c1::Let's take}} the technical details {{c1::offline}}."
+      }
+    ]
   },
   {
     "name": "i_look_forward_to",
     "template": "[[I look forward to]] {thing}.",
-    "pt": "Fico no aguardo de {thing}.",
+    "pt": "Estou ansioso {thing}.",
     "category": "meetings",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "hearing from you"
-    },
+    "examples": [
+      {
+        "thing": [
+          "hearing from you",
+          "pelo seu retorno"
+        ]
+      },
+      {
+        "thing": [
+          "working with you",
+          "para trabalhar com você"
+        ]
+      },
+      {
+        "thing": [
+          "our meeting",
+          "pela nossa reunião"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "Depois de 'to' vem verbo com -ing: 'hearing', 'working', 'meeting'.",
-    "demo": {
-      "en": "I look forward to hearing from you.",
-      "pt": "Fico no aguardo de hearing from you.",
-      "cloze": "{{c1::I look forward to}} hearing from you."
-    }
+    "demos": [
+      {
+        "en": "I look forward to hearing from you.",
+        "pt": "Estou ansioso pelo seu retorno.",
+        "cloze": "{{c1::I look forward to}} hearing from you."
+      },
+      {
+        "en": "I look forward to working with you.",
+        "pt": "Estou ansioso para trabalhar com você.",
+        "cloze": "{{c1::I look forward to}} working with you."
+      },
+      {
+        "en": "I look forward to our meeting.",
+        "pt": "Estou ansioso pela nossa reunião.",
+        "cloze": "{{c1::I look forward to}} our meeting."
+      }
+    ]
   },
   {
     "name": "we_should_consider",
@@ -1633,54 +4048,141 @@
     "slots": [
       "option"
     ],
-    "example": {
-      "option": "using a cache"
-    },
+    "examples": [
+      {
+        "option": [
+          "using a cache",
+          "usar um cache"
+        ]
+      },
+      {
+        "option": [
+          "a different approach",
+          "outra abordagem"
+        ]
+      },
+      {
+        "option": [
+          "hiring a contractor",
+          "contratar um freelancer"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I think we should consider using a cache.",
-      "pt": "Acho que devíamos considerar using a cache.",
-      "cloze": "{{c1::I think we should consider}} using a cache."
-    }
+    "demos": [
+      {
+        "en": "I think we should consider using a cache.",
+        "pt": "Acho que devíamos considerar usar um cache.",
+        "cloze": "{{c1::I think we should consider}} using a cache."
+      },
+      {
+        "en": "I think we should consider a different approach.",
+        "pt": "Acho que devíamos considerar outra abordagem.",
+        "cloze": "{{c1::I think we should consider}} a different approach."
+      },
+      {
+        "en": "I think we should consider hiring a contractor.",
+        "pt": "Acho que devíamos considerar contratar um freelancer.",
+        "cloze": "{{c1::I think we should consider}} hiring a contractor."
+      }
+    ]
   },
   {
     "name": "could_i_get",
     "template": "[[Could I get]] {item}[[, please]]?",
-    "pt": "Pode me ver {item}, por favor?",
+    "pt": "Pode me trazer {item}, por favor?",
     "category": "survival",
     "slots": [
       "item"
     ],
-    "example": {
-      "item": "a glass of water"
-    },
+    "examples": [
+      {
+        "item": [
+          "a glass of water",
+          "um copo de água"
+        ]
+      },
+      {
+        "item": [
+          "a cup of coffee",
+          "uma xícara de café"
+        ]
+      },
+      {
+        "item": [
+          "the menu",
+          "o cardápio"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "Mais educado que 'I want'. Serve para qualquer pedido.",
-    "demo": {
-      "en": "Could I get a glass of water, please?",
-      "pt": "Pode me ver a glass of water, por favor?",
-      "cloze": "{{c1::Could I get}} a glass of water{{c1::, please}}?"
-    }
+    "demos": [
+      {
+        "en": "Could I get a glass of water, please?",
+        "pt": "Pode me trazer um copo de água, por favor?",
+        "cloze": "{{c1::Could I get}} a glass of water{{c1::, please}}?"
+      },
+      {
+        "en": "Could I get a cup of coffee, please?",
+        "pt": "Pode me trazer uma xícara de café, por favor?",
+        "cloze": "{{c1::Could I get}} a cup of coffee{{c1::, please}}?"
+      },
+      {
+        "en": "Could I get the menu, please?",
+        "pt": "Pode me trazer o cardápio, por favor?",
+        "cloze": "{{c1::Could I get}} the menu{{c1::, please}}?"
+      }
+    ]
   },
   {
     "name": "can_i_have",
     "template": "[[Can I have]] {item}[[, please]]?",
-    "pt": "Posso pedir {item}, por favor?",
+    "pt": "Pode me dar {item}, por favor?",
     "category": "survival",
     "slots": [
       "item"
     ],
-    "example": {
-      "item": "the menu"
-    },
+    "examples": [
+      {
+        "item": [
+          "the menu",
+          "o cardápio"
+        ]
+      },
+      {
+        "item": [
+          "some more bread",
+          "mais um pouco de pão"
+        ]
+      },
+      {
+        "item": [
+          "a receipt",
+          "o recibo"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Can I have the menu, please?",
-      "pt": "Posso pedir the menu, por favor?",
-      "cloze": "{{c1::Can I have}} the menu{{c1::, please}}?"
-    }
+    "demos": [
+      {
+        "en": "Can I have the menu, please?",
+        "pt": "Pode me dar o cardápio, por favor?",
+        "cloze": "{{c1::Can I have}} the menu{{c1::, please}}?"
+      },
+      {
+        "en": "Can I have some more bread, please?",
+        "pt": "Pode me dar mais um pouco de pão, por favor?",
+        "cloze": "{{c1::Can I have}} some more bread{{c1::, please}}?"
+      },
+      {
+        "en": "Can I have a receipt, please?",
+        "pt": "Pode me dar o recibo, por favor?",
+        "cloze": "{{c1::Can I have}} a receipt{{c1::, please}}?"
+      }
+    ]
   },
   {
     "name": "ill_have",
@@ -1690,35 +4192,93 @@
     "slots": [
       "item"
     ],
-    "example": {
-      "item": "the chicken salad"
-    },
+    "examples": [
+      {
+        "item": [
+          "the chicken salad",
+          "a salada de frango"
+        ]
+      },
+      {
+        "item": [
+          "a large latte",
+          "um latte grande"
+        ]
+      },
+      {
+        "item": [
+          "the same",
+          "o mesmo"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "Usado na hora de fazer o pedido ao garçom.",
-    "demo": {
-      "en": "I'll have the chicken salad, please.",
-      "pt": "Vou querer the chicken salad, por favor.",
-      "cloze": "{{c1::I'll have}} the chicken salad{{c1::, please}}."
-    }
+    "demos": [
+      {
+        "en": "I'll have the chicken salad, please.",
+        "pt": "Vou querer a salada de frango, por favor.",
+        "cloze": "{{c1::I'll have}} the chicken salad{{c1::, please}}."
+      },
+      {
+        "en": "I'll have a large latte, please.",
+        "pt": "Vou querer um latte grande, por favor.",
+        "cloze": "{{c1::I'll have}} a large latte{{c1::, please}}."
+      },
+      {
+        "en": "I'll have the same, please.",
+        "pt": "Vou querer o mesmo, por favor.",
+        "cloze": "{{c1::I'll have}} the same{{c1::, please}}."
+      }
+    ]
   },
   {
     "name": "could_i_get_extra",
     "template": "[[Could I get an extra]] {item}[[?]]",
-    "pt": "Pode me trazer mais um(a) {item}?",
+    "pt": "Pode me trazer mais {item}?",
     "category": "survival",
     "slots": [
       "item"
     ],
-    "example": {
-      "item": "napkin"
-    },
+    "examples": [
+      {
+        "item": [
+          "napkin",
+          "um guardanapo"
+        ]
+      },
+      {
+        "item": [
+          "plate",
+          "um prato"
+        ]
+      },
+      {
+        "item": [
+          "spoon",
+          "uma colher"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Could I get an extra napkin?",
-      "pt": "Pode me trazer mais um(a) napkin?",
-      "cloze": "{{c1::Could I get an extra}} napkin?"
-    }
+    "demos": [
+      {
+        "en": "Could I get an extra napkin?",
+        "pt": "Pode me trazer mais um guardanapo?",
+        "cloze": "{{c1::Could I get an extra}} napkin?"
+      },
+      {
+        "en": "Could I get an extra plate?",
+        "pt": "Pode me trazer mais um prato?",
+        "cloze": "{{c1::Could I get an extra}} plate?"
+      },
+      {
+        "en": "Could I get an extra spoon?",
+        "pt": "Pode me trazer mais uma colher?",
+        "cloze": "{{c1::Could I get an extra}} spoon?"
+      }
+    ]
   },
   {
     "name": "on_the_side",
@@ -1728,35 +4288,93 @@
     "slots": [
       "item"
     ],
-    "example": {
-      "item": "the dressing"
-    },
+    "examples": [
+      {
+        "item": [
+          "the dressing",
+          "o molho da salada"
+        ]
+      },
+      {
+        "item": [
+          "the sauce",
+          "o molho"
+        ]
+      },
+      {
+        "item": [
+          "the fries",
+          "a batata frita"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Could I get the dressing on the side?",
-      "pt": "Pode trazer the dressing à parte?",
-      "cloze": "{{c1::Could I get}} the dressing {{c1::on the side}}?"
-    }
+    "demos": [
+      {
+        "en": "Could I get the dressing on the side?",
+        "pt": "Pode trazer o molho da salada à parte?",
+        "cloze": "{{c1::Could I get}} the dressing {{c1::on the side}}?"
+      },
+      {
+        "en": "Could I get the sauce on the side?",
+        "pt": "Pode trazer o molho à parte?",
+        "cloze": "{{c1::Could I get}} the sauce {{c1::on the side}}?"
+      },
+      {
+        "en": "Could I get the fries on the side?",
+        "pt": "Pode trazer a batata frita à parte?",
+        "cloze": "{{c1::Could I get}} the fries {{c1::on the side}}?"
+      }
+    ]
   },
   {
     "name": "im_allergic_to",
     "template": "[[I'm allergic to]] {thing}.",
-    "pt": "Eu sou alérgico a {thing}.",
+    "pt": "Tenho alergia a {thing}.",
     "category": "survival",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "peanuts"
-    },
+    "examples": [
+      {
+        "thing": [
+          "peanuts",
+          "amendoim"
+        ]
+      },
+      {
+        "thing": [
+          "shellfish",
+          "frutos do mar"
+        ]
+      },
+      {
+        "thing": [
+          "penicillin",
+          "penicilina"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm allergic to peanuts.",
-      "pt": "Eu sou alérgico a peanuts.",
-      "cloze": "{{c1::I'm allergic to}} peanuts."
-    }
+    "demos": [
+      {
+        "en": "I'm allergic to peanuts.",
+        "pt": "Tenho alergia a amendoim.",
+        "cloze": "{{c1::I'm allergic to}} peanuts."
+      },
+      {
+        "en": "I'm allergic to shellfish.",
+        "pt": "Tenho alergia a frutos do mar.",
+        "cloze": "{{c1::I'm allergic to}} shellfish."
+      },
+      {
+        "en": "I'm allergic to penicillin.",
+        "pt": "Tenho alergia a penicilina.",
+        "cloze": "{{c1::I'm allergic to}} penicillin."
+      }
+    ]
   },
   {
     "name": "could_we_get_the_check",
@@ -1764,73 +4382,173 @@
     "pt": "Pode trazer a conta, por favor?",
     "category": "survival",
     "slots": [],
-    "example": {},
+    "examples": [],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Could we get the check, please?",
-      "pt": "Pode trazer a conta, por favor?",
-      "cloze": "{{c1::Could we get the check, please?}}"
-    }
+    "demos": [
+      {
+        "en": "Could we get the check, please?",
+        "pt": "Pode trazer a conta, por favor?",
+        "cloze": "{{c1::Could we get the check, please?}}"
+      }
+    ]
   },
   {
     "name": "how_do_i_get_to",
     "template": "[[Excuse me, how do I get to]] {place}[[?]]",
-    "pt": "Com licença, como eu chego em {place}?",
+    "pt": "Com licença, como eu chego {place}?",
     "category": "survival",
     "slots": [
       "place"
     ],
-    "example": {
-      "place": "the train station"
-    },
+    "examples": [
+      {
+        "place": [
+          "the train station",
+          "à estação de trem"
+        ]
+      },
+      {
+        "place": [
+          "the city center",
+          "ao centro"
+        ]
+      },
+      {
+        "place": [
+          "Gate 12",
+          "ao portão 12"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Excuse me, how do I get to the train station?",
-      "pt": "Com licença, como eu chego em the train station?",
-      "cloze": "{{c1::Excuse me, how do I get to}} the train station?"
-    }
+    "demos": [
+      {
+        "en": "Excuse me, how do I get to the train station?",
+        "pt": "Com licença, como eu chego à estação de trem?",
+        "cloze": "{{c1::Excuse me, how do I get to}} the train station?"
+      },
+      {
+        "en": "Excuse me, how do I get to the city center?",
+        "pt": "Com licença, como eu chego ao centro?",
+        "cloze": "{{c1::Excuse me, how do I get to}} the city center?"
+      },
+      {
+        "en": "Excuse me, how do I get to Gate 12?",
+        "pt": "Com licença, como eu chego ao portão 12?",
+        "cloze": "{{c1::Excuse me, how do I get to}} Gate 12?"
+      }
+    ]
   },
   {
     "name": "which_train_goes_to",
     "template": "[[Which train goes to]] {place}[[?]]",
-    "pt": "Qual trem vai para {place}?",
+    "pt": "Qual trem vai {place}?",
     "category": "survival",
     "slots": [
       "place"
     ],
-    "example": {
-      "place": "Manhattan"
-    },
+    "examples": [
+      {
+        "place": [
+          "Manhattan",
+          "para Manhattan"
+        ]
+      },
+      {
+        "place": [
+          "the airport",
+          "para o aeroporto"
+        ]
+      },
+      {
+        "place": [
+          "downtown",
+          "para o centro"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Which train goes to Manhattan?",
-      "pt": "Qual trem vai para Manhattan?",
-      "cloze": "{{c1::Which train goes to}} Manhattan?"
-    }
+    "demos": [
+      {
+        "en": "Which train goes to Manhattan?",
+        "pt": "Qual trem vai para Manhattan?",
+        "cloze": "{{c1::Which train goes to}} Manhattan?"
+      },
+      {
+        "en": "Which train goes to the airport?",
+        "pt": "Qual trem vai para o aeroporto?",
+        "cloze": "{{c1::Which train goes to}} the airport?"
+      },
+      {
+        "en": "Which train goes to downtown?",
+        "pt": "Qual trem vai para o centro?",
+        "cloze": "{{c1::Which train goes to}} downtown?"
+      }
+    ]
   },
   {
     "name": "a_ticket_to",
     "template": "[[I'd like]] {kind} [[ticket to]] {place}[[, please]].",
-    "pt": "Eu gostaria de uma passagem {kind} para {place}, por favor.",
+    "pt": "Eu queria {kind} para {place}, por favor.",
     "category": "survival",
     "slots": [
       "kind",
       "place"
     ],
-    "example": {
-      "kind": "a one-way",
-      "place": "Boston"
-    },
+    "examples": [
+      {
+        "kind": [
+          "a one-way",
+          "uma passagem só de ida"
+        ],
+        "place": [
+          "Boston",
+          "Boston"
+        ]
+      },
+      {
+        "kind": [
+          "a round-trip",
+          "uma passagem de ida e volta"
+        ],
+        "place": [
+          "Chicago",
+          "Chicago"
+        ]
+      },
+      {
+        "kind": [
+          "a",
+          "uma passagem"
+        ],
+        "place": [
+          "the airport",
+          "o aeroporto"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "kind: 'a', 'a one-way' (só ida), 'a round-trip' (ida e volta).",
-    "demo": {
-      "en": "I'd like a one-way ticket to Boston, please.",
-      "pt": "Eu gostaria de uma passagem a one-way para Boston, por favor.",
-      "cloze": "{{c1::I'd like}} a one-way {{c1::ticket to}} Boston{{c1::, please}}."
-    }
+    "demos": [
+      {
+        "en": "I'd like a one-way ticket to Boston, please.",
+        "pt": "Eu queria uma passagem só de ida para Boston, por favor.",
+        "cloze": "{{c1::I'd like}} a one-way {{c1::ticket to}} Boston{{c1::, please}}."
+      },
+      {
+        "en": "I'd like a round-trip ticket to Chicago, please.",
+        "pt": "Eu queria uma passagem de ida e volta para Chicago, por favor.",
+        "cloze": "{{c1::I'd like}} a round-trip {{c1::ticket to}} Chicago{{c1::, please}}."
+      },
+      {
+        "en": "I'd like a ticket to the airport, please.",
+        "pt": "Eu queria uma passagem para o aeroporto, por favor.",
+        "cloze": "{{c1::I'd like}} a {{c1::ticket to}} the airport{{c1::, please}}."
+      }
+    ]
   },
   {
     "name": "how_long_does_it_take",
@@ -1840,73 +4558,189 @@
     "slots": [
       "action"
     ],
-    "example": {
-      "action": "get to the airport"
-    },
+    "examples": [
+      {
+        "action": [
+          "get to the airport",
+          "chegar ao aeroporto"
+        ]
+      },
+      {
+        "action": [
+          "walk there",
+          "ir a pé até lá"
+        ]
+      },
+      {
+        "action": [
+          "get my order",
+          "o meu pedido ficar pronto"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "How long does it take to get to the airport?",
-      "pt": "Quanto tempo leva para get to the airport?",
-      "cloze": "{{c1::How long does it take to}} get to the airport?"
-    }
+    "demos": [
+      {
+        "en": "How long does it take to get to the airport?",
+        "pt": "Quanto tempo leva para chegar ao aeroporto?",
+        "cloze": "{{c1::How long does it take to}} get to the airport?"
+      },
+      {
+        "en": "How long does it take to walk there?",
+        "pt": "Quanto tempo leva para ir a pé até lá?",
+        "cloze": "{{c1::How long does it take to}} walk there?"
+      },
+      {
+        "en": "How long does it take to get my order?",
+        "pt": "Quanto tempo leva para o meu pedido ficar pronto?",
+        "cloze": "{{c1::How long does it take to}} get my order?"
+      }
+    ]
   },
   {
     "name": "heading_to",
     "template": "[[I'm heading to]] {place}.",
-    "pt": "Estou indo para {place}.",
+    "pt": "Estou indo {place}.",
     "category": "survival",
     "slots": [
       "place"
     ],
-    "example": {
-      "place": "the airport"
-    },
+    "examples": [
+      {
+        "place": [
+          "the airport",
+          "para o aeroporto"
+        ]
+      },
+      {
+        "place": [
+          "the hotel",
+          "para o hotel"
+        ]
+      },
+      {
+        "place": [
+          "a meeting",
+          "para uma reunião"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm heading to the airport.",
-      "pt": "Estou indo para the airport.",
-      "cloze": "{{c1::I'm heading to}} the airport."
-    }
+    "demos": [
+      {
+        "en": "I'm heading to the airport.",
+        "pt": "Estou indo para o aeroporto.",
+        "cloze": "{{c1::I'm heading to}} the airport."
+      },
+      {
+        "en": "I'm heading to the hotel.",
+        "pt": "Estou indo para o hotel.",
+        "cloze": "{{c1::I'm heading to}} the hotel."
+      },
+      {
+        "en": "I'm heading to a meeting.",
+        "pt": "Estou indo para uma reunião.",
+        "cloze": "{{c1::I'm heading to}} a meeting."
+      }
+    ]
   },
   {
     "name": "is_this_the_right_way_to",
     "template": "[[Is this the right way to]] {place}[[?]]",
-    "pt": "Esse é o caminho certo para {place}?",
+    "pt": "Este é o caminho certo {place}?",
     "category": "survival",
     "slots": [
       "place"
     ],
-    "example": {
-      "place": "downtown"
-    },
+    "examples": [
+      {
+        "place": [
+          "downtown",
+          "para o centro"
+        ]
+      },
+      {
+        "place": [
+          "the museum",
+          "para o museu"
+        ]
+      },
+      {
+        "place": [
+          "the subway",
+          "para o metrô"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Is this the right way to downtown?",
-      "pt": "Esse é o caminho certo para downtown?",
-      "cloze": "{{c1::Is this the right way to}} downtown?"
-    }
+    "demos": [
+      {
+        "en": "Is this the right way to downtown?",
+        "pt": "Este é o caminho certo para o centro?",
+        "cloze": "{{c1::Is this the right way to}} downtown?"
+      },
+      {
+        "en": "Is this the right way to the museum?",
+        "pt": "Este é o caminho certo para o museu?",
+        "cloze": "{{c1::Is this the right way to}} the museum?"
+      },
+      {
+        "en": "Is this the right way to the subway?",
+        "pt": "Este é o caminho certo para o metrô?",
+        "cloze": "{{c1::Is this the right way to}} the subway?"
+      }
+    ]
   },
   {
     "name": "do_you_have_this_in",
     "template": "[[Do you have this in]] {variant}[[?]]",
-    "pt": "Vocês têm isso em {variant}?",
+    "pt": "Tem esse {variant}?",
     "category": "survival",
     "slots": [
       "variant"
     ],
-    "example": {
-      "variant": "a medium"
-    },
+    "examples": [
+      {
+        "variant": [
+          "a medium",
+          "no tamanho M"
+        ]
+      },
+      {
+        "variant": [
+          "black",
+          "em preto"
+        ]
+      },
+      {
+        "variant": [
+          "a bigger size",
+          "num tamanho maior"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Do you have this in a medium?",
-      "pt": "Vocês têm isso em a medium?",
-      "cloze": "{{c1::Do you have this in}} a medium?"
-    }
+    "demos": [
+      {
+        "en": "Do you have this in a medium?",
+        "pt": "Tem esse no tamanho M?",
+        "cloze": "{{c1::Do you have this in}} a medium?"
+      },
+      {
+        "en": "Do you have this in black?",
+        "pt": "Tem esse em preto?",
+        "cloze": "{{c1::Do you have this in}} black?"
+      },
+      {
+        "en": "Do you have this in a bigger size?",
+        "pt": "Tem esse num tamanho maior?",
+        "cloze": "{{c1::Do you have this in}} a bigger size?"
+      }
+    ]
   },
   {
     "name": "how_much_is",
@@ -1916,31 +4750,62 @@
     "slots": [
       "item"
     ],
-    "example": {
-      "item": "this jacket"
-    },
+    "examples": [
+      {
+        "item": [
+          "this jacket",
+          "esta jaqueta"
+        ]
+      },
+      {
+        "item": [
+          "a ticket",
+          "uma passagem"
+        ]
+      },
+      {
+        "item": [
+          "the room per night",
+          "a diária do quarto"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "How much is this jacket?",
-      "pt": "Quanto custa this jacket?",
-      "cloze": "{{c1::How much is}} this jacket?"
-    }
+    "demos": [
+      {
+        "en": "How much is this jacket?",
+        "pt": "Quanto custa esta jaqueta?",
+        "cloze": "{{c1::How much is}} this jacket?"
+      },
+      {
+        "en": "How much is a ticket?",
+        "pt": "Quanto custa uma passagem?",
+        "cloze": "{{c1::How much is}} a ticket?"
+      },
+      {
+        "en": "How much is the room per night?",
+        "pt": "Quanto custa a diária do quarto?",
+        "cloze": "{{c1::How much is}} the room per night?"
+      }
+    ]
   },
   {
     "name": "im_just_looking",
     "template": "[[I'm just looking, thanks.]]",
-    "pt": "Só estou olhando, obrigado.",
+    "pt": "Só estou dando uma olhada, obrigado.",
     "category": "survival",
     "slots": [],
-    "example": {},
+    "examples": [],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'm just looking, thanks.",
-      "pt": "Só estou olhando, obrigado.",
-      "cloze": "{{c1::I'm just looking, thanks.}}"
-    }
+    "demos": [
+      {
+        "en": "I'm just looking, thanks.",
+        "pt": "Só estou dando uma olhada, obrigado.",
+        "cloze": "{{c1::I'm just looking, thanks.}}"
+      }
+    ]
   },
   {
     "name": "can_i_pay_with",
@@ -1950,16 +4815,45 @@
     "slots": [
       "method"
     ],
-    "example": {
-      "method": "a credit card"
-    },
+    "examples": [
+      {
+        "method": [
+          "a credit card",
+          "cartão de crédito"
+        ]
+      },
+      {
+        "method": [
+          "cash",
+          "dinheiro"
+        ]
+      },
+      {
+        "method": [
+          "my phone",
+          "o celular"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Can I pay with a credit card?",
-      "pt": "Posso pagar com a credit card?",
-      "cloze": "{{c1::Can I pay with}} a credit card?"
-    }
+    "demos": [
+      {
+        "en": "Can I pay with a credit card?",
+        "pt": "Posso pagar com cartão de crédito?",
+        "cloze": "{{c1::Can I pay with}} a credit card?"
+      },
+      {
+        "en": "Can I pay with cash?",
+        "pt": "Posso pagar com dinheiro?",
+        "cloze": "{{c1::Can I pay with}} cash?"
+      },
+      {
+        "en": "Can I pay with my phone?",
+        "pt": "Posso pagar com o celular?",
+        "cloze": "{{c1::Can I pay with}} my phone?"
+      }
+    ]
   },
   {
     "name": "do_you_have_something_for",
@@ -1969,35 +4863,93 @@
     "slots": [
       "problem"
     ],
-    "example": {
-      "problem": "a headache"
-    },
+    "examples": [
+      {
+        "problem": [
+          "a headache",
+          "dor de cabeça"
+        ]
+      },
+      {
+        "problem": [
+          "a sore throat",
+          "dor de garganta"
+        ]
+      },
+      {
+        "problem": [
+          "a fever",
+          "febre"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Do you have something for a headache?",
-      "pt": "Você tem alguma coisa para a headache?",
-      "cloze": "{{c1::Do you have something for}} a headache?"
-    }
+    "demos": [
+      {
+        "en": "Do you have something for a headache?",
+        "pt": "Você tem alguma coisa para dor de cabeça?",
+        "cloze": "{{c1::Do you have something for}} a headache?"
+      },
+      {
+        "en": "Do you have something for a sore throat?",
+        "pt": "Você tem alguma coisa para dor de garganta?",
+        "cloze": "{{c1::Do you have something for}} a sore throat?"
+      },
+      {
+        "en": "Do you have something for a fever?",
+        "pt": "Você tem alguma coisa para febre?",
+        "cloze": "{{c1::Do you have something for}} a fever?"
+      }
+    ]
   },
   {
     "name": "how_often_should_i",
     "template": "[[How often should I]] {action}[[?]]",
-    "pt": "Com que frequência eu devo {action}?",
+    "pt": "De quanto em quanto tempo eu devo {action}?",
     "category": "survival",
     "slots": [
       "action"
     ],
-    "example": {
-      "action": "take this medicine"
-    },
+    "examples": [
+      {
+        "action": [
+          "take this medicine",
+          "tomar este remédio"
+        ]
+      },
+      {
+        "action": [
+          "give it to him",
+          "dar para ele"
+        ]
+      },
+      {
+        "action": [
+          "change the bandage",
+          "trocar o curativo"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "How often should I take this medicine?",
-      "pt": "Com que frequência eu devo take this medicine?",
-      "cloze": "{{c1::How often should I}} take this medicine?"
-    }
+    "demos": [
+      {
+        "en": "How often should I take this medicine?",
+        "pt": "De quanto em quanto tempo eu devo tomar este remédio?",
+        "cloze": "{{c1::How often should I}} take this medicine?"
+      },
+      {
+        "en": "How often should I give it to him?",
+        "pt": "De quanto em quanto tempo eu devo dar para ele?",
+        "cloze": "{{c1::How often should I}} give it to him?"
+      },
+      {
+        "en": "How often should I change the bandage?",
+        "pt": "De quanto em quanto tempo eu devo trocar o curativo?",
+        "cloze": "{{c1::How often should I}} change the bandage?"
+      }
+    ]
   },
   {
     "name": "i_have_a_reservation_under",
@@ -2007,54 +4959,141 @@
     "slots": [
       "name"
     ],
-    "example": {
-      "name": "Barros"
-    },
+    "examples": [
+      {
+        "name": [
+          "Barros",
+          "Barros"
+        ]
+      },
+      {
+        "name": [
+          "Igor Barros",
+          "Igor Barros"
+        ]
+      },
+      {
+        "name": [
+          "PGBA Solutions",
+          "PGBA Solutions"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I have a reservation under Barros.",
-      "pt": "Tenho uma reserva no nome de Barros.",
-      "cloze": "{{c1::I have a reservation under}} Barros."
-    }
+    "demos": [
+      {
+        "en": "I have a reservation under Barros.",
+        "pt": "Tenho uma reserva no nome de Barros.",
+        "cloze": "{{c1::I have a reservation under}} Barros."
+      },
+      {
+        "en": "I have a reservation under Igor Barros.",
+        "pt": "Tenho uma reserva no nome de Igor Barros.",
+        "cloze": "{{c1::I have a reservation under}} Igor Barros."
+      },
+      {
+        "en": "I have a reservation under PGBA Solutions.",
+        "pt": "Tenho uma reserva no nome de PGBA Solutions.",
+        "cloze": "{{c1::I have a reservation under}} PGBA Solutions."
+      }
+    ]
   },
   {
     "name": "what_time_is",
     "template": "[[What time is]] {event}[[?]]",
-    "pt": "Que horas é {event}?",
+    "pt": "A que horas é {event}?",
     "category": "survival",
     "slots": [
       "event"
     ],
-    "example": {
-      "event": "check-out"
-    },
+    "examples": [
+      {
+        "event": [
+          "check-out",
+          "o check-out"
+        ]
+      },
+      {
+        "event": [
+          "breakfast",
+          "o café da manhã"
+        ]
+      },
+      {
+        "event": [
+          "the last train",
+          "o último trem"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "What time is check-out?",
-      "pt": "Que horas é check-out?",
-      "cloze": "{{c1::What time is}} check-out?"
-    }
+    "demos": [
+      {
+        "en": "What time is check-out?",
+        "pt": "A que horas é o check-out?",
+        "cloze": "{{c1::What time is}} check-out?"
+      },
+      {
+        "en": "What time is breakfast?",
+        "pt": "A que horas é o café da manhã?",
+        "cloze": "{{c1::What time is}} breakfast?"
+      },
+      {
+        "en": "What time is the last train?",
+        "pt": "A que horas é o último trem?",
+        "cloze": "{{c1::What time is}} the last train?"
+      }
+    ]
   },
   {
     "name": "fetch_the_data_from",
     "template": "[[We need to fetch the data from]] {source}.",
-    "pt": "Precisamos buscar os dados de {source}.",
+    "pt": "Precisamos buscar os dados {source}.",
     "category": "tech",
     "slots": [
       "source"
     ],
-    "example": {
-      "source": "the SAP database"
-    },
+    "examples": [
+      {
+        "source": [
+          "the SAP database",
+          "do banco do SAP"
+        ]
+      },
+      {
+        "source": [
+          "the client's API",
+          "da API do cliente"
+        ]
+      },
+      {
+        "source": [
+          "these spreadsheets",
+          "destas planilhas"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We need to fetch the data from the SAP database.",
-      "pt": "Precisamos buscar os dados de the SAP database.",
-      "cloze": "{{c1::We need to fetch the data from}} the SAP database."
-    }
+    "demos": [
+      {
+        "en": "We need to fetch the data from the SAP database.",
+        "pt": "Precisamos buscar os dados do banco do SAP.",
+        "cloze": "{{c1::We need to fetch the data from}} the SAP database."
+      },
+      {
+        "en": "We need to fetch the data from the client's API.",
+        "pt": "Precisamos buscar os dados da API do cliente.",
+        "cloze": "{{c1::We need to fetch the data from}} the client's API."
+      },
+      {
+        "en": "We need to fetch the data from these spreadsheets.",
+        "pt": "Precisamos buscar os dados destas planilhas.",
+        "cloze": "{{c1::We need to fetch the data from}} these spreadsheets."
+      }
+    ]
   },
   {
     "name": "clean_up_the_dataset",
@@ -2064,102 +5103,263 @@
     "slots": [
       "time"
     ],
-    "example": {
-      "time": [
-        "the whole morning",
-        "a manhã toda"
-      ]
-    },
+    "examples": [
+      {
+        "time": [
+          "the whole morning",
+          "a manhã inteira"
+        ]
+      },
+      {
+        "time": [
+          "two days",
+          "dois dias"
+        ]
+      },
+      {
+        "time": [
+          "an hour",
+          "uma hora"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I spent the whole morning cleaning up the dataset.",
-      "pt": "Passei a manhã toda limpando o dataset.",
-      "cloze": "{{c1::I spent}} the whole morning {{c1::cleaning up the dataset}}."
-    }
+    "demos": [
+      {
+        "en": "I spent the whole morning cleaning up the dataset.",
+        "pt": "Passei a manhã inteira limpando o dataset.",
+        "cloze": "{{c1::I spent}} the whole morning {{c1::cleaning up the dataset}}."
+      },
+      {
+        "en": "I spent two days cleaning up the dataset.",
+        "pt": "Passei dois dias limpando o dataset.",
+        "cloze": "{{c1::I spent}} two days {{c1::cleaning up the dataset}}."
+      },
+      {
+        "en": "I spent an hour cleaning up the dataset.",
+        "pt": "Passei uma hora limpando o dataset.",
+        "cloze": "{{c1::I spent}} an hour {{c1::cleaning up the dataset}}."
+      }
+    ]
   },
   {
     "name": "fine_tune_the_model",
     "template": "[[We need]] {resource} [[to fine-tune the model]].",
-    "pt": "Precisamos de {resource} para ajustar o modelo.",
+    "pt": "Precisamos de {resource} para fazer o ajuste fino do modelo.",
     "category": "tech",
     "slots": [
       "resource"
     ],
-    "example": {
-      "resource": "more data"
-    },
+    "examples": [
+      {
+        "resource": [
+          "more data",
+          "mais dados"
+        ]
+      },
+      {
+        "resource": [
+          "labeled examples",
+          "exemplos rotulados"
+        ]
+      },
+      {
+        "resource": [
+          "a bigger GPU",
+          "uma GPU maior"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We need more data to fine-tune the model.",
-      "pt": "Precisamos de more data para ajustar o modelo.",
-      "cloze": "{{c1::We need}} more data {{c1::to fine-tune the model}}."
-    }
+    "demos": [
+      {
+        "en": "We need more data to fine-tune the model.",
+        "pt": "Precisamos de mais dados para fazer o ajuste fino do modelo.",
+        "cloze": "{{c1::We need}} more data {{c1::to fine-tune the model}}."
+      },
+      {
+        "en": "We need labeled examples to fine-tune the model.",
+        "pt": "Precisamos de exemplos rotulados para fazer o ajuste fino do modelo.",
+        "cloze": "{{c1::We need}} labeled examples {{c1::to fine-tune the model}}."
+      },
+      {
+        "en": "We need a bigger GPU to fine-tune the model.",
+        "pt": "Precisamos de uma GPU maior para fazer o ajuste fino do modelo.",
+        "cloze": "{{c1::We need}} a bigger GPU {{c1::to fine-tune the model}}."
+      }
+    ]
   },
   {
     "name": "push_the_changes",
     "template": "[[I'll push the changes to]] {branch}.",
-    "pt": "Vou subir as alterações para {branch}.",
+    "pt": "Vou subir as alterações {branch}.",
     "category": "tech",
     "slots": [
       "branch"
     ],
-    "example": {
-      "branch": "the dev branch"
-    },
+    "examples": [
+      {
+        "branch": [
+          "the dev branch",
+          "para a branch de dev"
+        ]
+      },
+      {
+        "branch": [
+          "main",
+          "para a main"
+        ]
+      },
+      {
+        "branch": [
+          "my fork",
+          "para o meu fork"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I'll push the changes to the dev branch.",
-      "pt": "Vou subir as alterações para the dev branch.",
-      "cloze": "{{c1::I'll push the changes to}} the dev branch."
-    }
+    "demos": [
+      {
+        "en": "I'll push the changes to the dev branch.",
+        "pt": "Vou subir as alterações para a branch de dev.",
+        "cloze": "{{c1::I'll push the changes to}} the dev branch."
+      },
+      {
+        "en": "I'll push the changes to main.",
+        "pt": "Vou subir as alterações para a main.",
+        "cloze": "{{c1::I'll push the changes to}} main."
+      },
+      {
+        "en": "I'll push the changes to my fork.",
+        "pt": "Vou subir as alterações para o meu fork.",
+        "cloze": "{{c1::I'll push the changes to}} my fork."
+      }
+    ]
   },
   {
     "name": "refactor",
     "template": "[[We need to refactor]] {code} [[to make it]] {quality}.",
-    "pt": "Precisamos refatorar {code} para deixá-lo {quality}.",
+    "pt": "Precisamos refatorar {code} para deixar {quality}.",
     "category": "tech",
     "slots": [
       "code",
       "quality"
     ],
-    "example": {
-      "code": "the auth module",
-      "quality": [
-        "more maintainable",
-        "mais fácil de manter"
-      ]
-    },
+    "examples": [
+      {
+        "code": [
+          "the auth module",
+          "o módulo de autenticação"
+        ],
+        "quality": [
+          "more maintainable",
+          "mais fácil de manter"
+        ]
+      },
+      {
+        "code": [
+          "this function",
+          "esta função"
+        ],
+        "quality": [
+          "easier to test",
+          "mais fácil de testar"
+        ]
+      },
+      {
+        "code": [
+          "the API layer",
+          "a camada da API"
+        ],
+        "quality": [
+          "faster",
+          "mais rápida"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We need to refactor the auth module to make it more maintainable.",
-      "pt": "Precisamos refatorar the auth module para deixá-lo mais fácil de manter.",
-      "cloze": "{{c1::We need to refactor}} the auth module {{c1::to make it}} more maintainable."
-    }
+    "demos": [
+      {
+        "en": "We need to refactor the auth module to make it more maintainable.",
+        "pt": "Precisamos refatorar o módulo de autenticação para deixar mais fácil de manter.",
+        "cloze": "{{c1::We need to refactor}} the auth module {{c1::to make it}} more maintainable."
+      },
+      {
+        "en": "We need to refactor this function to make it easier to test.",
+        "pt": "Precisamos refatorar esta função para deixar mais fácil de testar.",
+        "cloze": "{{c1::We need to refactor}} this function {{c1::to make it}} easier to test."
+      },
+      {
+        "en": "We need to refactor the API layer to make it faster.",
+        "pt": "Precisamos refatorar a camada da API para deixar mais rápida.",
+        "cloze": "{{c1::We need to refactor}} the API layer {{c1::to make it}} faster."
+      }
+    ]
   },
   {
     "name": "avoid_hardcoding",
     "template": "[[Avoid hardcoding]] {thing}[[; use]] {alternative} [[instead]].",
-    "pt": "Evite deixar {thing} fixo no código; use {alternative}.",
+    "pt": "Evite colocar {thing} direto no código; use {alternative}.",
     "category": "tech",
     "slots": [
       "thing",
       "alternative"
     ],
-    "example": {
-      "thing": "the API keys",
-      "alternative": "environment variables"
-    },
+    "examples": [
+      {
+        "thing": [
+          "the API keys",
+          "as chaves da API"
+        ],
+        "alternative": [
+          "environment variables",
+          "variáveis de ambiente"
+        ]
+      },
+      {
+        "thing": [
+          "the URL",
+          "a URL"
+        ],
+        "alternative": [
+          "a config file",
+          "um arquivo de configuração"
+        ]
+      },
+      {
+        "thing": [
+          "the tax rate",
+          "a alíquota"
+        ],
+        "alternative": [
+          "a database table",
+          "uma tabela no banco"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Avoid hardcoding the API keys; use environment variables instead.",
-      "pt": "Evite deixar the API keys fixo no código; use environment variables.",
-      "cloze": "{{c1::Avoid hardcoding}} the API keys{{c1::; use}} environment variables {{c1::instead}}."
-    }
+    "demos": [
+      {
+        "en": "Avoid hardcoding the API keys; use environment variables instead.",
+        "pt": "Evite colocar as chaves da API direto no código; use variáveis de ambiente.",
+        "cloze": "{{c1::Avoid hardcoding}} the API keys{{c1::; use}} environment variables {{c1::instead}}."
+      },
+      {
+        "en": "Avoid hardcoding the URL; use a config file instead.",
+        "pt": "Evite colocar a URL direto no código; use um arquivo de configuração.",
+        "cloze": "{{c1::Avoid hardcoding}} the URL{{c1::; use}} a config file {{c1::instead}}."
+      },
+      {
+        "en": "Avoid hardcoding the tax rate; use a database table instead.",
+        "pt": "Evite colocar a alíquota direto no código; use uma tabela no banco.",
+        "cloze": "{{c1::Avoid hardcoding}} the tax rate{{c1::; use}} a database table {{c1::instead}}."
+      }
+    ]
   },
   {
     "name": "did_you_test_the_edge_case",
@@ -2169,189 +5369,490 @@
     "slots": [
       "situation"
     ],
-    "example": {
-      "situation": "the user has no internet"
-    },
+    "examples": [
+      {
+        "situation": [
+          "the user has no internet",
+          "o usuário está sem internet"
+        ]
+      },
+      {
+        "situation": [
+          "the list is empty",
+          "a lista está vazia"
+        ]
+      },
+      {
+        "situation": [
+          "two requests arrive at the same time",
+          "chegam duas requisições ao mesmo tempo"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Did you test for the edge case where the user has no internet?",
-      "pt": "Você testou o caso extremo em que the user has no internet?",
-      "cloze": "{{c1::Did you test for the edge case where}} the user has no internet?"
-    }
+    "demos": [
+      {
+        "en": "Did you test for the edge case where the user has no internet?",
+        "pt": "Você testou o caso extremo em que o usuário está sem internet?",
+        "cloze": "{{c1::Did you test for the edge case where}} the user has no internet?"
+      },
+      {
+        "en": "Did you test for the edge case where the list is empty?",
+        "pt": "Você testou o caso extremo em que a lista está vazia?",
+        "cloze": "{{c1::Did you test for the edge case where}} the list is empty?"
+      },
+      {
+        "en": "Did you test for the edge case where two requests arrive at the same time?",
+        "pt": "Você testou o caso extremo em que chegam duas requisições ao mesmo tempo?",
+        "cloze": "{{c1::Did you test for the edge case where}} two requests arrive at the same time?"
+      }
+    ]
   },
   {
     "name": "pay_off_tech_debt",
     "template": "[[We need to allocate time]] {when} [[to pay off some tech debt]].",
-    "pt": "Precisamos reservar tempo {when} para pagar dívida técnica.",
+    "pt": "Precisamos reservar tempo {when} para pagar parte da dívida técnica.",
     "category": "tech",
     "slots": [
       "when"
     ],
-    "example": {
-      "when": "next sprint"
-    },
+    "examples": [
+      {
+        "when": [
+          "next sprint",
+          "na próxima sprint"
+        ]
+      },
+      {
+        "when": [
+          "every Friday",
+          "toda sexta"
+        ]
+      },
+      {
+        "when": [
+          "this quarter",
+          "neste trimestre"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We need to allocate time next sprint to pay off some tech debt.",
-      "pt": "Precisamos reservar tempo next sprint para pagar dívida técnica.",
-      "cloze": "{{c1::We need to allocate time}} next sprint {{c1::to pay off some tech debt}}."
-    }
+    "demos": [
+      {
+        "en": "We need to allocate time next sprint to pay off some tech debt.",
+        "pt": "Precisamos reservar tempo na próxima sprint para pagar parte da dívida técnica.",
+        "cloze": "{{c1::We need to allocate time}} next sprint {{c1::to pay off some tech debt}}."
+      },
+      {
+        "en": "We need to allocate time every Friday to pay off some tech debt.",
+        "pt": "Precisamos reservar tempo toda sexta para pagar parte da dívida técnica.",
+        "cloze": "{{c1::We need to allocate time}} every Friday {{c1::to pay off some tech debt}}."
+      },
+      {
+        "en": "We need to allocate time this quarter to pay off some tech debt.",
+        "pt": "Precisamos reservar tempo neste trimestre para pagar parte da dívida técnica.",
+        "cloze": "{{c1::We need to allocate time}} this quarter {{c1::to pay off some tech debt}}."
+      }
+    ]
   },
   {
     "name": "we_found_the_root_cause",
     "template": "[[We found the root cause of]] {problem}.",
-    "pt": "Encontramos a causa raiz de {problem}.",
+    "pt": "Encontramos a causa raiz {problem}.",
     "category": "tech",
     "slots": [
       "problem"
     ],
-    "example": {
-      "problem": "the memory leak"
-    },
+    "examples": [
+      {
+        "problem": [
+          "the memory leak",
+          "do vazamento de memória"
+        ]
+      },
+      {
+        "problem": [
+          "the outage",
+          "da queda do sistema"
+        ]
+      },
+      {
+        "problem": [
+          "the duplicate records",
+          "dos registros duplicados"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We found the root cause of the memory leak.",
-      "pt": "Encontramos a causa raiz de the memory leak.",
-      "cloze": "{{c1::We found the root cause of}} the memory leak."
-    }
+    "demos": [
+      {
+        "en": "We found the root cause of the memory leak.",
+        "pt": "Encontramos a causa raiz do vazamento de memória.",
+        "cloze": "{{c1::We found the root cause of}} the memory leak."
+      },
+      {
+        "en": "We found the root cause of the outage.",
+        "pt": "Encontramos a causa raiz da queda do sistema.",
+        "cloze": "{{c1::We found the root cause of}} the outage."
+      },
+      {
+        "en": "We found the root cause of the duplicate records.",
+        "pt": "Encontramos a causa raiz dos registros duplicados.",
+        "cloze": "{{c1::We found the root cause of}} the duplicate records."
+      }
+    ]
   },
   {
     "name": "theres_a_workaround",
     "template": "[[We don't have a fix yet, but there's a workaround for]] {problem}.",
-    "pt": "Ainda não temos correção, mas há uma solução paliativa para {problem}.",
+    "pt": "Ainda não temos a correção, mas há uma solução provisória para {problem}.",
     "category": "tech",
     "slots": [
       "problem"
     ],
-    "example": {
-      "problem": "the timeout issue"
-    },
+    "examples": [
+      {
+        "problem": [
+          "the timeout issue",
+          "o problema de timeout"
+        ]
+      },
+      {
+        "problem": [
+          "the login error",
+          "o erro no login"
+        ]
+      },
+      {
+        "problem": [
+          "the slow report",
+          "o relatório lento"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We don't have a fix yet, but there's a workaround for the timeout issue.",
-      "pt": "Ainda não temos correção, mas há uma solução paliativa para the timeout issue.",
-      "cloze": "{{c1::We don't have a fix yet, but there's a workaround for}} the timeout issue."
-    }
+    "demos": [
+      {
+        "en": "We don't have a fix yet, but there's a workaround for the timeout issue.",
+        "pt": "Ainda não temos a correção, mas há uma solução provisória para o problema de timeout.",
+        "cloze": "{{c1::We don't have a fix yet, but there's a workaround for}} the timeout issue."
+      },
+      {
+        "en": "We don't have a fix yet, but there's a workaround for the login error.",
+        "pt": "Ainda não temos a correção, mas há uma solução provisória para o erro no login.",
+        "cloze": "{{c1::We don't have a fix yet, but there's a workaround for}} the login error."
+      },
+      {
+        "en": "We don't have a fix yet, but there's a workaround for the slow report.",
+        "pt": "Ainda não temos a correção, mas há uma solução provisória para o relatório lento.",
+        "cloze": "{{c1::We don't have a fix yet, but there's a workaround for}} the slow report."
+      }
+    ]
   },
   {
     "name": "i_cant_reproduce_the_bug",
     "template": "[[I can't reproduce the bug on]] {env}.",
-    "pt": "Não consigo reproduzir o bug em {env}.",
+    "pt": "Não consigo reproduzir o bug {env}.",
     "category": "tech",
     "slots": [
       "env"
     ],
-    "example": {
-      "env": "my local machine"
-    },
+    "examples": [
+      {
+        "env": [
+          "my local machine",
+          "na minha máquina"
+        ]
+      },
+      {
+        "env": [
+          "staging",
+          "em homologação"
+        ]
+      },
+      {
+        "env": [
+          "Chrome",
+          "no Chrome"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "I can't reproduce the bug on my local machine.",
-      "pt": "Não consigo reproduzir o bug em my local machine.",
-      "cloze": "{{c1::I can't reproduce the bug on}} my local machine."
-    }
+    "demos": [
+      {
+        "en": "I can't reproduce the bug on my local machine.",
+        "pt": "Não consigo reproduzir o bug na minha máquina.",
+        "cloze": "{{c1::I can't reproduce the bug on}} my local machine."
+      },
+      {
+        "en": "I can't reproduce the bug on staging.",
+        "pt": "Não consigo reproduzir o bug em homologação.",
+        "cloze": "{{c1::I can't reproduce the bug on}} staging."
+      },
+      {
+        "en": "I can't reproduce the bug on Chrome.",
+        "pt": "Não consigo reproduzir o bug no Chrome.",
+        "cloze": "{{c1::I can't reproduce the bug on}} Chrome."
+      }
+    ]
   },
   {
     "name": "lets_roll_back_to",
     "template": "[[Let's roll back to]] {version}.",
-    "pt": "Vamos reverter para {version}.",
+    "pt": "Vamos voltar para {version}.",
     "category": "tech",
     "slots": [
       "version"
     ],
-    "example": {
-      "version": "v1.2"
-    },
+    "examples": [
+      {
+        "version": [
+          "v1.2",
+          "a v1.2"
+        ]
+      },
+      {
+        "version": [
+          "the previous version",
+          "a versão anterior"
+        ]
+      },
+      {
+        "version": [
+          "yesterday's release",
+          "a release de ontem"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Let's roll back to v1.2.",
-      "pt": "Vamos reverter para v1.2.",
-      "cloze": "{{c1::Let's roll back to}} v1.2."
-    }
+    "demos": [
+      {
+        "en": "Let's roll back to v1.2.",
+        "pt": "Vamos voltar para a v1.2.",
+        "cloze": "{{c1::Let's roll back to}} v1.2."
+      },
+      {
+        "en": "Let's roll back to the previous version.",
+        "pt": "Vamos voltar para a versão anterior.",
+        "cloze": "{{c1::Let's roll back to}} the previous version."
+      },
+      {
+        "en": "Let's roll back to yesterday's release.",
+        "pt": "Vamos voltar para a release de ontem.",
+        "cloze": "{{c1::Let's roll back to}} yesterday's release."
+      }
+    ]
   },
   {
     "name": "we_deployed_a_hotfix",
     "template": "[[We deployed a hotfix to address]] {problem}.",
-    "pt": "Fizemos o deploy de uma correção urgente para {problem}.",
+    "pt": "Subimos uma correção urgente para resolver {problem}.",
     "category": "tech",
     "slots": [
       "problem"
     ],
-    "example": {
-      "problem": "the payment issue"
-    },
+    "examples": [
+      {
+        "problem": [
+          "the payment issue",
+          "o problema no pagamento"
+        ]
+      },
+      {
+        "problem": [
+          "the broken login",
+          "o login quebrado"
+        ]
+      },
+      {
+        "problem": [
+          "the security vulnerability",
+          "a falha de segurança"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We deployed a hotfix to address the payment issue.",
-      "pt": "Fizemos o deploy de uma correção urgente para the payment issue.",
-      "cloze": "{{c1::We deployed a hotfix to address}} the payment issue."
-    }
+    "demos": [
+      {
+        "en": "We deployed a hotfix to address the payment issue.",
+        "pt": "Subimos uma correção urgente para resolver o problema no pagamento.",
+        "cloze": "{{c1::We deployed a hotfix to address}} the payment issue."
+      },
+      {
+        "en": "We deployed a hotfix to address the broken login.",
+        "pt": "Subimos uma correção urgente para resolver o login quebrado.",
+        "cloze": "{{c1::We deployed a hotfix to address}} the broken login."
+      },
+      {
+        "en": "We deployed a hotfix to address the security vulnerability.",
+        "pt": "Subimos uma correção urgente para resolver a falha de segurança.",
+        "cloze": "{{c1::We deployed a hotfix to address}} the security vulnerability."
+      }
+    ]
   },
   {
     "name": "it_turned_out_to_be",
     "template": "[[It turned out to be]] {cause}.",
-    "pt": "No fim das contas era {cause}.",
+    "pt": "No fim, era {cause}.",
     "category": "tech",
     "slots": [
       "cause"
     ],
-    "example": {
-      "cause": "a missing index"
-    },
+    "examples": [
+      {
+        "cause": [
+          "a missing index",
+          "um índice faltando"
+        ]
+      },
+      {
+        "cause": [
+          "a typo in the config",
+          "um erro de digitação na configuração"
+        ]
+      },
+      {
+        "cause": [
+          "an expired certificate",
+          "um certificado vencido"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "It turned out to be a missing index.",
-      "pt": "No fim das contas era a missing index.",
-      "cloze": "{{c1::It turned out to be}} a missing index."
-    }
+    "demos": [
+      {
+        "en": "It turned out to be a missing index.",
+        "pt": "No fim, era um índice faltando.",
+        "cloze": "{{c1::It turned out to be}} a missing index."
+      },
+      {
+        "en": "It turned out to be a typo in the config.",
+        "pt": "No fim, era um erro de digitação na configuração.",
+        "cloze": "{{c1::It turned out to be}} a typo in the config."
+      },
+      {
+        "en": "It turned out to be an expired certificate.",
+        "pt": "No fim, era um certificado vencido.",
+        "cloze": "{{c1::It turned out to be}} an expired certificate."
+      }
+    ]
   },
   {
     "name": "we_ran_into",
     "template": "[[We ran into]] {problem} [[while]] {action}.",
-    "pt": "Esbarramos em {problem} enquanto {action}.",
+    "pt": "Demos de cara com {problem} enquanto {action}.",
     "category": "tech",
     "slots": [
       "problem",
       "action"
     ],
-    "example": {
-      "problem": "a major issue",
-      "action": "migrating the database"
-    },
+    "examples": [
+      {
+        "problem": [
+          "a major issue",
+          "um problema sério"
+        ],
+        "action": [
+          "migrating the database",
+          "migrávamos o banco"
+        ]
+      },
+      {
+        "problem": [
+          "a memory leak",
+          "um vazamento de memória"
+        ],
+        "action": [
+          "load testing",
+          "fazíamos o teste de carga"
+        ]
+      },
+      {
+        "problem": [
+          "some duplicates",
+          "algumas duplicatas"
+        ],
+        "action": [
+          "importing the data",
+          "importávamos os dados"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "We ran into a major issue while migrating the database.",
-      "pt": "Esbarramos em a major issue enquanto migrating the database.",
-      "cloze": "{{c1::We ran into}} a major issue {{c1::while}} migrating the database."
-    }
+    "demos": [
+      {
+        "en": "We ran into a major issue while migrating the database.",
+        "pt": "Demos de cara com um problema sério enquanto migrávamos o banco.",
+        "cloze": "{{c1::We ran into}} a major issue {{c1::while}} migrating the database."
+      },
+      {
+        "en": "We ran into a memory leak while load testing.",
+        "pt": "Demos de cara com um vazamento de memória enquanto fazíamos o teste de carga.",
+        "cloze": "{{c1::We ran into}} a memory leak {{c1::while}} load testing."
+      },
+      {
+        "en": "We ran into some duplicates while importing the data.",
+        "pt": "Demos de cara com algumas duplicatas enquanto importávamos os dados.",
+        "cloze": "{{c1::We ran into}} some duplicates {{c1::while}} importing the data."
+      }
+    ]
   },
   {
     "name": "can_you_take_a_look_at",
     "template": "[[Can you take a look at]] {thing} [[when you get a chance]]?",
-    "pt": "Você pode dar uma olhada em {thing} quando puder?",
+    "pt": "Você pode dar uma olhada {thing} quando puder?",
     "category": "tech",
     "slots": [
       "thing"
     ],
-    "example": {
-      "thing": "my PR"
-    },
+    "examples": [
+      {
+        "thing": [
+          "my PR",
+          "no meu PR"
+        ]
+      },
+      {
+        "thing": [
+          "this error",
+          "neste erro"
+        ]
+      },
+      {
+        "thing": [
+          "the new design",
+          "no novo layout"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "Can you take a look at my PR when you get a chance?",
-      "pt": "Você pode dar uma olhada em my PR quando puder?",
-      "cloze": "{{c1::Can you take a look at}} my PR {{c1::when you get a chance}}?"
-    }
+    "demos": [
+      {
+        "en": "Can you take a look at my PR when you get a chance?",
+        "pt": "Você pode dar uma olhada no meu PR quando puder?",
+        "cloze": "{{c1::Can you take a look at}} my PR {{c1::when you get a chance}}?"
+      },
+      {
+        "en": "Can you take a look at this error when you get a chance?",
+        "pt": "Você pode dar uma olhada neste erro quando puder?",
+        "cloze": "{{c1::Can you take a look at}} this error {{c1::when you get a chance}}?"
+      },
+      {
+        "en": "Can you take a look at the new design when you get a chance?",
+        "pt": "Você pode dar uma olhada no novo layout quando puder?",
+        "cloze": "{{c1::Can you take a look at}} the new design {{c1::when you get a chance}}?"
+      }
+    ]
   },
   {
     "name": "its_integrated_with",
@@ -2362,16 +5863,56 @@
       "system",
       "other"
     ],
-    "example": {
-      "system": "The dashboard",
-      "other": "the SAP API"
-    },
+    "examples": [
+      {
+        "system": [
+          "The dashboard",
+          "O dashboard"
+        ],
+        "other": [
+          "the SAP API",
+          "a API do SAP"
+        ]
+      },
+      {
+        "system": [
+          "Our app",
+          "O nosso app"
+        ],
+        "other": [
+          "Stripe",
+          "o Stripe"
+        ]
+      },
+      {
+        "system": [
+          "The CRM",
+          "O CRM"
+        ],
+        "other": [
+          "our email tool",
+          "a nossa ferramenta de e-mail"
+        ]
+      }
+    ],
     "defaults": {},
     "note": "",
-    "demo": {
-      "en": "The dashboard is integrated with the SAP API.",
-      "pt": "The dashboard está integrado com the SAP API.",
-      "cloze": "The dashboard {{c1::is integrated with}} the SAP API."
-    }
+    "demos": [
+      {
+        "en": "The dashboard is integrated with the SAP API.",
+        "pt": "O dashboard está integrado com a API do SAP.",
+        "cloze": "The dashboard {{c1::is integrated with}} the SAP API."
+      },
+      {
+        "en": "Our app is integrated with Stripe.",
+        "pt": "O nosso app está integrado com o Stripe.",
+        "cloze": "Our app {{c1::is integrated with}} Stripe."
+      },
+      {
+        "en": "The CRM is integrated with our email tool.",
+        "pt": "O CRM está integrado com a nossa ferramenta de e-mail.",
+        "cloze": "The CRM {{c1::is integrated with}} our email tool."
+      }
+    ]
   }
 ]

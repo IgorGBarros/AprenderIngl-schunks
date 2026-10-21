@@ -1,19 +1,31 @@
 import { useState } from "react";
-import { CATEGORY_LABELS, type Chunk, type SlotValue, exampleValues, render } from "../lib/chunks";
+import {
+  CATEGORY_LABELS,
+  type Chunk,
+  type SlotValue,
+  demos,
+  examplesOf,
+  exampleValues,
+  render,
+} from "../lib/chunks";
+import { ChunkQuiz } from "./ChunkQuiz";
 import { PhraseText } from "./PhraseText";
 import { SpeakButton } from "./SpeakButton";
 
 interface Props {
   chunk: Chunk;
   onBack: () => void;
+  /** Chamado no fim do quiz do chunk: perfeito = acertou todas. */
+  onQuizDone: (perfect: boolean) => void;
 }
 
-/** "Executa" o chunk: o usuário preenche as variáveis e vê a frase pronta. */
-export function ChunkView({ chunk, onBack }: Props) {
+/** Página do chunk: exemplos prontos, montar a sua frase e, no final, o quiz. */
+export function ChunkView({ chunk, onBack, onQuizDone }: Props) {
   const [values, setValues] = useState<Record<string, SlotValue>>(() => exampleValues(chunk));
   const [showPt, setShowPt] = useState(false);
   const [copied, setCopied] = useState(false);
   const phrase = render(chunk, values);
+  const examples = demos(chunk);
 
   const set = (slot: string, field: keyof SlotValue, text: string) =>
     setValues((v) => ({ ...v, [slot]: { ...v[slot], [field]: text } }));
@@ -42,24 +54,57 @@ export function ChunkView({ chunk, onBack }: Props) {
         <span className="args">{chunk.slots.join(", ")}</span>)
       </code>
 
-      <section className="card output" aria-live="polite">
-        <div className="output-en">
-          <p className="phrase">
-            <PhraseText phrase={phrase} />
-          </p>
-          <SpeakButton text={phrase.en} />
-        </div>
-        <p className="pt">{phrase.pt}</p>
+      <section className="examples" aria-labelledby="examples-title">
+        <h2 id="examples-title">
+          {examples.length > 1 ? `${examples.length} exemplos` : "Exemplo"}
+        </h2>
+        <ul className="list">
+          {examples.map((p, i) => (
+            <li key={p.en} className="card example">
+              <div className="output-en">
+                <p className="phrase">
+                  <PhraseText phrase={p} />
+                </p>
+                <SpeakButton text={p.en} />
+              </div>
+              <p className="pt">{p.pt}</p>
+              {chunk.slots.length > 0 && examplesOf(chunk).length > 1 && (
+                <button
+                  className="link small"
+                  onClick={() => {
+                    setValues(exampleValues(chunk, i));
+                    document.getElementById("build-title")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  Editar este exemplo
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
       </section>
 
+      {chunk.note && <p className="note">💡 {chunk.note}</p>}
+
       {chunk.slots.length > 0 && (
-        <section className="slots">
+        <section className="slots" aria-labelledby="build-title">
           <div className="slots-head">
-            <h2>Variáveis</h2>
+            <h2 id="build-title">Monte a sua</h2>
             <button className="link" onClick={() => setShowPt((s) => !s)}>
               {showPt ? "Ocultar tradução" : "+ Traduzir variáveis"}
             </button>
           </div>
+
+          <div className="card output" aria-live="polite">
+            <div className="output-en">
+              <p className="phrase">
+                <PhraseText phrase={phrase} />
+              </p>
+              <SpeakButton text={phrase.en} />
+            </div>
+            <p className="pt">{phrase.pt}</p>
+          </div>
+
           {chunk.slots.map((slot) => (
             <div className="slot" key={slot}>
               <label htmlFor={`slot-${slot}`}>
@@ -86,23 +131,20 @@ export function ChunkView({ chunk, onBack }: Props) {
               )}
             </div>
           ))}
-          <button className="secondary" onClick={() => setValues(exampleValues(chunk))}>
-            Voltar ao exemplo
-          </button>
+
+          <div className="anki">
+            <div className="anki-head">
+              <h3>Card do Anki (Cloze)</h3>
+              <button className="link" onClick={copy}>
+                {copied ? "Copiado ✓" : "Copiar"}
+              </button>
+            </div>
+            <code className="cloze">{phrase.cloze}</code>
+          </div>
         </section>
       )}
 
-      {chunk.note && <p className="note">💡 {chunk.note}</p>}
-
-      <section className="card anki">
-        <div className="anki-head">
-          <h2>Card do Anki (Cloze)</h2>
-          <button className="link" onClick={copy}>
-            {copied ? "Copiado ✓" : "Copiar"}
-          </button>
-        </div>
-        <code className="cloze">{phrase.cloze}</code>
-      </section>
+      <ChunkQuiz chunk={chunk} phrases={examples} onDone={onQuizDone} />
     </>
   );
 }

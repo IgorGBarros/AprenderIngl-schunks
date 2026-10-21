@@ -5,7 +5,7 @@ import { Library } from "./components/Library";
 import { MyChunks } from "./components/MyChunks";
 import { Quiz } from "./components/Quiz";
 import { BUILTIN, type Chunk } from "./lib/chunks";
-import type { Progress } from "./lib/srs";
+import { type Progress, record } from "./lib/srs";
 import { load, save } from "./lib/storage";
 
 type Tab = "library" | "quiz" | "interview" | "mine";
@@ -57,7 +57,12 @@ export default function App() {
     <div className="app">
       <main className="screen">
         {opened ? (
-          <ChunkView key={opened.name} chunk={opened} onBack={() => (window.history.length > 1 ? window.history.back() : go(""))} />
+          <ChunkView
+            key={opened.name}
+            chunk={opened}
+            onBack={() => (window.history.length > 1 ? window.history.back() : go(""))}
+            onQuizDone={(perfect) => setProgress((p) => record(p, opened.name, perfect))}
+          />
         ) : tab === "interview" ? (
           <Interview path={route.slice(1)} go={go} />
         ) : tab === "quiz" ? (

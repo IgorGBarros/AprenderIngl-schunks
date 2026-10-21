@@ -50,6 +50,11 @@ def due_chunks(
     return sorted(due, key=lambda c: progress.get(c.name, {}).get("box", 0))
 
 
+def random_phrase(c: Chunk) -> Phrase:
+    """Um dos exemplos do chunk, sorteado (cada revisão usa uma frase diferente)."""
+    return random.choice(c.demos())
+
+
 # ---------------------------------------------------------------- correção
 def normalize(text: str) -> str:
     text = text.lower().replace("’", "'")
@@ -71,11 +76,13 @@ def to_json() -> str:
             "pt": c.pt,
             "category": c.category,
             "slots": c.slots,
-            "example": {k: list(v) if isinstance(v, tuple) else v for k, v in c.example.items()},
+            "examples": [
+                {k: list(v) if isinstance(v, tuple) else v for k, v in ex.items()} for ex in c.examples
+            ],
             "defaults": c.defaults,
             "note": c.note,
             # Saída esperada: o app web testa se o motor em TS gera o mesmo.
-            "demo": {"en": (d := c.demo()).en, "pt": d.pt, "cloze": d.cloze},
+            "demos": [{"en": d.en, "pt": d.pt, "cloze": d.cloze} for d in c.demos()],
         }
         for c in registry().values()
     ]
@@ -101,15 +108,14 @@ def prompts_json() -> str:
 def anki_export(path: Path, category: str | None = None) -> int:
     """Gera um arquivo .txt para importar no Anki (tipo de nota *Cloze*).
 
-    Campos: Text (frase com a parte fixa escondida) e Back Extra
-    (tradução + padrão da função).
+    Um card por exemplo. Campos: Text (frase com a parte fixa escondida) e
+    Back Extra (tradução + padrão da função).
     """
     rows = ["#separator:tab", "#html:false", "#notetype:Cloze", "#tags column:3"]
     for c in registry().values():
         if category not in (None, c.category):
             continue
-        p = c.demo()
-        extra = f"{p.pt} | {c.pattern}"
-        rows.append(f"{p.cloze}\t{extra}\tchunks::{c.category}")
+        for p in c.demos():
+            rows.append(f"{p.cloze}\t{p.pt} | {c.pattern}\tchunks::{c.category}")
     path.write_text("\n".join(rows) + "\n", encoding="utf-8")
     return len(rows) - 4

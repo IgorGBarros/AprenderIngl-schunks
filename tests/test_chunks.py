@@ -19,7 +19,7 @@ class TestChunkAsFunction(unittest.TestCase):
     def test_tuple_translates_variable(self):
         p = chunks.could_i_get(("a coffee", "um café"))
         self.assertEqual(p.en, "Could I get a coffee, please?")
-        self.assertEqual(p.pt, "Pode me ver um café, por favor?")
+        self.assertEqual(p.pt, "Pode me trazer um café, por favor?")
 
     def test_keyword_arguments(self):
         p = chunks.let_me_loop_in(topic="the deploy", person="Ana")
@@ -45,6 +45,15 @@ class TestChunkAsFunction(unittest.TestCase):
     def test_braces_in_variable_are_kept(self):
         self.assertEqual(chunks.how_much_is("{x}"), "How much is {x}?")
 
+    def test_blanks_hint_hides_only_the_fixed_part(self):
+        self.assertEqual(chunks.could_i_get("a glass of water").blanks, "_____ _ ___ a glass of water, ______?")
+
+    def test_demos_cover_every_example(self):
+        self.assertEqual(
+            [p.pt for p in chunks.dont_forget_your.demos()],
+            ["Não esqueça a sua mochila!", "Não esqueça o seu casaco!", "Não esqueça as suas chaves!"],
+        )
+
     def test_signature_is_introspectable(self):
         self.assertEqual(chunks.let_me_loop_in.pattern, "let_me_loop_in(person, topic)")
 
@@ -55,11 +64,29 @@ class TestLibrary(unittest.TestCase):
             with self.subTest(chunk=c.name):
                 pt_slots = {f for _, f, _, _ in string.Formatter().parse(c.pt) if f}
                 self.assertEqual(pt_slots, set(c.slots), "tradução usa variáveis diferentes")
-                self.assertTrue(set(c.slots) - set(c.defaults) <= set(c.example) <= set(c.slots))
                 self.assertIn("[[", c.template)
-                demo = c.demo()
-                self.assertNotIn("[[", demo.en)
-                self.assertIn("{{c1::", demo.cloze)
+                for demo in c.demos():
+                    self.assertNotIn("[[", demo.en)
+                    self.assertIn("{{c1::", demo.cloze)
+
+    def test_examples_are_many_and_translated(self):
+        for c in chunks.registry().values():
+            with self.subTest(chunk=c.name):
+                if c.slots:
+                    self.assertGreaterEqual(len(c.examples), 3, "dê pelo menos 3 exemplos")
+                for ex in c.examples:
+                    for slot, value in ex.items():
+                        self.assertIsInstance(value, tuple, f"traduza {slot!r}: ('inglês', 'português')")
+                for p in c.demos():
+                    for bad in ("o(a)", "(a) ", "seu/sua", "o/a "):
+                        self.assertNotIn(bad, p.pt, "deixe o artigo dentro da tradução da variável")
+                self.assertEqual(len({p.en for p in c.demos()}), len(c.demos()), "exemplos repetidos")
+
+    def test_invalid_example_is_rejected(self):
+        from chunks.core import Chunk
+
+        with self.assertRaisesRegex(ValueError, "exemplo 1"):
+            Chunk("x", "[[Hi]] {name}.", "Oi {name}.", "mine", [{"nome": "Ana"}])
 
     def test_every_chunk_is_importable_by_name(self):
         for name in chunks.registry():

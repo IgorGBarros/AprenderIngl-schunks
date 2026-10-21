@@ -6,8 +6,10 @@ Receita (igual a criar uma função):
 2. Escreva o template em inglês:
    - ``[[...]]`` = parte fixa (o que você quer memorizar)
    - ``{variavel}`` = o que muda a cada uso
-3. Escreva a tradução em português com as mesmas variáveis.
-4. Dê um exemplo de uso.
+3. Escreva a tradução em português com as mesmas variáveis. Deixe artigos e
+   preposições ("o", "a", "do", "para a") dentro da tradução de cada variável:
+   assim a frase fica natural em qualquer gênero.
+4. Dê alguns exemplos, cada variável como ("inglês", "português").
 
 Depois é só chamar: ``we_should_consider("using a cache")``.
 """
@@ -21,5 +23,9 @@ we_should_consider = chunk(
     "[[I think we should consider]] {option}.",
     "Acho que devíamos considerar {option}.",
     category=C,
-    example={"option": "using a cache"},
+    examples=[
+        {"option": ("using a cache", "usar um cache")},
+        {"option": ("a different approach", "outra abordagem")},
+        {"option": ("hiring a contractor", "contratar um freelancer")},
+    ],
 )

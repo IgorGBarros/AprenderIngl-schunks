@@ -7,7 +7,7 @@ recebe a frase pronta:
     >>> could_i_get("a glass of water")
     'Could I get a glass of water, please?'
     >>> could_i_get(("a coffee", "um café")).pt
-    'Pode me ver um café, por favor?'
+    'Pode me trazer um café, por favor?'
     >>> print(lets_touch_base("tomorrow", "review the PR").explain())
 """
 

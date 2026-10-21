@@ -120,7 +120,7 @@ p.pt      # 'Estou travado por causa de the API credentials.'
 p.cloze   # '{{c1::I'm blocked by}} the API credentials.'
 
 # Variável traduzida: passe uma tupla (inglês, português)
-could_i_get(("a coffee", "um café")).pt   # 'Pode me ver um café, por favor?'
+could_i_get(("a coffee", "um café")).pt   # 'Pode me trazer um café, por favor?'
 
 # Argumentos nomeados também funcionam
 a_ticket_to(kind="a round-trip", place="Chicago")
@@ -141,7 +141,8 @@ search("deploy")            # procura em inglês, português, nome e exemplos
 ```bash
 chunks list                      # todas as funções, por categoria
 chunks list meetings             # só uma categoria
-chunks show walk_me_through      # documentação
+chunks show walk_me_through      # documentação, com os 3 exemplos
+chunks estudar walk_me_through   # exemplos e, no final, o quiz deste chunk
 chunks run could_i_get "a cup of coffee"
 chunks run could_i_get "a cup of coffee|uma xícara de café"   # inglês|português
 chunks play let_me_loop_in       # pergunta cada variável
@@ -152,10 +153,19 @@ chunks anki cards.txt            # exporta tudo para o Anki
 chunks anki home.txt home        # exporta só uma categoria
 ```
 
+### Exemplos e quiz de cada chunk
+
+Cada chunk tem 3 exemplos prontos, com tradução. O `chunks estudar <chunk>`
+mostra os exemplos para você ler em voz alta e termina com um quiz: aparece a
+frase em português e você escreve em inglês. Digite `?` para ver uma dica com
+a parte fixa escondida (`_____ _ ___ a glass of water, ______?`). No app, a
+página de cada chunk tem o mesmo quiz no final.
+
 ### Quiz com repetição espaçada
 
-O `quiz` mostra a frase em português e as variáveis, e você digita a frase em
-inglês. Maiúsculas e pontuação não contam. Ele usa o sistema de Leitner:
+O `quiz` sorteia um dos exemplos de cada chunk, mostra a frase em português e
+você digita em inglês (`?` mostra a dica). Maiúsculas e pontuação não contam.
+Ele usa o sistema de Leitner:
 
 - acertou: o chunk sobe de caixa e volta em 2, 4, 8 e depois 16 dias;
 - errou: o chunk volta para a caixa 1 e reaparece amanhã.
@@ -165,8 +175,8 @@ O progresso fica salvo em `~/.chunks_progress.json`.
 ### Anki
 
 `chunks anki cards.txt` gera um arquivo pronto para o tipo de nota **Cloze**.
-A parte fixa do chunk fica escondida e a variável continua visível, que é
-exatamente o que você precisa memorizar. No Anki: *Arquivo > Importar*. As
+São um card por exemplo. A parte fixa do chunk fica escondida e a variável
+continua visível, que é exatamente o que você precisa memorizar. No Anki: *Arquivo > Importar*. As
 tags (`chunks::meetings` etc.) já vêm no arquivo.
 
 ## Categorias incluídas (121 chunks)
@@ -304,17 +314,25 @@ we_should_consider = chunk(
     "[[I think we should consider]] {option}.", # [[fixo]] e {variável}
     "Acho que devíamos considerar {option}.",   # tradução com as mesmas variáveis
     category="mine",
-    example={"option": "using a cache"},
+    examples=[                                  # 3 exemplos: ("inglês", "português")
+        {"option": ("using a cache", "usar um cache")},
+        {"option": ("a different approach", "outra abordagem")},
+        {"option": ("hiring a contractor", "contratar um freelancer")},
+    ],
     note="Jeito educado de sugerir algo numa reunião.",  # opcional
 )
 ```
 
 - `[[...]]` marca a parte fixa: é o que o Anki esconde e o que o quiz cobra.
 - `{nome}` vira um parâmetro da função.
+- Na tradução de cada variável, inclua o artigo ou a preposição
+  (`"a sua mochila"`, `"para o aeroporto"`). Assim a frase em português fica
+  natural, sem "o(a)" ou "seu/sua".
 - `defaults={"when": "later"}` torna uma variável opcional.
 
 Rode os testes depois de adicionar chunks. Eles conferem se a tradução usa as
-mesmas variáveis do inglês:
+mesmas variáveis do inglês, se há 3 exemplos traduzidos e se não sobrou
+nenhum "o(a)":
 
 ```bash
 python -m unittest discover -s tests
@@ -323,6 +341,6 @@ python -m unittest discover -s tests
 ## Rotina sugerida (15 min/dia)
 
 1. **Manhã:** `chunks quiz -n 10`.
-2. **Durante o dia:** use 3 chunks de verdade (reunião, Slack, com seu filho).
-   Use `chunks run` para montar a frase antes.
+2. **Durante o dia:** escolha 3 chunks, rode `chunks estudar <chunk>` em cada
+   um e use as frases de verdade (reunião, Slack, com seu filho).
 3. **Noite:** adicione em `my_chunks.py` 1 chunk novo que você ouviu ou leu.

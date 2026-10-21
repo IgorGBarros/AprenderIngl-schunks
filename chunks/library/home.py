@@ -9,78 +9,122 @@ time_to = chunk(
     "[[Time to]] {action}!",
     "Hora de {action}!",
     category=C,
-    example={"action": "wake up"},
+    examples=[
+        {"action": ("wake up", "acordar")},
+        {"action": ("brush your teeth", "escovar os dentes")},
+        {"action": ("go", "ir")},
+    ],
     note="Funciona para tudo: 'go', 'eat', 'take a bath', 'brush your teeth'.",
 )
 time_for = chunk(
     "time_for",
     "[[Time for]] {thing}!",
-    "Hora do/da {thing}!",
+    "Hora {thing}!",
     category=C,
-    example={"thing": "bed"},
+    examples=[
+        {"thing": ("bed", "de dormir")},
+        {"thing": ("lunch", "do almoço")},
+        {"thing": ("school", "da escola")},
+    ],
 )
 dont_forget_to = chunk(
     "dont_forget_to",
     "[[Don't forget to]] {action}.",
     "Não esqueça de {action}.",
     category=C,
-    example={"action": "brush your teeth"},
+    examples=[
+        {"action": ("brush your teeth", "escovar os dentes")},
+        {"action": ("take out the trash", "levar o lixo para fora")},
+        {"action": ("lock the door", "trancar a porta")},
+    ],
 )
 dont_forget_your = chunk(
     "dont_forget_your",
     "[[Don't forget your]] {thing}!",
-    "Não esqueça seu/sua {thing}!",
+    "Não esqueça {thing}!",
     category=C,
-    example={"thing": "backpack"},
+    examples=[
+        {"thing": ("backpack", "a sua mochila")},
+        {"thing": ("jacket", "o seu casaco")},
+        {"thing": ("keys", "as suas chaves")},
+    ],
 )
 could_you_pass_me = chunk(
     "could_you_pass_me",
     "[[Could you pass me]] {thing}[[, please]]?",
     "Você pode me passar {thing}, por favor?",
     category=C,
-    example={"thing": "the salt"},
+    examples=[
+        {"thing": ("the salt", "o sal")},
+        {"thing": ("the remote", "o controle remoto")},
+        {"thing": ("a towel", "uma toalha")},
+    ],
 )
 could_you_help_me_with = chunk(
     "could_you_help_me_with",
     "[[Could you help me with]] {thing}[[?]]",
     "Você pode me ajudar com {thing}?",
     category=C,
-    example={"thing": "the dishes"},
+    examples=[
+        {"thing": ("the dishes", "a louça")},
+        {"thing": ("these bags", "estas sacolas")},
+        {"thing": ("my homework", "a minha lição de casa")},
+    ],
 )
 what_do_you_want_for = chunk(
     "what_do_you_want_for",
     "[[What do you want for]] {meal}[[?]]",
-    "O que você quer de {meal}?",
+    "O que você quer {meal}?",
     category=C,
-    example={"meal": "dinner"},
+    examples=[
+        {"meal": ("dinner", "para o jantar")},
+        {"meal": ("breakfast", "no café da manhã")},
+        {"meal": ("your birthday", "de aniversário")},
+    ],
 )
 lets_go_to = chunk(
     "lets_go_to",
     "[[Let's go to]] {place}!",
-    "Vamos para {place}!",
+    "Vamos {place}!",
     category=C,
-    example={"place": "the park"},
+    examples=[
+        {"place": ("the park", "ao parque")},
+        {"place": ("the beach", "à praia")},
+        {"place": ("Grandma's house", "para a casa da vovó")},
+    ],
 )
 ill_pick_you_up_at = chunk(
     "ill_pick_you_up_at",
     "[[I'll pick you up at]] {time}.",
-    "Eu te pego às {time}.",
+    "Eu te pego {time}.",
     category=C,
-    example={"time": "five"},
+    examples=[
+        {"time": ("five", "às cinco")},
+        {"time": ("noon", "ao meio-dia")},
+        {"time": ("the school gate", "no portão da escola")},
+    ],
 )
 im_running_late = chunk(
     "im_running_late",
     "[[I'm running late]][[, I'll be there in]] {time}.",
     "Estou atrasado, chego em {time}.",
     category=C,
-    example={"time": "ten minutes"},
+    examples=[
+        {"time": ("ten minutes", "dez minutos")},
+        {"time": ("half an hour", "meia hora")},
+        {"time": ("five", "cinco minutos")},
+    ],
 )
 can_you_turn = chunk(
     "can_you_turn",
     "[[Can you turn]] {state} [[the]] {device}[[?]]",
-    "Você pode {state} o/a {device}?",
+    "Você pode {state} {device}?",
     category=C,
-    example={"state": ("off", "desligar"), "device": ("TV", "TV")},
+    examples=[
+        {"state": ("off", "desligar"), "device": ("TV", "a TV")},
+        {"state": ("on", "ligar"), "device": ("lights", "a luz")},
+        {"state": ("down", "abaixar"), "device": ("music", "a música")},
+    ],
     note="state: 'on' (ligar), 'off' (desligar), 'up' (aumentar), 'down' (abaixar).",
 )
 where_did_you_put = chunk(
@@ -88,19 +132,31 @@ where_did_you_put = chunk(
     "[[Where did you put]] {thing}[[?]]",
     "Onde você colocou {thing}?",
     category=C,
-    example={"thing": "the keys"},
+    examples=[
+        {"thing": ("the keys", "as chaves")},
+        {"thing": ("my charger", "o meu carregador")},
+        {"thing": ("the remote", "o controle remoto")},
+    ],
 )
 did_you = chunk(
     "did_you",
     "[[Did you]] {action}[[?]]",
     "Você {action}?",
     category=C,
-    example={"action": ("sleep well", "dormiu bem")},
+    examples=[
+        {"action": ("sleep well", "dormiu bem")},
+        {"action": ("eat already", "já comeu")},
+        {"action": ("finish your homework", "terminou a lição de casa")},
+    ],
 )
 lets_read = chunk(
     "lets_read",
     "[[Let me read you]] {story}.",
     "Deixa eu ler {story} para você.",
     category=C,
-    example={"story": "a story"},
+    examples=[
+        {"story": ("a story", "uma história")},
+        {"story": ("this book", "este livro")},
+        {"story": ("one more page", "mais uma página")},
+    ],
 )

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ankiText, downloadText } from "../lib/anki";
-import { type Chunk, exampleValues, nameFrom, render, slotsOf } from "../lib/chunks";
+import { type Chunk, type ExampleValue, demos, exampleValues, nameFrom, render, slotsOf } from "../lib/chunks";
 import { PhraseText } from "./PhraseText";
 
 interface Props {
@@ -11,7 +11,10 @@ interface Props {
   onResetProgress: () => void;
 }
 
-const EMPTY = { template: "", pt: "", example: {} as Record<string, string>, note: "" };
+type DraftExample = Record<string, { en: string; pt: string }>;
+
+const MAX_EXAMPLES = 3;
+const EMPTY = { template: "", pt: "", examples: [{}] as DraftExample[], note: "" };
 
 /** Criar os próprios chunks (como em chunks/library/my_chunks.py). */
 export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props) {
@@ -26,7 +29,18 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
     pt: draft.pt,
     category: "mine",
     slots,
-    example: Object.fromEntries(slots.map((s) => [s, draft.example[s] ?? ""])),
+    // Exemplos completos viram ["inglês", "português"]; sem tradução, a variável fica só em inglês.
+    examples: draft.examples
+      .filter((ex) => slots.every((s) => ex[s]?.en.trim()))
+      .map((ex) =>
+        Object.fromEntries(
+          slots.map((s): [string, ExampleValue] => {
+            const en = ex[s].en.trim();
+            const pt = ex[s].pt.trim();
+            return [s, pt ? [en, pt] : en];
+          }),
+        ),
+      ),
     defaults: {},
     note: draft.note.trim(),
   };
@@ -38,7 +52,19 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
   if (draft.pt.trim() && missing.length) errors.push(`Use na tradução: ${missing.map((s) => `{${s}}`).join(", ")}`);
   const extra = ptSlots.filter((s) => !slots.includes(s));
   if (extra.length) errors.push(`A tradução usa variáveis que não existem: ${extra.join(", ")}`);
-  if (slots.some((s) => !draft.example[s]?.trim())) errors.push("Preencha um exemplo para cada variável.");
+  if (slots.length && candidate.examples.length === 0) errors.push("Preencha pelo menos um exemplo completo.");
+  const partial = draft.examples.some(
+    (ex) => slots.some((s) => ex[s]?.en.trim()) && !slots.every((s) => ex[s]?.en.trim()),
+  );
+  if (partial) errors.push("Complete (ou apague) os exemplos pela metade.");
+
+  const setSlot = (i: number, slot: string, field: "en" | "pt", value: string) =>
+    setDraft({
+      ...draft,
+      examples: draft.examples.map((ex, j) =>
+        j === i ? { ...ex, [slot]: { ...(ex[slot] ?? { en: "", pt: "" }), [field]: value } } : ex,
+      ),
+    });
 
   const preview = draft.template ? render(candidate, exampleValues(candidate)) : null;
 
@@ -88,22 +114,43 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
           placeholder="Acho que devíamos considerar {option}."
         />
 
-        {slots.map((slot) => (
-          <div key={slot}>
-            <label htmlFor={`ex-${slot}`}>
-              Exemplo de <code>{slot}</code>
-            </label>
-            <input
-              id={`ex-${slot}`}
-              value={draft.example[slot] ?? ""}
-              onChange={(e) =>
-                setDraft({ ...draft, example: { ...draft.example, [slot]: e.target.value } })
-              }
-              placeholder="using a cache"
-              autoCapitalize="off"
-            />
-          </div>
-        ))}
+        {slots.length > 0 &&
+          draft.examples.map((ex, i) => (
+            <fieldset key={i} className="example-set">
+              <legend>Exemplo {i + 1}</legend>
+              {slots.map((slot) => (
+                <div key={slot} className="example-slot">
+                  <label htmlFor={`ex-${i}-${slot}`}>
+                    <code>{slot}</code>
+                  </label>
+                  <input
+                    id={`ex-${i}-${slot}`}
+                    value={ex[slot]?.en ?? ""}
+                    onChange={(e) => setSlot(i, slot, "en", e.target.value)}
+                    placeholder={i === 0 ? "using a cache" : "em inglês"}
+                    autoCapitalize="off"
+                  />
+                  <input
+                    id={`ex-${i}-${slot}-pt`}
+                    className="pt-input"
+                    value={ex[slot]?.pt ?? ""}
+                    onChange={(e) => setSlot(i, slot, "pt", e.target.value)}
+                    placeholder={i === 0 ? "usar um cache" : "tradução, com artigo (o, a, do…)"}
+                    aria-label={`Tradução de ${slot}, exemplo ${i + 1}`}
+                  />
+                </div>
+              ))}
+            </fieldset>
+          ))}
+        {slots.length > 0 && draft.examples.length < MAX_EXAMPLES && (
+          <button
+            type="button"
+            className="link"
+            onClick={() => setDraft({ ...draft, examples: [...draft.examples, {}] })}
+          >
+            + Outro exemplo
+          </button>
+        )}
 
         <label htmlFor="note">Nota (opcional)</label>
         <input
@@ -116,10 +163,14 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
         {preview && (
           <div className="card preview">
             <code className="fn">{candidate.name}({slots.join(", ")})</code>
-            <p className="phrase">
-              <PhraseText phrase={preview} />
-            </p>
-            <p className="pt">{preview.pt}</p>
+            {(candidate.examples.length ? demos(candidate) : [preview]).map((p) => (
+              <div key={p.en} className="preview-item">
+                <p className="phrase">
+                  <PhraseText phrase={p} />
+                </p>
+                <p className="pt">{p.pt}</p>
+              </div>
+            ))}
           </div>
         )}
 

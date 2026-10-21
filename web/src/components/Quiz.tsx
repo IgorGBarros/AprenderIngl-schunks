@@ -1,16 +1,7 @@
-import { useMemo, useRef, useState } from "react";
-import {
-  CATEGORY_LABELS,
-  type Chunk,
-  categoriesOf,
-  core,
-  exampleValues,
-  normalizeAnswer,
-  render,
-} from "../lib/chunks";
+import { useMemo, useState } from "react";
+import { CATEGORY_LABELS, type Chunk, categoriesOf, demos } from "../lib/chunks";
 import { type Progress, dueChunks, record, stats } from "../lib/srs";
-import { PhraseText } from "./PhraseText";
-import { SpeakButton } from "./SpeakButton";
+import { QuestionCard } from "./QuestionCard";
 
 interface Props {
   chunks: Chunk[];
@@ -121,16 +112,11 @@ interface QuestionProps {
 }
 
 function Question({ chunk, position, onAnswer, onQuit }: QuestionProps) {
-  const values = exampleValues(chunk);
-  const phrase = render(chunk, values);
-  const [answer, setAnswer] = useState("");
-  const [checked, setChecked] = useState<boolean | null>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
-
-  const check = () => {
-    setChecked(normalizeAnswer(answer) === normalizeAnswer(phrase.en));
-    setTimeout(() => nextRef.current?.focus(), 0);
-  };
+  // Cada revisão sorteia um dos exemplos do chunk.
+  const [phrase] = useState(() => {
+    const all = demos(chunk);
+    return all[Math.floor(Math.random() * all.length)];
+  });
 
   return (
     <>
@@ -140,82 +126,7 @@ function Question({ chunk, position, onAnswer, onQuit }: QuestionProps) {
         </button>
         <span className="badge">{position}</span>
       </header>
-
-      <section className="card question">
-        <p className="label">Como se diz em inglês?</p>
-        <p className="phrase">{phrase.pt}</p>
-        {chunk.slots.length > 0 && (
-          <ul className="hints">
-            {chunk.slots.map((slot) => (
-              <li key={slot}>
-                <code>{slot}</code> = “{values[slot].en}”
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <form
-        className="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (checked === null) check();
-        }}
-      >
-        <textarea
-          rows={3}
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-          placeholder="Escreva a frase em inglês…"
-          readOnly={checked !== null}
-          autoCapitalize="sentences"
-          autoCorrect="off"
-          spellCheck={false}
-          autoFocus
-          aria-label="Sua resposta"
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              if (checked === null) check();
-            }
-          }}
-        />
-        {checked === null && (
-          <div className="row">
-            <button type="button" className="secondary" onClick={() => setChecked(false)}>
-              Não sei
-            </button>
-            <button type="submit" className="primary" disabled={!answer.trim()}>
-              Verificar
-            </button>
-          </div>
-        )}
-      </form>
-
-      {checked !== null && (
-        <section className={checked ? "card feedback ok" : "card feedback wrong"} aria-live="polite">
-          <p className="verdict">{checked ? "✔ Correto!" : "✘ Resposta:"}</p>
-          <div className="output-en">
-            <p className="phrase">
-              <PhraseText phrase={phrase} />
-            </p>
-            <SpeakButton text={phrase.en} />
-          </div>
-          <p className="pt">
-            Chunk: <strong>{core(chunk)}</strong>
-          </p>
-          <div className="row">
-            {!checked && answer.trim() && (
-              <button className="secondary" onClick={() => onAnswer(true)}>
-                Eu acertei
-              </button>
-            )}
-            <button ref={nextRef} className="primary" onClick={() => onAnswer(checked)}>
-              Próximo
-            </button>
-          </div>
-        </section>
-      )}
+      <QuestionCard chunk={chunk} phrase={phrase} onAnswer={onAnswer} />
     </>
   );
 }

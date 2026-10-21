@@ -45,6 +45,13 @@ class Phrase(str):
         obj.en, obj.pt, obj.cloze, obj.chunk = en, pt, cloze, chunk
         return obj
 
+    @property
+    def blanks(self) -> str:
+        """Dica do quiz: cada letra da parte fixa vira ``_`` (mostra quantas palavras faltam)."""
+        return re.sub(
+            r"\{\{c1::(.*?)\}\}", lambda m: re.sub(r"[A-Za-z0-9']", "_", m.group(1)), self.cloze
+        )
+
     def explain(self) -> str:
         """Texto completo: inglês, português, chunk fixo e card do Anki."""
         return (
@@ -63,7 +70,8 @@ class Chunk:
     template: str
     pt: str
     category: str
-    example: dict[str, str] = field(default_factory=dict)
+    examples: list[dict] = field(default_factory=list)
+    """Exemplos prontos: {variável: "inglês"} ou {variável: ("inglês", "português")}."""
     defaults: dict[str, str] = field(default_factory=dict)
     note: str = ""
 
@@ -71,6 +79,13 @@ class Chunk:
         self.slots = [
             f for _, f, _, _ in string.Formatter().parse(_FIXED.sub(r"\1", self.template)) if f
         ]
+        required = set(self.slots) - set(self.defaults)
+        for i, ex in enumerate(self.examples, 1):
+            if not required <= set(ex) <= set(self.slots):
+                raise ValueError(
+                    f"{self.name}: o exemplo {i} precisa das variáveis {sorted(required)}, "
+                    f"e só pode usar {self.slots} (recebeu {sorted(ex)})"
+                )
         params = [
             inspect.Parameter(
                 s,
@@ -99,9 +114,18 @@ class Chunk:
         pt = self.pt.format(**pt_vals)
         return Phrase(_tidy(en), _tidy(pt), _tidy(cloze), self)
 
+    @property
+    def example(self) -> dict:
+        """O primeiro exemplo (o principal)."""
+        return self.examples[0] if self.examples else {}
+
     def demo(self) -> Phrase:
-        """Executa o chunk com as variáveis de exemplo."""
+        """Executa o chunk com as variáveis do primeiro exemplo."""
         return self(**self.example)
+
+    def demos(self) -> list[Phrase]:
+        """Todos os exemplos prontos, já montados."""
+        return [self(**ex) for ex in self.examples] or [self()]
 
     @property
     def core(self) -> str:
@@ -118,8 +142,9 @@ class Chunk:
         lines = [self.core, "", f"PT: {self.pt}"]
         if self.note:
             lines += ["", self.note]
-        if self.example:
-            lines += ["", f"Exemplo: {self.pattern} -> {self.demo().en}"]
+        if self.examples:
+            lines += ["", "Exemplos:"]
+            lines += [f"  {p.en}  —  {p.pt}" for p in self.demos()]
         return "\n".join(lines)
 
     def __repr__(self) -> str:
@@ -132,14 +157,19 @@ def chunk(
     pt: str,
     *,
     category: str,
-    example: dict[str, str] | None = None,
+    examples: list[dict] | None = None,
+    example: dict | None = None,
     defaults: dict[str, str] | None = None,
     note: str = "",
 ) -> Chunk:
-    """Cria e registra um chunk. Use isso para adicionar os seus."""
+    """Cria e registra um chunk. Use isso para adicionar os seus.
+
+    ``examples`` é uma lista de exemplos; ``example`` (um só) também é aceito.
+    """
     if name in _REGISTRY:
         raise ValueError(f"Chunk duplicado: {name}")
-    c = Chunk(name, template, pt, category, example or {}, defaults or {}, note)
+    all_examples = list(examples or []) or ([example] if example else [])
+    c = Chunk(name, template, pt, category, all_examples, defaults or {}, note)
     _REGISTRY[name] = c
     return c
 
@@ -161,12 +191,15 @@ def categories() -> list[str]:
 
 
 def search(term: str) -> list[Chunk]:
-    """Procura chunks pelo nome, inglês, português ou exemplo."""
+    """Procura chunks pelo nome, inglês, português ou qualquer exemplo."""
     t = term.lower()
     return [
         c
         for c in _REGISTRY.values()
-        if any(t in text.lower() for text in (c.name, c.core, c.pt, c.demo().en))
+        if any(
+            t in text.lower()
+            for text in (c.name, c.core, c.pt, *(s for p in c.demos() for s in (p.en, p.pt)))
+        )
     ]
 
 

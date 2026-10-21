@@ -1,12 +1,11 @@
 // Exporta cards no formato Cloze do Anki (mesmo formato de `chunks anki`).
 
-import { type Chunk, exampleValues, pattern, render } from "./chunks";
+import { type Chunk, demos, pattern } from "./chunks";
 
 export function ankiText(chunks: Chunk[]): string {
   const rows = ["#separator:tab", "#html:false", "#notetype:Cloze", "#tags column:3"];
   for (const c of chunks) {
-    const p = render(c, exampleValues(c));
-    rows.push(`${p.cloze}\t${p.pt} | ${pattern(c)}\tchunks::${c.category}`);
+    for (const p of demos(c)) rows.push(`${p.cloze}\t${p.pt} | ${pattern(c)}\tchunks::${c.category}`);
   }
   return rows.join("\n") + "\n";
 }

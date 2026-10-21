@@ -15,11 +15,14 @@ export interface Chunk {
   pt: string;
   category: string;
   slots: string[];
-  example: Record<string, ExampleValue>;
+  /** Exemplos prontos (o primeiro é o principal). */
+  examples: Record<string, ExampleValue>[];
+  /** Formato antigo (um exemplo só), ainda salvo nos "Meus chunks" de versões anteriores. */
+  example?: Record<string, ExampleValue>;
   defaults: Record<string, string>;
   note: string;
-  /** Saída gerada pelo Python para o exemplo (usada nos testes). */
-  demo?: { en: string; pt: string; cloze: string };
+  /** Saída gerada pelo Python para cada exemplo (usada nos testes). */
+  demos?: { en: string; pt: string; cloze: string }[];
 }
 
 /** Variável preenchida pelo usuário; `pt` é opcional. */
@@ -67,13 +70,29 @@ export function slotsOf(template: string): string[] {
   return out;
 }
 
-export function exampleValues(c: Chunk): Record<string, SlotValue> {
+export function examplesOf(c: Chunk): Record<string, ExampleValue>[] {
+  return c.examples?.length ? c.examples : c.example ? [c.example] : [{}];
+}
+
+/** Valores do exemplo ``index`` (o primeiro, se não informado). */
+export function exampleValues(c: Chunk, index = 0): Record<string, SlotValue> {
+  const example = examplesOf(c)[index] ?? {};
   const values: Record<string, SlotValue> = {};
   for (const slot of c.slots) {
-    const ex = c.example[slot] ?? c.defaults[slot] ?? "";
+    const ex = example[slot] ?? c.defaults[slot] ?? "";
     values[slot] = Array.isArray(ex) ? { en: ex[0], pt: ex[1] } : { en: ex };
   }
   return values;
+}
+
+/** Todos os exemplos já montados. */
+export function demos(c: Chunk): Phrase[] {
+  return examplesOf(c).map((_, i) => render(c, exampleValues(c, i)));
+}
+
+/** Dica do quiz: cada letra da parte fixa vira "_" (mostra quantas palavras faltam). */
+export function blanks(p: Phrase): string {
+  return p.parts.map((x) => (x.fixed ? x.text.replace(/[A-Za-z0-9']/g, "_") : x.text)).join("");
 }
 
 export function render(c: Chunk, values: Record<string, SlotValue>): Phrase {
@@ -122,7 +141,7 @@ export function search(chunks: Chunk[], term: string): Chunk[] {
   const t = normalizeSearch(term);
   if (!t) return chunks;
   return chunks.filter((c) =>
-    [c.name.replace(/_/g, " "), core(c), c.pt, render(c, exampleValues(c)).en].some((s) =>
+    [c.name.replace(/_/g, " "), core(c), c.pt, ...demos(c).flatMap((p) => [p.en, p.pt])].some((s) =>
       normalizeSearch(s).includes(t),
     ),
   );

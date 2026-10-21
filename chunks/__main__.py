@@ -2,7 +2,8 @@
 
 Comandos:
     list   [categoria]           lista os chunks (funções) disponíveis
-    show   <chunk>               mostra a "documentação" do chunk
+    show   <chunk>               mostra a "documentação" do chunk, com os exemplos
+    estudar <chunk>              exemplos do chunk e, no final, um quiz com eles
     run    <chunk> [valores...]  executa o chunk com as suas variáveis
     play   <chunk>               pergunta cada variável e executa
     search <termo>               procura por inglês, português ou nome
@@ -16,6 +17,7 @@ Comandos:
 from __future__ import annotations
 
 import argparse
+import random
 import sys
 from pathlib import Path
 
@@ -79,26 +81,55 @@ def cmd_quiz(args) -> None:
     if not queue:
         print("Nada para revisar hoje. Volte amanhã!")
         return
-    print(f"{len(queue)} chunks para hoje. Escreva a frase em inglês. (Ctrl+C para sair)\n")
+    print(f"{len(queue)} chunks para hoje. Escreva a frase em inglês (? mostra uma dica). Ctrl+C sai.\n")
     score = 0
     try:
         for i, c in enumerate(queue, 1):
-            p = c.demo()
-            print(f"[{i}/{len(queue)}] {p.pt}")
-            if c.example:
-                hints = ", ".join(
-                    f"{k}={(v[0] if isinstance(v, tuple) else v)!r}" for k, v in c.example.items()
-                )
-                print(f"        variáveis: {hints}")
-            answer = input("  > ")
-            ok = study.check(answer, p)
+            ok = _ask(study.random_phrase(c), f"[{i}/{len(queue)}]")
             score += ok
             study.record(progress, c.name, ok)
-            print("  ✔ Correto!\n" if ok else f"  ✘ {p.en}\n    chunk: {c.core}\n")
     except (KeyboardInterrupt, EOFError):
         print()
     study.save_progress(progress)
     print(f"Placar: {score}/{len(queue)}. Progresso salvo em {study.PROGRESS_FILE}")
+
+
+def cmd_study(args) -> None:
+    c = chunks.get(args.chunk)
+    print(f"{c.pattern}\n{c.core}\n")
+    if c.note:
+        print(f"💡 {c.note}\n")
+    phrases = c.demos()
+    print("Exemplos (leia em voz alta):")
+    for p in phrases:
+        print(f"  • {p.en}\n    {p.pt}")
+    input("\nEnter para começar o quiz deste chunk… ")
+    print("\nEscreva em inglês. Digite ? para ver uma dica.\n")
+    quiz = random.sample(phrases, len(phrases))
+    score = 0
+    try:
+        for i, p in enumerate(quiz, 1):
+            score += _ask(p, f"[{i}/{len(quiz)}]")
+    except (KeyboardInterrupt, EOFError):
+        print()
+        return
+    print(f"Placar: {score}/{len(quiz)}." + (" Perfeito! 🎉" if score == len(quiz) else " Repita amanhã."))
+    if score == len(quiz):
+        progress = study.load_progress()
+        study.record(progress, c.name, True)
+        study.save_progress(progress)
+
+
+def _ask(p, label: str) -> bool:
+    """Mostra o português, lê a resposta (``?`` mostra a dica) e corrige."""
+    print(f"{label} {p.pt}")
+    answer = input("  > ")
+    if answer.strip() == "?":
+        print(f"  dica: {p.blanks}")
+        answer = input("  > ")
+    ok = study.check(answer, p)
+    print("  ✔ Correto!\n" if ok else f"  ✘ {p.en}\n    chunk: {p.chunk.core}\n")
+    return ok
 
 
 def cmd_anki(args) -> None:
@@ -205,6 +236,7 @@ def main(argv: list[str] | None = None) -> None:
 
     p = sub.add_parser("list"); p.add_argument("category", nargs="?"); p.set_defaults(fn=cmd_list)
     p = sub.add_parser("show"); p.add_argument("chunk"); p.set_defaults(fn=cmd_show)
+    p = sub.add_parser("estudar"); p.add_argument("chunk"); p.set_defaults(fn=cmd_study)
     p = sub.add_parser("run"); p.add_argument("chunk"); p.add_argument("values", nargs="*")
     p.set_defaults(fn=cmd_run)
     p = sub.add_parser("play"); p.add_argument("chunk"); p.set_defaults(fn=cmd_play)

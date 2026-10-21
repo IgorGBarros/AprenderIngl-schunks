@@ -381,7 +381,7 @@ button.back {
 }
 
 mark.fixed {
-  padding: 1px 3px;
+  padding: 1px 0.08em;
   border-radius: 4px;
   background: var(--fixed-bg);
   color: var(--fixed-text);
@@ -950,4 +950,116 @@ mark.fixed {
 
 .import {
   margin-top: 8px;
+}
+
+/* ------------------------------------------------------ exemplos e quiz */
+.examples {
+  display: grid;
+  gap: 10px;
+}
+
+.example {
+  display: grid;
+  gap: 6px;
+}
+
+.example .phrase {
+  font-size: 1.1rem;
+}
+
+.link.small {
+  justify-self: start;
+  padding: 4px 0;
+  font-size: 0.9rem;
+}
+
+.slots .output {
+  margin-bottom: 4px;
+}
+
+.anki h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.slots .anki {
+  margin-top: 4px;
+  padding: 12px 14px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+
+.chunk-quiz {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.quiz-intro {
+  display: grid;
+  gap: 12px;
+}
+
+.quiz-intro p {
+  margin: 0;
+}
+
+.quiz-progress {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.result {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
+.hint-line {
+  margin: 12px 0 0;
+  overflow-wrap: anywhere;
+}
+
+.hint-line code {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.form > .link {
+  justify-self: start;
+}
+
+.example-set {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding: 12px 14px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 0;
+}
+
+.example-set legend {
+  padding: 0 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.example-slot {
+  display: grid;
+  gap: 6px;
+}
+
+.example-slot label code {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.preview-item + .preview-item {
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
 }
