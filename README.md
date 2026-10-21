@@ -63,6 +63,25 @@ chunks list                      # testa: lista os chunks
 Sem instalar nada, `python -m chunks` funciona direto da pasta do projeto, e
 faz o mesmo que o comando `chunks`.
 
+No **Windows (PowerShell)**:
+
+```powershell
+python -m venv venv
+venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+chunks list
+```
+
+Se aparecer *"O termo 'chunks' não é reconhecido"*:
+
+- Confira se você está na pasta do projeto, a que tem o `pyproject.toml` e o
+  `requirements.txt` (`dir pyproject.toml`). Dentro da subpasta `chunks` a
+  instalação não funciona, e o `python -m chunks` também não.
+- Rode `python -m pip install -r requirements.txt` com o venv ativado: o
+  comando `chunks` só existe depois disso.
+- Se o PowerShell bloquear o `Activate.ps1`, rode uma vez
+  `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+
 ### 2. App web (opcional)
 
 ```bash
