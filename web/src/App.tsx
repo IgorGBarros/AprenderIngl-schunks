@@ -34,10 +34,18 @@ export default function App() {
   const [mine, setMine] = useState<Chunk[]>(() => load("chunks.mine", []));
   const [progress, setProgress] = useState<Progress>(() => load("chunks.progress", {}));
 
-  useEffect(() => save("chunks.mine", mine), [mine]);
-  useEffect(() => save("chunks.progress", progress), [progress]);
+  useEffect(() => {
+    save("chunks.mine", mine);
+  }, [mine]);
+  useEffect(() => {
+    save("chunks.progress", progress);
+  }, [progress]);
   // Cada tela nova começa do topo (o hash muda, mas o navegador mantém a rolagem).
-  useEffect(() => window.scrollTo(0, 0), [route.join("/")]);
+  // Corpo em bloco: algumas extensões fazem scrollTo devolver uma Promise, e o
+  // React trataria esse valor como função de limpeza.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [route.join("/")]);
 
   const all = useMemo(() => [...BUILTIN, ...mine], [mine]);
   const [section, param] = route;
