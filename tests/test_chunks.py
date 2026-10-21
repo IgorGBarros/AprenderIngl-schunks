@@ -1,3 +1,4 @@
+import json
 import string
 import tempfile
 import unittest
@@ -105,7 +106,12 @@ class TestStudy(unittest.TestCase):
 
     def test_web_data_is_up_to_date(self):
         folder = Path(__file__).resolve().parent.parent / "web" / "src" / "data"
-        for name, expected in (("chunks.json", study.to_json()), ("interviews.json", study.interviews_json())):
+        files = (
+            ("chunks.json", study.to_json()),
+            ("interviews.json", study.interviews_json()),
+            ("interview_prompts.json", study.prompts_json()),
+        )
+        for name, expected in files:
             with self.subTest(file=name):
                 self.assertEqual(
                     (folder / name).read_text(encoding="utf-8"),
@@ -141,3 +147,81 @@ class TestInterviews(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestJobGeneration(unittest.TestCase):
+    JOB = "We are hiring a Data Engineer to build pipelines in Python and SQL. " * 3
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+
+    def test_generates_a_full_session(self):
+        from chunks.interviews import from_dict, generate, prompts, to_dict
+        from chunks.llm import Ollama
+        from tests.fake_ollama import FakeOllama
+
+        steps = []
+        with FakeOllama() as fake:
+            session = generate.generate_session(
+                self.JOB, "", Ollama(host=fake.url, model="fake:latest"), per_stage=4, on_progress=steps.append
+            )
+        self.assertEqual(session.title, "Data Engineer")
+        self.assertEqual(session.company, "Acme Corp")
+        self.assertEqual([s.id for s in session.stages], [s.id for s in prompts.STAGES])
+        # 4 por etapa, 2 no encerramento; a pergunta vazia foi descartada.
+        self.assertEqual(len(session.questions), 4 * 5 + 2)
+        self.assertEqual(len({q.id for q in session.questions}), len(session.questions))
+        q = session.questions[0]
+        self.assertEqual(q.tips, ("Dica 1", "Dica 2", "Dica 3"))
+        self.assertIn("((number of years))", q.answer)
+        self.assertEqual(len(steps), 1 + len(prompts.STAGES))
+
+        # Sem perfil, o prompt manda usar ((placeholders)); as perguntas já feitas vão no prompt.
+        chat = fake.requests[2]["messages"][1]["content"]
+        self.assertIn(prompts.NO_PROFILE, chat)
+        self.assertIn("Recrutador question 1?", chat)
+        self.assertEqual(fake.requests[1]["format"], prompts.QUESTIONS_SCHEMA)
+
+        # Salva e carrega de volta igual.
+        path = generate.save(session, Path(self.tmp.name))
+        self.assertEqual(from_dict(json.loads(path.read_text(encoding="utf-8"))), session)
+        self.assertEqual(to_dict(generate.load_all(Path(self.tmp.name))[0]), to_dict(session))
+
+    def test_profile_goes_into_the_prompt(self):
+        from chunks.interviews import generate
+        from chunks.llm import Ollama
+        from tests.fake_ollama import FakeOllama
+
+        with FakeOllama() as fake:
+            generate.generate_session(self.JOB, "Data Analyst at a refinery", Ollama(host=fake.url, model="fake:latest"))
+        self.assertIn("Data Analyst at a refinery", fake.requests[1]["messages"][1]["content"])
+
+    def test_friendly_errors(self):
+        from chunks.interviews import generate
+        from chunks.llm import Ollama, OllamaError
+        from tests.fake_ollama import FakeOllama
+
+        with FakeOllama() as fake:
+            with self.assertRaisesRegex(OllamaError, "ollama pull llama3"):
+                generate.generate_session(self.JOB, "", Ollama(host=fake.url, model="llama3"))
+            self.assertEqual(Ollama(host=fake.url).models(), ["fake:latest"])
+        with FakeOllama(bad_json=True) as fake:
+            with self.assertRaisesRegex(OllamaError, "JSON válido"):
+                generate.generate_session(self.JOB, "", Ollama(host=fake.url, model="fake:latest"))
+        with self.assertRaisesRegex(OllamaError, "ollama serve"):
+            Ollama(host="http://127.0.0.1:9", model="x", timeout=2).models()
+        with self.assertRaisesRegex(ValueError, "curto"):
+            generate.generate_session("Dev Python", "", Ollama(host="http://127.0.0.1:9"))
+
+    def test_host_without_scheme(self):
+        from chunks.llm import Ollama
+
+        self.assertEqual(Ollama(host="0.0.0.0:11434").host, "http://0.0.0.0:11434")
+
+    def test_fix_markup(self):
+        from chunks.interviews.generate import fix_markup, slugify
+
+        self.assertEqual(fix_markup("[[ok]] and ((fill))"), "[[ok]] and ((fill))")
+        self.assertEqual(fix_markup("[[broken and ((fill))"), "broken and ((fill))")
+        self.assertEqual(slugify("Ação & Co — Sênior Dev"), "acao_co_senior_dev")

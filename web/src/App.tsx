@@ -36,6 +36,8 @@ export default function App() {
 
   useEffect(() => save("chunks.mine", mine), [mine]);
   useEffect(() => save("chunks.progress", progress), [progress]);
+  // Cada tela nova começa do topo (o hash muda, mas o navegador mantém a rolagem).
+  useEffect(() => window.scrollTo(0, 0), [route.join("/")]);
 
   const all = useMemo(() => [...BUILTIN, ...mine], [mine]);
   const [section, param] = route;
@@ -49,7 +51,7 @@ export default function App() {
         {opened ? (
           <ChunkView key={opened.name} chunk={opened} onBack={() => (window.history.length > 1 ? window.history.back() : go(""))} />
         ) : tab === "interview" ? (
-          <Interview openId={param} onOpen={(id) => go(id ? `interview/${id}` : "interview")} />
+          <Interview path={route.slice(1)} go={go} />
         ) : tab === "quiz" ? (
           <Quiz chunks={all} progress={progress} onProgress={setProgress} />
         ) : tab === "mine" ? (

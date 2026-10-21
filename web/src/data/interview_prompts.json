@@ -1,0 +1,109 @@
+{
+  "stages": [
+    {
+      "id": "screen",
+      "title": "Recrutador",
+      "description": "Primeira conversa: trajetória, motivação, disponibilidade, modelo de trabalho, salário e inglês. Eles filtram encaixe e comunicação."
+    },
+    {
+      "id": "experience",
+      "title": "Experiência (STAR)",
+      "description": "Perguntas comportamentais. Responda sempre com uma história real: Situation, Task, Action, Result."
+    },
+    {
+      "id": "technical",
+      "title": "Técnica",
+      "description": "As habilidades e ferramentas que a vaga pede."
+    },
+    {
+      "id": "domain",
+      "title": "Específicas da vaga",
+      "description": "O problema, o setor e as responsabilidades desta vaga em particular."
+    },
+    {
+      "id": "design",
+      "title": "Caso prático",
+      "description": "Um cenário para resolver na hora: system design, estudo de caso ou situação do dia a dia da função."
+    },
+    {
+      "id": "closing",
+      "title": "Suas perguntas e encerramento",
+      "description": "Perguntar bem mostra senioridade. Tenha 3 ou 4 perguntas prontas."
+    }
+  ],
+  "stage_focus": {
+    "screen": "the first call with a recruiter: background pitch, motivation for this role and company, why the candidate is looking, availability and start date, time zone or work model, salary expectations, English level, other processes.",
+    "experience": "behavioral questions answered with the STAR method, tied to the responsibilities in the job description: ownership, a difficult problem, a failure, conflict or disagreement, teamwork, prioritization.",
+    "technical": "the hard skills, tools and technologies explicitly required by the job description. Ask how the candidate uses them and about trade-offs, not trivia.",
+    "domain": "the specific problem, industry and day-to-day responsibilities of this role, including the 'bonus' or 'nice to have' items of the description.",
+    "design": "one or two practical scenarios typical of this role (for engineers: a system design question; for other roles: a case study or a realistic work situation), plus a follow-up about scaling or edge cases.",
+    "closing": "the moment the interviewer asks 'Do you have any questions for us?' and the closing of the interview. The answers must be good questions the candidate can ask about this specific role, and a short, positive closing."
+  },
+  "system": "You are a senior interviewer and interview coach. You help a Brazilian professional who is learning English prepare for a job interview that will be conducted in English.\n\nYou write likely interview questions for one stage of the interview, based on the job description and the candidate profile you receive.\n\nRules for every question:\n- \"question\": what the interviewer would actually say, in natural spoken English.\n- \"goal\": in Brazilian Portuguese, one or two sentences explaining what the interviewer really wants to find out with this question.\n- \"answer\": a model answer in English, in the first person, as the candidate would say it out loud: clear, natural, B2-level English, 60 to 150 words. Use the STAR structure for behavioral questions.\n- In \"answer\", wrap 2 to 4 reusable expressions (chunks the candidate should memorize, such as \"I've been working in\", \"As a result\", \"The trade-off is\") in double square brackets: [[As a result]].\n- NEVER invent facts about the candidate. Any fact that is not written in the candidate profile (employers, years, numbers, results, tools used, dates, salary) must be a placeholder in double parentheses describing what to fill in, in English, for example: ((number of years)), ((a project where you cleaned messy data)), ((your salary range in USD per month)).\n- \"tips\": 1 to 3 short, practical tips in Brazilian Portuguese.\n- \"follow_ups\": 0 to 2 follow-up questions the interviewer could ask next, in English.\n- Questions must be specific to this job, not generic, and must not repeat questions already asked.\n",
+  "stage_prompt": "JOB DESCRIPTION:\n\"\"\"\n{job}\n\"\"\"\n\nCANDIDATE PROFILE:\n\"\"\"\n{profile}\n\"\"\"\n\nSTAGE: {stage_title}\nWrite {count} questions about {stage_focus}\n\nQuestions already written for other stages (do not repeat them):\n{already}\n",
+  "meta_prompt": "JOB DESCRIPTION:\n\"\"\"\n{job}\n\"\"\"\n\nExtract:\n- \"title\": the job title, in the original language of the description.\n- \"company\": the company name (and the hiring agency, if there is one). Use \"\" if unknown.\n- \"summary\": one or two sentences in Brazilian Portuguese explaining what the job is about and the main skills required.\n",
+  "no_profile": "(No profile given. Use ((placeholders)) for every fact about the candidate.)",
+  "questions_schema": {
+    "type": "object",
+    "properties": {
+      "questions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string"
+            },
+            "goal": {
+              "type": "string"
+            },
+            "answer": {
+              "type": "string"
+            },
+            "tips": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "follow_ups": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "question",
+            "goal",
+            "answer",
+            "tips",
+            "follow_ups"
+          ]
+        }
+      }
+    },
+    "required": [
+      "questions"
+    ]
+  },
+  "meta_schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "company": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "title",
+      "company",
+      "summary"
+    ]
+  }
+}

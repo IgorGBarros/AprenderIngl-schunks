@@ -1,5 +1,9 @@
 """Sessões de entrevista: perguntas prováveis + respostas modelo.
 
+Há sessões prontas (``general``, ``vendor_data_platform``) e sessões geradas
+para qualquer vaga com o Ollama (``python -m chunks vaga``), salvas em
+``chunks/interviews/generated/``.
+
 Marcação usada nas respostas modelo (``answer``):
 
 - ``[[...]]``  chunk (bloco pronto para memorizar), destacado no app.
@@ -83,4 +87,25 @@ def to_dict(session: Session) -> dict:
     return asdict(session)
 
 
-from chunks.interviews import vendor_data_platform  # noqa: E402,F401  (registra a sessão)
+def from_dict(data: dict) -> Session:
+    return Session(
+        id=data["id"],
+        title=data["title"],
+        company=data.get("company", ""),
+        summary=data.get("summary", ""),
+        stages=tuple(Stage(**s) for s in data["stages"]),
+        questions=tuple(
+            Question(
+                **{**q, "tips": tuple(q.get("tips", ())), "follow_ups": tuple(q.get("follow_ups", ()))}
+            )
+            for q in data["questions"]
+        ),
+    )
+
+
+# Sessões prontas, depois as geradas com o Ollama (chunks/interviews/generated/*.json).
+from chunks.interviews import general, vendor_data_platform  # noqa: E402,F401
+from chunks.interviews.generate import load_all as _load_generated  # noqa: E402
+
+for _session in _load_generated():
+    register(_session)

@@ -121,12 +121,11 @@ tags (`chunks::meetings` etc.) já vêm no arquivo.
 | `data`      | matching, deduplicação, reconciliação, multi-tenant, eventos    |
 | `mine`      | os seus chunks                                                  |
 
-## Preparação para entrevista
+## Preparação para entrevista (qualquer vaga)
 
-Uma sessão completa para a vaga **Senior Software Engineer, Vendor Data
-Platform** (DistantJob): 38 perguntas prováveis, em 6 etapas (recrutador,
-experiência STAR, técnica, dados de fornecedores, system design e
-encerramento). Cada pergunta tem:
+Cada sessão de entrevista tem as perguntas prováveis, divididas em etapas
+(recrutador, experiência STAR, técnica, específicas da vaga, caso prático e
+encerramento). Cada pergunta traz:
 
 - o que o entrevistador quer descobrir (em português);
 - uma resposta modelo em inglês com os chunks marcados;
@@ -136,14 +135,51 @@ Nas respostas, `((...))` marca o que **você precisa trocar por um fato real
 seu** (números, empresa, datas). Nunca diga algo que não consegue sustentar
 com um exemplo.
 
+Sessões incluídas:
+
+| Sessão | Para quê |
+|---|---|
+| `general` | Perguntas que caem em quase qualquer vaga. Não precisa de LLM. |
+| `vendor_data_platform` | Exemplo completo, feito à mão, para uma vaga real de Senior Software Engineer. |
+| as suas | Geradas para **qualquer vaga** com o Ollama (abaixo). |
+
 ```bash
-python -m chunks entrevista                              # sessão completa
-python -m chunks entrevista vendor_data_platform domain  # só uma etapa
+python -m chunks entrevista                      # escolhe a sessão numa lista
+python -m chunks entrevista general screen       # sessão e etapa direto
 ```
 
-Etapas: `screen`, `experience`, `technical`, `domain`, `design`, `closing`.
-As perguntas ficam em `chunks/interviews/vendor_data_platform.py`. Para
-preparar outra vaga, crie um arquivo parecido na mesma pasta.
+### Gerar a entrevista de qualquer vaga com o Ollama
+
+O [Ollama](https://ollama.com) roda um modelo de linguagem no seu computador,
+de graça e sem mandar seus dados para fora.
+
+1. Instale o Ollama e baixe um modelo. O `qwen2.5:7b` funciona bem; modelos
+   menores (`llama3.2:3b`) são mais rápidos mas erram mais o formato.
+
+   ```bash
+   ollama pull qwen2.5:7b
+   ```
+
+2. (Opcional, recomendado) Copie `perfil.exemplo.md` para `perfil.md` e
+   preencha com fatos reais seus. Ele fica fora do git. Com o perfil, as
+   respostas modelo já vêm com a sua história; sem ele, tudo sobre você
+   vem como `((preencha))`.
+
+3. Salve a descrição da vaga num arquivo de texto e gere:
+
+   ```bash
+   python -m chunks vaga vaga.txt
+   python -m chunks vaga vaga.txt --modelo llama3.1:8b -n 7   # outro modelo, 7 perguntas por etapa
+   python -m chunks vaga -     # cola a vaga no terminal e termina com Ctrl+D (Ctrl+Z e Enter no Windows)
+   ```
+
+A sessão é salva em `chunks/interviews/generated/` e aparece no
+`python -m chunks entrevista`. Para levá-la ao app web, rode
+`python -m chunks json` (ou importe o `.json` direto no app).
+
+Para usar outro endereço ou modelo por padrão: variáveis `OLLAMA_HOST` e
+`OLLAMA_MODEL`. Os prompts ficam em `chunks/interviews/prompts.py` e são os
+mesmos no terminal e no app.
 
 ## App web para o celular (`web/`)
 
@@ -157,7 +193,9 @@ Um app em React + TypeScript + Vite com a mesma biblioteca e o mesmo motor:
   celular.
 - **Entrevista:** simulação da entrevista. O app lê a pergunta em voz alta, você
   responde falando e depois compara com a resposta modelo (que também pode ser
-  ouvida, para treinar *shadowing*).
+  ouvida, para treinar *shadowing*). Em **+ Nova vaga** você cola qualquer vaga
+  e o app gera a entrevista com o seu Ollama, ou importa um `.json` gerado no
+  terminal.
 - **Meus:** crie chunks pelo celular (`[[fixo]] {variável}`) e baixe o
   arquivo do Anki.
 - Funciona offline e pode ser instalado na tela inicial ("Adicionar à tela de
@@ -171,8 +209,17 @@ npm test           # testes (inclui conferir que o TS gera o mesmo que o Python)
 npm run build      # gera web/dist
 ```
 
-A biblioteca do app vem de `web/src/data/chunks.json`, gerado a partir do
-Python. Depois de criar ou editar chunks em Python, rode:
+**Ollama no app:** com o app rodando em `localhost` (`npm run dev`), ele fala
+com o Ollama sem configuração. Para gerar pelo celular, na mesma rede Wi-Fi,
+inicie o Ollama aceitando conexões da rede e de outros endereços:
+
+```bash
+OLLAMA_HOST=0.0.0.0 OLLAMA_ORIGINS="*" ollama serve
+```
+
+e, no app, em *Configurar Ollama*, use `http://IP-DO-SEU-COMPUTADOR:11434`.
+
+A biblioteca do app vem de `web/src/data/`, gerado a partir do Python. Depois de criar ou editar chunks em Python, rode:
 
 ```bash
 python -m chunks json

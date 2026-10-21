@@ -10,6 +10,7 @@ Comandos:
     anki   <arquivo.txt> [cat]   exporta cards Cloze para o Anki
     json   [pasta]               exporta biblioteca e entrevistas para o app web
     entrevista [sessão] [etapa]  simulação de entrevista (perguntas + respostas modelo)
+    vaga   <vaga.txt|-> [opções] gera uma entrevista para QUALQUER vaga com o Ollama
 """
 
 from __future__ import annotations
@@ -22,6 +23,7 @@ import chunks
 from chunks import study
 
 WEB_DATA = Path(__file__).resolve().parent.parent / "web" / "src" / "data"
+DEFAULT_PROFILE = "perfil.md"
 
 
 def cmd_list(args) -> None:
@@ -109,6 +111,7 @@ def cmd_json(args) -> None:
     folder = Path(args.folder)
     (folder / "chunks.json").write_text(study.to_json(), encoding="utf-8")
     (folder / "interviews.json").write_text(study.interviews_json(), encoding="utf-8")
+    (folder / "interview_prompts.json").write_text(study.prompts_json(), encoding="utf-8")
     print(f"{len(chunks.registry())} chunks e as entrevistas exportados para {folder}.")
 
 
@@ -116,6 +119,8 @@ def cmd_interview(args) -> None:
     from chunks import interviews
 
     all_sessions = interviews.sessions()
+    if args.session is None:
+        args.session = _pick_session(all_sessions)
     if args.session not in all_sessions:
         sys.exit("Sessões: " + ", ".join(all_sessions))
     session = all_sessions[args.session]
@@ -145,6 +150,46 @@ def cmd_interview(args) -> None:
         print()
 
 
+def _pick_session(all_sessions: dict) -> str:
+    items = list(all_sessions.values())
+    print("Sessões de entrevista:\n")
+    for i, sess in enumerate(items, 1):
+        print(f"  {i}. {sess.title} — {sess.company} ({len(sess.questions)} perguntas)  [{sess.id}]")
+    print("\nNova vaga? python -m chunks vaga descricao_da_vaga.txt\n")
+    choice = input("Número ou id da sessão: ").strip()
+    if choice.isdigit() and 1 <= int(choice) <= len(items):
+        return items[int(choice) - 1].id
+    return choice
+
+
+def cmd_job(args) -> None:
+    from chunks.interviews import generate
+    from chunks.llm import Ollama, OllamaError
+
+    job = sys.stdin.read() if args.file == "-" else Path(args.file).read_text(encoding="utf-8")
+    profile = ""
+    if args.profile:
+        profile = Path(args.profile).read_text(encoding="utf-8")
+    elif Path(DEFAULT_PROFILE).exists():
+        profile = Path(DEFAULT_PROFILE).read_text(encoding="utf-8")
+        print(f"Usando seu perfil de {DEFAULT_PROFILE}.")
+    else:
+        print(f"Sem perfil: os fatos sobre você virão como ((preencha)). Veja {DEFAULT_PROFILE.replace('.md', '.exemplo.md')}.")
+
+    client = Ollama(host=args.host, model=args.model)
+    print(f"Ollama: {client.host} · modelo {client.model}. Isso pode levar alguns minutos.\n")
+    try:
+        session = generate.generate_session(
+            job, profile, client, per_stage=args.n, on_progress=lambda msg: print(f"  {msg}")
+        )
+    except (OllamaError, ValueError) as e:
+        sys.exit(f"\n{e}")
+    path = generate.save(session)
+    print(f"\n{len(session.questions)} perguntas para {session.title!r} salvas em {path}.")
+    print(f"Pratique: python -m chunks entrevista {session.id}")
+    print("App web: rode `python -m chunks json` para incluir a sessão no app.")
+
+
 def _parse_value(raw: str):
     """``'a coffee|um café'`` vira ``('a coffee', 'um café')``."""
     if "|" in raw:
@@ -170,7 +215,14 @@ def main(argv: list[str] | None = None) -> None:
     p.set_defaults(fn=cmd_anki)
     p = sub.add_parser("json"); p.add_argument("folder", nargs="?", default=str(WEB_DATA))
     p.set_defaults(fn=cmd_json)
-    p = sub.add_parser("entrevista"); p.add_argument("session", nargs="?", default="vendor_data_platform")
+    p = sub.add_parser("vaga", help="gera uma entrevista para qualquer vaga com o Ollama")
+    p.add_argument("file", help="arquivo .txt com a descrição da vaga, ou - para colar no terminal")
+    p.add_argument("--perfil", dest="profile", help=f"seu perfil/currículo (padrão: {DEFAULT_PROFILE})")
+    p.add_argument("--modelo", dest="model", help="modelo do Ollama (padrão: $OLLAMA_MODEL ou qwen2.5:7b)")
+    p.add_argument("--host", help="endereço do Ollama (padrão: $OLLAMA_HOST ou http://localhost:11434)")
+    p.add_argument("-n", type=int, default=5, help="perguntas por etapa (padrão: 5)")
+    p.set_defaults(fn=cmd_job)
+    p = sub.add_parser("entrevista"); p.add_argument("session", nargs="?")
     p.add_argument("stage", nargs="?"); p.set_defaults(fn=cmd_interview)
 
     args = parser.parse_args(argv)

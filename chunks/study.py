@@ -90,6 +90,13 @@ def interviews_json() -> str:
     return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
 
 
+def prompts_json() -> str:
+    """Prompts de geração de entrevistas, para o app web gerar igual ao Python."""
+    from chunks.interviews import prompts
+
+    return json.dumps(prompts.to_dict(), indent=2, ensure_ascii=False) + "\n"
+
+
 # ------------------------------------------------------------------- Anki
 def anki_export(path: Path, category: str | None = None) -> int:
     """Gera um arquivo .txt para importar no Anki (tipo de nota *Cloze*).
