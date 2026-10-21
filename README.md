@@ -141,8 +141,10 @@ search("deploy")            # procura em inglês, português, nome e exemplos
 ```bash
 chunks list                      # todas as funções, por categoria
 chunks list meetings             # só uma categoria
-chunks show walk_me_through      # documentação, com os 3 exemplos
+chunks show walk_me_through      # documentação, com os exemplos
 chunks estudar walk_me_through   # exemplos e, no final, o quiz deste chunk
+chunks estudar walk_me_through --idioma en+de   # inglês e alemão juntos
+chunks quiz --idioma de          # treino do dia em alemão
 chunks run could_i_get "a cup of coffee"
 chunks run could_i_get "a cup of coffee|uma xícara de café"   # inglês|português
 chunks play let_me_loop_in       # pergunta cada variável
@@ -155,7 +157,7 @@ chunks anki home.txt home        # exporta só uma categoria
 
 ### Exemplos e quiz de cada chunk
 
-Cada chunk tem 3 exemplos prontos, com tradução. O `chunks estudar <chunk>`
+Cada chunk tem 10 exemplos prontos, em inglês, alemão e português. O `chunks estudar <chunk>`
 mostra os exemplos para você ler em voz alta e termina com um quiz: aparece a
 frase em português e você escreve em inglês. Digite `?` para ver uma dica com
 a parte fixa escondida (`_____ _ ___ a glass of water, ______?`). No app, a
@@ -258,9 +260,16 @@ Um app em React + TypeScript + Vite com a mesma biblioteca e o mesmo motor:
 
 - **Biblioteca:** busca (com ou sem acento), filtro por categoria e a parte
   fixa de cada chunk destacada.
-- **Chunk:** 3 exemplos com tradução, "Monte a sua" (você digita as variáveis e
+- **Idioma:** escolha **Inglês**, **Alemão** ou **Os dois**. Com os dois, cada
+  exemplo mostra a frase em inglês, em alemão e a tradução em português, e o
+  quiz pede a resposta nos dois idiomas.
+- **Chunk:** 10 exemplos com tradução, "Monte a sua" (você digita as variáveis e
   vê a frase montada na hora) e o card do Anki para copiar. No final, um quiz
   dos exemplos, que abre em tela cheia para as respostas não ficarem à vista.
+  Responda digitando ou pelo **microfone** 🎤 (reconhecimento de voz do navegador:
+  Chrome, Edge ou Safari, em HTTPS ou `localhost`; pelo IP da rede local, sem
+  HTTPS, o navegador não libera o microfone). A correção ignora maiúsculas,
+  pontuação e acentos: "konnen" vale "können".
 - **Áudio:** voz do próprio celular, em 0.75x por padrão (dá para trocar para
   1x ou 0.5x; a escolha fica salva). O botão **A·B** lê palavra por palavra e
   destaca na frase a palavra que está tocando.
@@ -317,12 +326,14 @@ we_should_consider = chunk(
     "we_should_consider",                       # nome da função
     "[[I think we should consider]] {option}.", # [[fixo]] e {variável}
     "Acho que devíamos considerar {option}.",   # tradução com as mesmas variáveis
+    de="[[Ich finde, wir sollten]] {option} [[in Betracht ziehen]].",  # alemão (opcional)
     category="mine",
-    examples=[                                  # 3 exemplos: ("inglês", "português")
-        {"option": ("using a cache", "usar um cache")},
-        {"option": ("a different approach", "outra abordagem")},
-        {"option": ("hiring a contractor", "contratar um freelancer")},
-    ],
+    examples=ex(                                # ~10 exemplos: inglês | português | alemão
+        "option",
+        "using a cache | usar um cache | den Einsatz eines Caches",
+        "a different approach | outra abordagem | einen anderen Ansatz",
+        "hiring a contractor | contratar um freelancer | die Einstellung eines Freelancers",
+    ),
     note="Jeito educado de sugerir algo numa reunião.",  # opcional
 )
 ```
@@ -335,7 +346,8 @@ we_should_consider = chunk(
 - `defaults={"when": "later"}` torna uma variável opcional.
 
 Rode os testes depois de adicionar chunks. Eles conferem se a tradução usa as
-mesmas variáveis do inglês, se há 3 exemplos traduzidos e se não sobrou
+mesmas variáveis do inglês, se há 10 exemplos traduzidos (inglês, português e
+alemão), se nenhuma frase se repete e se não sobrou
 nenhum "o(a)":
 
 ```bash

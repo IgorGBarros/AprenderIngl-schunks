@@ -9,6 +9,10 @@ Um chunk é definido por um *template* em inglês:
 
 Chamar o chunk devolve uma ``Phrase``: uma string em inglês que também
 carrega a tradução (``.pt``) e o card do Anki pronto (``.cloze``).
+
+Cada chunk também pode ter a versão em alemão (``de``), com as mesmas
+variáveis e a mesma marcação: ``"[[Könnte ich]] {item} [[bekommen, bitte]]?"``.
+Nos exemplos, cada variável é ``("inglês", "português", "alemão")``.
 """
 
 from __future__ import annotations
@@ -32,31 +36,50 @@ class Phrase(str):
     - ``.en``     frase em inglês
     - ``.pt``     tradução/significado em português
     - ``.cloze``  frase no formato Cloze do Anki (parte fixa escondida)
+    - ``.de`` / ``.de_cloze``  a mesma frase em alemão ("" se o chunk não tem)
     - ``.chunk``  o ``Chunk`` que gerou a frase
     """
 
     en: str
     pt: str
     cloze: str
+    de: str
+    de_cloze: str
     chunk: "Chunk"
 
-    def __new__(cls, en: str, pt: str, cloze: str, chunk: "Chunk") -> "Phrase":
+    def __new__(
+        cls, en: str, pt: str, cloze: str, chunk: "Chunk", de: str = "", de_cloze: str = ""
+    ) -> "Phrase":
         obj = super().__new__(cls, en)
         obj.en, obj.pt, obj.cloze, obj.chunk = en, pt, cloze, chunk
+        obj.de, obj.de_cloze = de, de_cloze
         return obj
+
+    def text(self, lang: str = "en") -> str:
+        """A frase no idioma pedido: ``"en"`` ou ``"de"``."""
+        return self.de if lang == "de" else self.en
+
+    def cloze_for(self, lang: str = "en") -> str:
+        return self.de_cloze if lang == "de" else self.cloze
+
+    def blanks_for(self, lang: str = "en") -> str:
+        """Dica do quiz: cada letra da parte fixa vira ``_`` (mostra quantas palavras faltam)."""
+        return re.sub(
+            r"\{\{c1::(.*?)\}\}",
+            lambda m: re.sub(r"[\wÄÖÜäöüß']", "_", m.group(1)),
+            self.cloze_for(lang),
+        )
 
     @property
     def blanks(self) -> str:
-        """Dica do quiz: cada letra da parte fixa vira ``_`` (mostra quantas palavras faltam)."""
-        return re.sub(
-            r"\{\{c1::(.*?)\}\}", lambda m: re.sub(r"[A-Za-z0-9']", "_", m.group(1)), self.cloze
-        )
+        return self.blanks_for("en")
 
     def explain(self) -> str:
         """Texto completo: inglês, português, chunk fixo e card do Anki."""
         return (
             f"EN    : {self.en}\n"
-            f"PT    : {self.pt}\n"
+            + (f"DE    : {self.de}\n" if self.de else "")
+            + f"PT    : {self.pt}\n"
             f"CHUNK : {self.chunk.core}\n"
             f"ANKI  : {self.cloze}"
         )
@@ -71,14 +94,16 @@ class Chunk:
     pt: str
     category: str
     examples: list[dict] = field(default_factory=list)
-    """Exemplos prontos: {variável: "inglês"} ou {variável: ("inglês", "português")}."""
+    """Exemplos prontos: {variável: ("inglês", "português", "alemão")} (alemão opcional)."""
     defaults: dict[str, str] = field(default_factory=dict)
     note: str = ""
+    de: str = ""
+    """Template em alemão, com as mesmas variáveis e a mesma marcação [[fixo]]."""
 
     def __post_init__(self) -> None:
-        self.slots = [
-            f for _, f, _, _ in string.Formatter().parse(_FIXED.sub(r"\1", self.template)) if f
-        ]
+        self.slots = _slots(self.template)
+        if self.de and set(_slots(self.de)) != set(self.slots):
+            raise ValueError(f"{self.name}: o alemão usa variáveis diferentes do inglês")
         required = set(self.slots) - set(self.defaults)
         for i, ex in enumerate(self.examples, 1):
             if not required <= set(ex) <= set(self.slots):
@@ -102,17 +127,14 @@ class Chunk:
     def __call__(self, *args, **kwargs) -> Phrase:
         bound = self.__signature__.bind(*args, **kwargs)
         bound.apply_defaults()
-        en_vals, pt_vals = {}, {}
+        en_vals, pt_vals, de_vals = {}, {}, {}
         for slot, value in bound.arguments.items():
-            en_vals[slot], pt_vals[slot] = _split_value(value)
+            en_vals[slot], pt_vals[slot], de_vals[slot] = _split_value(value)
 
-        # Marca a parte fixa com sentinelas antes do format(), para que as
-        # chaves do Cloze ({{c1::...}}) não sejam interpretadas pelo format.
-        marked = _FIXED.sub(_mark, self.template).format(**en_vals).replace(_END + _START, "")
-        en = marked.replace(_START, "").replace(_END, "")
-        cloze = marked.replace(_START, "{{c1::").replace(_END, "}}")
+        en, cloze = _fill(self.template, en_vals)
+        de, de_cloze = _fill(self.de, de_vals) if self.de else ("", "")
         pt = self.pt.format(**pt_vals)
-        return Phrase(_tidy(en), _tidy(pt), _tidy(cloze), self)
+        return Phrase(_tidy(en), _tidy(pt), _tidy(cloze), self, _tidy(de), _tidy(de_cloze))
 
     @property
     def example(self) -> dict:
@@ -131,6 +153,11 @@ class Chunk:
     def core(self) -> str:
         """Só a parte fixa do chunk, com as variáveis como ``...``."""
         return _FIXED.sub(r"\1", self.template).format(**{s: "..." for s in self.slots})
+
+    @property
+    def core_de(self) -> str:
+        """A parte fixa em alemão ("" se o chunk não tem alemão)."""
+        return _FIXED.sub(r"\1", self.de).format(**{s: "..." for s in self.slots})
 
     @property
     def pattern(self) -> str:
@@ -161,6 +188,7 @@ def chunk(
     example: dict | None = None,
     defaults: dict[str, str] | None = None,
     note: str = "",
+    de: str = "",
 ) -> Chunk:
     """Cria e registra um chunk. Use isso para adicionar os seus.
 
@@ -169,9 +197,30 @@ def chunk(
     if name in _REGISTRY:
         raise ValueError(f"Chunk duplicado: {name}")
     all_examples = list(examples or []) or ([example] if example else [])
-    c = Chunk(name, template, pt, category, all_examples, defaults or {}, note)
+    c = Chunk(name, template, pt, category, all_examples, defaults or {}, note, de)
     _REGISTRY[name] = c
     return c
+
+
+def ex(slots: str | tuple[str, ...], *rows: str) -> list[dict]:
+    """Escreve exemplos de forma compacta, uma linha por exemplo.
+
+    Cada variável é ``"inglês | português | alemão"``; com várias variáveis,
+    separe-as com ``;;`` na ordem de ``slots``::
+
+        ex("item", "a glass of water | um copo de água | ein Glas Wasser")
+        ex(("when", "goal"), "tomorrow | amanhã | morgen ;; review it | revisar | es prüfen")
+    """
+    names = (slots,) if isinstance(slots, str) else slots
+    examples = []
+    for row in rows:
+        values = row.split(";;")
+        if len(values) != len(names):
+            raise ValueError(f"Exemplo com {len(values)} variáveis, esperado {len(names)}: {row!r}")
+        examples.append(
+            {name: tuple(part.strip() for part in value.split("|")) for name, value in zip(names, values)}
+        )
+    return examples
 
 
 def registry() -> dict[str, Chunk]:
@@ -218,11 +267,31 @@ def _mark(m: re.Match) -> str:
     return text if not re.search(r"\w", text) else f"{_START}{text}{_END}"
 
 
-def _split_value(value) -> tuple[str, str]:
-    """Aceita ``"water"`` ou ``("water", "água")`` (inglês, português)."""
-    if isinstance(value, tuple) and len(value) == 2:
-        return str(value[0]), str(value[1])
-    return str(value), str(value)
+def _split_value(value) -> tuple[str, str, str]:
+    """Aceita ``"water"``, ``("water", "água")`` ou ``("water", "água", "Wasser")``.
+
+    Sem tradução, o idioma que falta repete o inglês.
+    """
+    if isinstance(value, tuple) and len(value) in (2, 3):
+        en, pt, *rest = (str(v) for v in value)
+        return en, pt, rest[0] if rest else en
+    return str(value), str(value), str(value)
+
+
+def _slots(template: str) -> list[str]:
+    return [f for _, f, _, _ in string.Formatter().parse(_FIXED.sub(r"\1", template)) if f]
+
+
+def _fill(template: str, values: dict) -> tuple[str, str]:
+    """Preenche o template; devolve (frase, cloze).
+
+    Marca a parte fixa com sentinelas antes do format(), para que as chaves do
+    Cloze ({{c1::...}}) não sejam interpretadas pelo format.
+    """
+    marked = _FIXED.sub(_mark, template).format(**values).replace(_END + _START, "")
+    text = marked.replace(_START, "").replace(_END, "")
+    cloze = marked.replace(_START, "{{c1::").replace(_END, "}}")
+    return text, cloze
 
 
 def _tidy(text: str) -> str:

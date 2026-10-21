@@ -50,7 +50,7 @@ class TestChunkAsFunction(unittest.TestCase):
 
     def test_demos_cover_every_example(self):
         self.assertEqual(
-            [p.pt for p in chunks.dont_forget_your.demos()],
+            [p.pt for p in chunks.dont_forget_your.demos()[:3]],
             ["Não esqueça a sua mochila!", "Não esqueça o seu casaco!", "Não esqueça as suas chaves!"],
         )
 
@@ -73,14 +73,37 @@ class TestLibrary(unittest.TestCase):
         for c in chunks.registry().values():
             with self.subTest(chunk=c.name):
                 if c.slots:
-                    self.assertGreaterEqual(len(c.examples), 3, "dê pelo menos 3 exemplos")
+                    self.assertGreaterEqual(len(c.examples), 10, "dê pelo menos 10 exemplos")
                 for ex in c.examples:
                     for slot, value in ex.items():
-                        self.assertIsInstance(value, tuple, f"traduza {slot!r}: ('inglês', 'português')")
+                        self.assertIsInstance(value, tuple)
+                        self.assertEqual(len(value), 3, f"{slot!r}: ('inglês', 'português', 'alemão')")
                 for p in c.demos():
                     for bad in ("o(a)", "(a) ", "seu/sua", "o/a "):
                         self.assertNotIn(bad, p.pt, "deixe o artigo dentro da tradução da variável")
-                self.assertEqual(len({p.en for p in c.demos()}), len(c.demos()), "exemplos repetidos")
+                demos = c.demos()
+                for lang in ("en", "pt", "de"):
+                    texts = [getattr(p, lang) for p in demos]
+                    self.assertEqual(len(set(texts)), len(texts), f"frases repetidas em {lang}")
+
+    def test_every_chunk_has_german(self):
+        for c in chunks.registry().values():
+            with self.subTest(chunk=c.name):
+                self.assertIn("[[", c.de)
+                for p in c.demos():
+                    self.assertTrue(p.de)
+                    self.assertIn("{{c1::", p.de_cloze)
+                    self.assertNotIn("[[", p.de)
+
+    def test_ex_helper(self):
+        from chunks.core import ex
+
+        self.assertEqual(
+            ex(("a", "b"), "x | y | z ;; 1 | 2 | 3"),
+            [{"a": ("x", "y", "z"), "b": ("1", "2", "3")}],
+        )
+        with self.assertRaisesRegex(ValueError, "esperado 2"):
+            ex(("a", "b"), "x | y | z")
 
     def test_invalid_example_is_rejected(self):
         from chunks.core import Chunk
@@ -108,6 +131,30 @@ class TestStudy(unittest.TestCase):
         p = chunks.could_i_get("a glass of water")
         self.assertTrue(study.check("could i get a glass of water please", p))
         self.assertFalse(study.check("I want a glass of water", p))
+
+    def test_check_german_accepts_missing_umlauts(self):
+        p = chunks.could_i_get(("a glass of water", "um copo de água", "ein Glas Wasser"))
+        self.assertEqual(p.de, "Könnte ich bitte ein Glas Wasser haben?")
+        self.assertTrue(study.check("Könnte ich bitte ein Glas Wasser haben", p, "de"))
+        self.assertTrue(study.check("konnte ich bitte ein glas wasser haben?", p, "de"))
+        self.assertFalse(study.check("Ich will Wasser", p, "de"))
+        self.assertTrue(study.check("strasse", chunks.how_much_is(("x", "y", "Straße")), "de") is False)
+        self.assertEqual(study.normalize("Straße"), "strasse")
+
+    def test_parse_langs(self):
+        self.assertEqual(study.parse_langs("en+de"), ["en", "de"])
+        self.assertEqual(study.parse_langs("de"), ["de"])
+        with self.assertRaisesRegex(ValueError, "Idioma inválido"):
+            study.parse_langs("fr")
+
+    def test_anki_export_german(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "cards.txt"
+            n = study.anki_export(path, "survival", ["en", "de"])
+            lines = path.read_text(encoding="utf-8").splitlines()[4:]
+        self.assertEqual(n, len(lines))
+        self.assertTrue(any(l.startswith("{{c1::Könnte ich bitte}}") for l in lines))
+        self.assertTrue(any("chunks::de" in l for l in lines))
 
     def test_leitner_boxes(self):
         progress, today = {}, date(2026, 1, 1)

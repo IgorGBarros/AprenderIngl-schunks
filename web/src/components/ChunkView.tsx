@@ -2,14 +2,19 @@ import { useState } from "react";
 import {
   CATEGORY_LABELS,
   type Chunk,
+  LANG_NAMES,
+  type Lang,
   type SlotValue,
   demos,
   examplesOf,
   exampleValues,
+  hasLang,
+  langText,
   render,
 } from "../lib/chunks";
+import { useLangs } from "../lib/langs";
 import { ChunkQuiz } from "./ChunkQuiz";
-import { SpeedControl, SpokenPhrase } from "./SpeakButton";
+import { LangControl, SpeedControl, SpokenPhrase } from "./SpeakButton";
 
 interface Props {
   chunk: Chunk;
@@ -22,18 +27,23 @@ interface Props {
 export function ChunkView({ chunk, onBack, onQuizDone }: Props) {
   const [values, setValues] = useState<Record<string, SlotValue>>(() => exampleValues(chunk));
   const [showPt, setShowPt] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
+  const selected = useLangs();
+  const available = selected.filter((l) => hasLang(chunk, l));
+  const langs: Lang[] = available.length ? available : ["en"];
+  const missingDe = selected.includes("de") && !hasLang(chunk, "de");
+  const many = langs.length > 1;
   const phrase = render(chunk, values);
   const examples = demos(chunk);
 
   const set = (slot: string, field: keyof SlotValue, text: string) =>
     setValues((v) => ({ ...v, [slot]: { ...v[slot], [field]: text } }));
 
-  const copy = async () => {
+  const copy = async (lang: string, text: string) => {
     try {
-      await navigator.clipboard.writeText(phrase.cloze);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      await navigator.clipboard.writeText(text);
+      setCopied(lang);
+      setTimeout(() => setCopied(null), 1500);
     } catch {
       // clipboard indisponível: o texto continua visível para copiar à mão
     }
@@ -53,17 +63,22 @@ export function ChunkView({ chunk, onBack, onQuizDone }: Props) {
         <span className="args">{chunk.slots.join(", ")}</span>)
       </code>
 
+      <div className="controls">
+        <LangControl />
+        <SpeedControl />
+      </div>
+      {missingDe && <p className="hint">Este chunk ainda não tem versão em alemão.</p>}
+
       <section className="examples" aria-labelledby="examples-title">
-        <div className="examples-head">
-          <h2 id="examples-title">
-            {examples.length > 1 ? `${examples.length} exemplos` : "Exemplo"}
-          </h2>
-          <SpeedControl />
-        </div>
+        <h2 id="examples-title">
+          {examples.length > 1 ? `${examples.length} exemplos` : "Exemplo"}
+        </h2>
         <ul className="list">
           {examples.map((p, i) => (
             <li key={p.en} className="card example">
-              <SpokenPhrase phrase={p} />
+              {langs.map((lang) => (
+                <SpokenPhrase key={lang} phrase={p} lang={lang} label={many} />
+              ))}
               <p className="pt">{p.pt}</p>
               {chunk.slots.length > 0 && examplesOf(chunk).length > 1 && (
                 <button
@@ -93,7 +108,9 @@ export function ChunkView({ chunk, onBack, onQuizDone }: Props) {
           </div>
 
           <div className="card output" aria-live="polite">
-            <SpokenPhrase phrase={phrase} />
+            {langs.map((lang) => (
+              <SpokenPhrase key={lang} phrase={phrase} lang={lang} label={many} />
+            ))}
             <p className="pt">{phrase.pt}</p>
           </div>
 
@@ -103,15 +120,33 @@ export function ChunkView({ chunk, onBack, onQuizDone }: Props) {
                 <code>{slot}</code>
                 {slot in chunk.defaults && <span className="optional">opcional</span>}
               </label>
-              <input
-                id={`slot-${slot}`}
-                value={values[slot]?.en ?? ""}
-                onChange={(e) => set(slot, "en", e.target.value)}
-                autoCapitalize="off"
-                autoCorrect="off"
-                spellCheck={false}
-                enterKeyHint="done"
-              />
+              {langs.includes("en") && (
+                <input
+                  id={`slot-${slot}`}
+                  value={values[slot]?.en ?? ""}
+                  onChange={(e) => set(slot, "en", e.target.value)}
+                  placeholder="em inglês"
+                  aria-label={`${slot} em inglês`}
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  enterKeyHint="done"
+                />
+              )}
+              {langs.includes("de") && (
+                <input
+                  id={langs.includes("en") ? `slot-${slot}-de` : `slot-${slot}`}
+                  value={values[slot]?.de ?? values[slot]?.en ?? ""}
+                  onChange={(e) => set(slot, "de", e.target.value)}
+                  placeholder="em alemão (com artigo: den, die, das…)"
+                  aria-label={`${slot} em alemão`}
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  enterKeyHint="done"
+                  lang="de"
+                />
+              )}
               {showPt && (
                 <input
                   className="pt-input"
@@ -124,15 +159,22 @@ export function ChunkView({ chunk, onBack, onQuizDone }: Props) {
             </div>
           ))}
 
-          <div className="anki">
-            <div className="anki-head">
-              <h3>Card do Anki (Cloze)</h3>
-              <button className="link" onClick={copy}>
-                {copied ? "Copiado ✓" : "Copiar"}
-              </button>
-            </div>
-            <code className="cloze">{phrase.cloze}</code>
-          </div>
+          {langs.map((lang) => {
+            const cloze = langText(phrase, lang)!.cloze;
+            return (
+              <div className="anki" key={lang}>
+                <div className="anki-head">
+                  <h3>
+                    Card do Anki{many ? ` (${LANG_NAMES[lang]})` : ""}
+                  </h3>
+                  <button className="link" onClick={() => copy(lang, cloze)}>
+                    {copied === lang ? "Copiado ✓" : "Copiar"}
+                  </button>
+                </div>
+                <code className="cloze">{cloze}</code>
+              </div>
+            );
+          })}
         </section>
       )}
 

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { CATEGORY_LABELS, type Chunk, categoriesOf, demos } from "../lib/chunks";
 import { type Progress, dueChunks, record, stats } from "../lib/srs";
 import { QuestionCard } from "./QuestionCard";
+import { LangControl } from "./SpeakButton";
 
 interface Props {
   chunks: Chunk[];
@@ -44,6 +45,7 @@ export function Quiz({ chunks, progress, onProgress }: Props) {
       <header className="header">
         <h1>Treinar</h1>
         <p className="subtitle">Repetição espaçada: o que você erra volta amanhã.</p>
+        <LangControl />
       </header>
 
       {session && (

@@ -20,8 +20,13 @@ const byName = (name: string) => BUILTIN.find((c) => c.name === name)!;
 describe("render", () => {
   it.each(BUILTIN.map((c) => [c.name, c] as const))("%s gera o mesmo que o Python", (_, c) => {
     const phrases = demos(c);
-    expect(phrases.map((p) => ({ en: p.en, pt: p.pt, cloze: p.cloze }))).toEqual(c.demos);
-    for (const p of phrases) expect(p.parts.map((x) => x.text).join("")).toBe(p.en);
+    expect(
+      phrases.map((p) => ({ en: p.en, pt: p.pt, cloze: p.cloze, de: p.de?.text ?? "", de_cloze: p.de?.cloze ?? "" })),
+    ).toEqual(c.demos);
+    for (const p of phrases) {
+      expect(p.parts.map((x) => x.text).join("")).toBe(p.en);
+      if (p.de) expect(p.de.parts.map((x) => x.text).join("")).toBe(p.de.text);
+    }
   });
 
   it("aceita chunks salvos no formato antigo (example)", () => {
@@ -119,7 +124,38 @@ describe("anki", () => {
     const lines = ankiText([byName("could_i_get")]).trim().split("\n");
     expect(lines[2]).toBe("#notetype:Cloze");
     expect(lines[4]).toBe(
-      "{{c1::Could I get}} a glass of water{{c1::, please}}?\tPode me trazer um copo de água, por favor? | could_i_get(item)\tchunks::survival",
+      "{{c1::Could I get}} a glass of water{{c1::, please}}?\tPode me trazer um copo de água, por favor? | could_i_get(item)\tchunks::survival chunks::en",
+    );
+  });
+
+  it("gera cards em alemão", () => {
+    const lines = ankiText([byName("could_i_get")], ["en", "de"]).trim().split("\n").slice(4);
+    expect(lines).toHaveLength(20);
+    expect(lines[10]).toBe(
+      "{{c1::Könnte ich bitte}} ein Glas Wasser {{c1::haben}}?\tPode me trazer um copo de água, por favor? | could_i_get(item)\tchunks::survival chunks::de",
+    );
+  });
+});
+
+describe("alemão", () => {
+  it("monta a frase e a dica em alemão", () => {
+    const p = demos(byName("could_i_get"))[0];
+    expect(p.de?.text).toBe("Könnte ich bitte ein Glas Wasser haben?");
+    expect(blanks(p, "de")).toBe("______ ___ _____ ein Glas Wasser _____?");
+    expect(core(byName("could_i_get"), "de")).toBe("Könnte ich bitte ... haben?");
+  });
+
+  it("a correção aceita a resposta sem trema e com ss", () => {
+    expect(normalizeAnswer("konnte ich bitte ein glas wasser haben")).toBe(
+      normalizeAnswer("Könnte ich bitte ein Glas Wasser haben?"),
+    );
+    expect(normalizeAnswer("Straße")).toBe("strasse");
+  });
+
+  it("sem tradução, a variável em alemão repete o inglês", () => {
+    expect(render(byName("could_i_get"), { item: { en: "tea" } }).de?.text).toBe("Könnte ich bitte tea haben?");
+    expect(render(byName("could_i_get"), { item: { en: "tea", de: "einen Tee" } }).de?.text).toBe(
+      "Könnte ich bitte einen Tee haben?",
     );
   });
 });

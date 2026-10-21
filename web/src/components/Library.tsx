@@ -1,7 +1,18 @@
 import { useMemo, useState } from "react";
-import { CATEGORY_LABELS, type Chunk, categoriesOf, exampleValues, render, search } from "../lib/chunks";
+import {
+  CATEGORY_LABELS,
+  type Chunk,
+  categoriesOf,
+  exampleValues,
+  hasLang,
+  langText,
+  render,
+  search,
+} from "../lib/chunks";
+import { useLangs } from "../lib/langs";
 import { load, save } from "../lib/storage";
 import { PhraseText } from "./PhraseText";
+import { LangControl } from "./SpeakButton";
 
 interface Props {
   chunks: Chunk[];
@@ -11,6 +22,7 @@ interface Props {
 export function Library({ chunks, onOpen }: Props) {
   const [term, setTerm] = useState("");
   const [category, setCategory] = useState<string>(() => load("chunks.category", "all"));
+  const langs = useLangs();
 
   const categories = useMemo(() => categoriesOf(chunks), [chunks]);
   const visible = useMemo(
@@ -28,6 +40,7 @@ export function Library({ chunks, onOpen }: Props) {
       <header className="header">
         <h1>Chunks</h1>
         <p className="subtitle">Cada frase é uma função. Passe as variáveis.</p>
+        <LangControl />
         <input
           className="search"
           type="search"
@@ -65,9 +78,14 @@ export function Library({ chunks, onOpen }: Props) {
                   {c.name}
                   <span className="args">({c.slots.join(", ")})</span>
                 </code>
-                <span className="en">
-                  <PhraseText phrase={p} />
-                </span>
+                {langs
+                  .filter((lang) => hasLang(c, lang))
+                  .map((lang) => (
+                    <span key={lang} className="en" lang={lang}>
+                      {langs.length > 1 && <span className="lang-tag">{lang.toUpperCase()}</span>}
+                      <PhraseText text={langText(p, lang)!} />
+                    </span>
+                  ))}
                 <span className="pt">{p.pt}</span>
               </button>
             </li>

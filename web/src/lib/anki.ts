@@ -1,11 +1,17 @@
 // Exporta cards no formato Cloze do Anki (mesmo formato de `chunks anki`).
 
-import { type Chunk, demos, pattern } from "./chunks";
+import { type Chunk, type Lang, demos, langText, pattern } from "./chunks";
 
-export function ankiText(chunks: Chunk[]): string {
+/** Um card por exemplo e por idioma (mesmo formato de `chunks anki --idioma`). */
+export function ankiText(chunks: Chunk[], langs: Lang[] = ["en"]): string {
   const rows = ["#separator:tab", "#html:false", "#notetype:Cloze", "#tags column:3"];
   for (const c of chunks) {
-    for (const p of demos(c)) rows.push(`${p.cloze}\t${p.pt} | ${pattern(c)}\tchunks::${c.category}`);
+    for (const lang of langs) {
+      for (const p of demos(c)) {
+        const cloze = langText(p, lang)?.cloze;
+        if (cloze) rows.push(`${cloze}\t${p.pt} | ${pattern(c)}\tchunks::${c.category} chunks::${lang}`);
+      }
+    }
   }
   return rows.join("\n") + "\n";
 }

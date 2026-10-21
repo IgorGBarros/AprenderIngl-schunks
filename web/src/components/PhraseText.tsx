@@ -1,18 +1,19 @@
-import type { Phrase } from "../lib/chunks";
+import type { LangText } from "../lib/chunks";
 import { tokenize } from "../lib/speech";
 
 interface Props {
-  phrase: Phrase;
+  /** A frase num idioma (inglês ou alemão), com os pedaços fixos e variáveis. */
+  text: Pick<LangText, "parts">;
   /** Palavra que está tocando no "palavra por palavra" (índice), para destacar. */
   activeWord?: number;
 }
 
-/** Frase em inglês com a parte fixa do chunk destacada. */
-export function PhraseText({ phrase, activeWord = -1 }: Props) {
+/** Frase com a parte fixa do chunk destacada. */
+export function PhraseText({ text, activeWord = -1 }: Props) {
   let count = 0;
   return (
     <>
-      {phrase.parts.map((p, i) => {
+      {text.parts.map((p, i) => {
         const tokens = tokenize(p.text, count);
         count += tokens.filter((t) => t.word !== null).length;
         const content =

@@ -3,11 +3,18 @@
 // Template:  "[[Could I get]] {item}[[, please]]?"
 //   [[...]] = parte fixa (o que você memoriza)
 //   {nome}  = variável (argumento da "função")
+//
+// O chunk pode ter também a versão em alemão (`de`), com as mesmas variáveis.
 
 import library from "../data/chunks.json";
 
-/** Valor de exemplo: só inglês, ou [inglês, português]. */
-export type ExampleValue = string | [string, string];
+/** Idiomas que o app ensina (o português é sempre a tradução). */
+export type Lang = "en" | "de";
+
+export const LANG_NAMES: Record<Lang, string> = { en: "Inglês", de: "Alemão" };
+
+/** Valor de exemplo: só inglês, [inglês, português] ou [inglês, português, alemão]. */
+export type ExampleValue = string | [string, string] | [string, string, string];
 
 export interface Chunk {
   name: string;
@@ -21,14 +28,24 @@ export interface Chunk {
   example?: Record<string, ExampleValue>;
   defaults: Record<string, string>;
   note: string;
+  /** Template em alemão ("" ou ausente: o chunk não tem alemão). */
+  de?: string;
   /** Saída gerada pelo Python para cada exemplo (usada nos testes). */
-  demos?: { en: string; pt: string; cloze: string }[];
+  demos?: { en: string; pt: string; cloze: string; de: string; de_cloze: string }[];
 }
 
-/** Variável preenchida pelo usuário; `pt` é opcional. */
+/** Variável preenchida pelo usuário; `pt` e `de` são opcionais. */
 export interface SlotValue {
   en: string;
   pt?: string;
+  de?: string;
+}
+
+/** A frase num idioma: texto, card do Anki e pedaços (fixo / variável). */
+export interface LangText {
+  text: string;
+  cloze: string;
+  parts: { text: string; fixed: boolean }[];
 }
 
 export interface Phrase {
@@ -37,6 +54,8 @@ export interface Phrase {
   cloze: string;
   /** Pedaços da frase em inglês, marcando o que é fixo e o que é variável. */
   parts: { text: string; fixed: boolean }[];
+  /** A mesma frase em alemão (ausente se o chunk não tem alemão). */
+  de?: LangText;
 }
 
 export const BUILTIN = library as unknown as Chunk[];
@@ -60,6 +79,7 @@ export function categoriesOf(chunks: Chunk[]): string[] {
 }
 
 const TOKEN = /\[\[(.+?)\]\]|\{(\w+)\}/g;
+const LETTER = /[\p{L}\p{N}_]/u;
 
 /** Nomes das variáveis na ordem em que aparecem no template. */
 export function slotsOf(template: string): string[] {
@@ -68,6 +88,10 @@ export function slotsOf(template: string): string[] {
     if (m[2] && !out.includes(m[2])) out.push(m[2]);
   }
   return out;
+}
+
+export function hasLang(c: Chunk, lang: Lang): boolean {
+  return lang === "en" || !!c.de;
 }
 
 export function examplesOf(c: Chunk): Record<string, ExampleValue>[] {
@@ -80,7 +104,7 @@ export function exampleValues(c: Chunk, index = 0): Record<string, SlotValue> {
   const values: Record<string, SlotValue> = {};
   for (const slot of c.slots) {
     const ex = example[slot] ?? c.defaults[slot] ?? "";
-    values[slot] = Array.isArray(ex) ? { en: ex[0], pt: ex[1] } : { en: ex };
+    values[slot] = Array.isArray(ex) ? { en: ex[0], pt: ex[1], de: ex[2] } : { en: ex };
   }
   return values;
 }
@@ -90,47 +114,35 @@ export function demos(c: Chunk): Phrase[] {
   return examplesOf(c).map((_, i) => render(c, exampleValues(c, i)));
 }
 
+/** A frase no idioma pedido (texto, cloze e pedaços). */
+export function langText(p: Phrase, lang: Lang): LangText | undefined {
+  return lang === "de" ? p.de : { text: p.en, cloze: p.cloze, parts: p.parts };
+}
+
 /** Dica do quiz: cada letra da parte fixa vira "_" (mostra quantas palavras faltam). */
-export function blanks(p: Phrase): string {
-  return p.parts.map((x) => (x.fixed ? x.text.replace(/[A-Za-z0-9']/g, "_") : x.text)).join("");
+export function blanks(p: Phrase, lang: Lang = "en"): string {
+  const t = langText(p, lang);
+  return (t?.parts ?? [])
+    .map((x) => (x.fixed ? x.text.replace(/[\p{L}\p{N}']/gu, "_") : x.text))
+    .join("");
 }
 
 export function render(c: Chunk, values: Record<string, SlotValue>): Phrase {
-  const parts: Phrase["parts"] = [];
-  let last = 0;
-  const push = (text: string, fixed: boolean) => {
-    if (!text) return;
-    const prev = parts[parts.length - 1];
-    if (prev && prev.fixed === fixed) prev.text += text;
-    else parts.push({ text, fixed });
-  };
-  for (const m of c.template.matchAll(TOKEN)) {
-    push(c.template.slice(last, m.index), false);
-    if (m[1] !== undefined) {
-      // Pontuação solta não conta como parte fixa (não vira cloze).
-      push(m[1], /\w/.test(m[1]));
-    } else {
-      push(slotEn(c, values, m[2]), false);
-    }
-    last = m.index! + m[0].length;
-  }
-  push(c.template.slice(last), false);
-
-  const clean = tidyParts(parts);
-  const en = clean.map((p) => p.text).join("");
-  const cloze = clean.map((p) => (p.fixed ? `{{c1::${p.text}}}` : p.text)).join("");
+  const en = fill(c.template, (slot) => valueIn(c, values, slot, "en"));
   const pt = tidy(
     c.pt.replace(/\{(\w+)\}/g, (_, slot: string) => {
       const v = values[slot];
-      return v?.pt?.trim() || slotEn(c, values, slot);
+      return v?.pt?.trim() || valueIn(c, values, slot, "en");
     }),
   );
-  return { en, pt, cloze, parts: clean };
+  const de = c.de ? fill(c.de, (slot) => valueIn(c, values, slot, "de")) : undefined;
+  return { en: en.text, pt, cloze: en.cloze, parts: en.parts, de };
 }
 
 /** Parte fixa com as variáveis como "...". */
-export function core(c: Chunk): string {
-  return c.template.replace(/\[\[(.+?)\]\]/g, "$1").replace(/\{\w+\}/g, "...");
+export function core(c: Chunk, lang: Lang = "en"): string {
+  const template = lang === "de" ? (c.de ?? "") : c.template;
+  return template.replace(/\[\[(.+?)\]\]/g, "$1").replace(/\{\w+\}/g, "...");
 }
 
 export function pattern(c: Chunk): string {
@@ -141,9 +153,12 @@ export function search(chunks: Chunk[], term: string): Chunk[] {
   const t = normalizeSearch(term);
   if (!t) return chunks;
   return chunks.filter((c) =>
-    [c.name.replace(/_/g, " "), core(c), c.pt, ...demos(c).flatMap((p) => [p.en, p.pt])].some((s) =>
-      normalizeSearch(s).includes(t),
-    ),
+    [
+      c.name.replace(/_/g, " "),
+      core(c),
+      c.pt,
+      ...demos(c).flatMap((p) => [p.en, p.pt, p.de?.text ?? ""]),
+    ].some((s) => normalizeSearch(s).includes(t)),
   );
 }
 
@@ -155,11 +170,17 @@ export function a(noun: string): string {
   return `${vowel ? "an" : "a"} ${noun}`;
 }
 
-/** Compara a resposta ignorando maiúsculas, pontuação e espaços. */
+/**
+ * Compara a resposta ignorando maiúsculas, pontuação, acentos e espaços:
+ * "konnen" vale "können", e "ß" vale "ss" (igual ao Python).
+ */
 export function normalizeAnswer(text: string): string {
   return text
     .toLowerCase()
     .replace(/[’‘]/g, "'")
+    .replace(/ß/g, "ss")
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9' ]+/g, " ")
     .split(/\s+/)
     .filter(Boolean)
@@ -179,9 +200,45 @@ export function nameFrom(template: string): string {
   );
 }
 
-function slotEn(c: Chunk, values: Record<string, SlotValue>, slot: string): string {
-  const v = values[slot]?.en;
-  return v !== undefined && v.trim() !== "" ? v : (c.defaults[slot] ?? "");
+/** Preenche um template e devolve texto, cloze e pedaços já limpos. */
+function fill(template: string, valueOf: (slot: string) => string): LangText {
+  const parts: LangText["parts"] = [];
+  let last = 0;
+  const push = (text: string, fixed: boolean) => {
+    if (!text) return;
+    const prev = parts[parts.length - 1];
+    if (prev && prev.fixed === fixed) prev.text += text;
+    else parts.push({ text, fixed });
+  };
+  for (const m of template.matchAll(TOKEN)) {
+    push(template.slice(last, m.index), false);
+    if (m[1] !== undefined) {
+      // Pontuação solta não conta como parte fixa (não vira cloze).
+      push(m[1], LETTER.test(m[1]));
+    } else {
+      push(valueOf(m[2]), false);
+    }
+    last = m.index! + m[0].length;
+  }
+  push(template.slice(last), false);
+
+  const clean = tidyParts(parts);
+  return {
+    text: clean.map((p) => p.text).join(""),
+    cloze: clean.map((p) => (p.fixed ? `{{c1::${p.text}}}` : p.text)).join(""),
+    parts: clean,
+  };
+}
+
+/** Valor da variável no idioma; sem tradução, usa o inglês (igual ao Python). */
+function valueIn(c: Chunk, values: Record<string, SlotValue>, slot: string, lang: Lang): string {
+  const v = values[slot];
+  const en = v?.en !== undefined && v.en.trim() !== "" ? v.en : (c.defaults[slot] ?? "");
+  if (lang === "de") {
+    // Exemplo com tradução (mesmo vazia, como em ("", "", "")) usa o alemão.
+    return v?.de !== undefined ? v.de : en;
+  }
+  return en;
 }
 
 function tidy(text: string): string {
@@ -190,7 +247,7 @@ function tidy(text: string): string {
 }
 
 /** Mesma limpeza do tidy(), mas preservando o que é fixo e o que é variável. */
-function tidyParts(parts: Phrase["parts"]): Phrase["parts"] {
+function tidyParts(parts: LangText["parts"]): LangText["parts"] {
   const chars = parts.flatMap((p) => [...p.text].map((ch) => ({ ch, fixed: p.fixed })));
   const kept: typeof chars = [];
   chars.forEach((c, i) => {
@@ -201,7 +258,7 @@ function tidyParts(parts: Phrase["parts"]): Phrase["parts"] {
   });
   if (kept[0]) kept[0] = { ...kept[0], ch: kept[0].ch.toUpperCase() };
 
-  const out: Phrase["parts"] = [];
+  const out: LangText["parts"] = [];
   for (const { ch, fixed } of kept) {
     const prev = out[out.length - 1];
     if (prev && prev.fixed === fixed) prev.text += ch;

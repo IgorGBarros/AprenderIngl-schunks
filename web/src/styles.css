@@ -1178,3 +1178,97 @@ mark.fixed {
 .modal .result .row {
   width: 100%;
 }
+
+/* --------------------------------------------------- idiomas e microfone */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.lang-control {
+  justify-self: start;
+}
+
+.lang-tag {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  vertical-align: 0.2em;
+}
+
+.example,
+.output {
+  gap: 10px;
+}
+
+.chunk-row .en + .en {
+  margin-top: 2px;
+}
+
+.answer-field {
+  display: grid;
+  gap: 6px;
+}
+
+.answer-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.answer-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.answer-row textarea {
+  flex: 1;
+  min-width: 0;
+}
+
+.icon-btn.mic {
+  width: 48px;
+  height: 48px;
+}
+
+.icon-btn.mic.listening {
+  border-color: var(--bad);
+  background: var(--bad);
+  color: var(--surface);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 8px var(--bad-bg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn.mic.listening {
+    animation: none;
+  }
+}
+
+.feedback-lang {
+  display: grid;
+  gap: 8px;
+}
+
+.feedback-lang + .feedback-lang {
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.answer-field .hint-line {
+  margin: 0;
+}

@@ -32,11 +32,18 @@ export function useRate(): number {
   );
 }
 
-function utterance(text: string): SpeechSynthesisUtterance {
+/** Idioma da voz: "en" (inglês dos EUA) ou "de" (alemão). */
+export type VoiceLang = "en" | "de";
+
+export const VOICE_LOCALE: Record<VoiceLang, string> = { en: "en-US", de: "de-DE" };
+
+function utterance(text: string, lang: VoiceLang): SpeechSynthesisUtterance {
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
+  u.lang = VOICE_LOCALE[lang];
   u.rate = rate;
-  const voice = speechSynthesis.getVoices().find((v) => v.lang.startsWith("en-US"));
+  const voices = speechSynthesis.getVoices();
+  const voice =
+    voices.find((v) => v.lang === VOICE_LOCALE[lang]) ?? voices.find((v) => v.lang.startsWith(lang));
   if (voice) u.voice = voice;
   return u;
 }
@@ -57,15 +64,16 @@ function interrupt(): void {
 }
 
 /** Lê a frase inteira na velocidade escolhida. */
-export function speak(text: string, onEnd?: () => void): void {
+export function speak(text: string, lang: VoiceLang = "en", onEnd?: () => void): void {
   if (!canSpeak) return;
   interrupt();
-  const u = utterance(text);
+  const u = utterance(text, lang);
   u.onend = u.onerror = () => onEnd?.();
   speechSynthesis.speak(u);
 }
 
-const strip = (token: string) => token.replace(/^[^\w']+|[^\w'%]+$/g, "");
+// Letras de qualquer idioma (ä, ö, ü, ß contam como letra).
+const strip = (token: string) => token.replace(/^[^\p{L}\p{N}']+|[^\p{L}\p{N}'%]+$/gu, "");
 
 /** Palavras da frase, sem a pontuação colada (o que a voz vai ler uma a uma). */
 export function wordsOf(text: string): string[] {
@@ -89,7 +97,11 @@ export function tokenize(text: string, start = 0): { text: string; word: number 
  * Lê palavra por palavra, com uma pausa entre elas.
  * ``onWord(i)`` avisa qual palavra está tocando; ``-1`` quando termina.
  */
-export function speakWords(text: string, onWord: (index: number) => void): void {
+export function speakWords(
+  text: string,
+  onWord: (index: number) => void,
+  lang: VoiceLang = "en",
+): void {
   if (!canSpeak) return;
   interrupt();
   // Avisos atrasados de uma leitura cancelada não podem mexer na leitura nova.
@@ -100,7 +112,7 @@ export function speakWords(text: string, onWord: (index: number) => void): void 
   activeWords = report;
   const words = wordsOf(text);
   words.forEach((word, i) => {
-    const u = utterance(word);
+    const u = utterance(word, lang);
     u.onstart = () => report(i);
     if (i === words.length - 1) {
       u.onend = u.onerror = () => {

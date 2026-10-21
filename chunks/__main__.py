@@ -3,11 +3,11 @@
 Comandos:
     list   [categoria]           lista os chunks (funções) disponíveis
     show   <chunk>               mostra a "documentação" do chunk, com os exemplos
-    estudar <chunk>              exemplos do chunk e, no final, um quiz com eles
+    estudar <chunk>              exemplos do chunk e, no final, um quiz (--idioma en|de|en+de)
     run    <chunk> [valores...]  executa o chunk com as suas variáveis
     play   <chunk>               pergunta cada variável e executa
     search <termo>               procura por inglês, português ou nome
-    quiz   [categoria] [-n N]    treino com repetição espaçada
+    quiz   [categoria] [-n N]    treino com repetição espaçada (--idioma en|de|en+de)
     anki   <arquivo.txt> [cat]   exporta cards Cloze para o Anki
     json   [pasta]               exporta biblioteca e entrevistas para o app web
     entrevista [sessão] [etapa]  simulação de entrevista (perguntas + respostas modelo)
@@ -81,11 +81,12 @@ def cmd_quiz(args) -> None:
     if not queue:
         print("Nada para revisar hoje. Volte amanhã!")
         return
-    print(f"{len(queue)} chunks para hoje. Escreva a frase em inglês (? mostra uma dica). Ctrl+C sai.\n")
+    langs = study.parse_langs(args.idioma)
+    print(f"{len(queue)} chunks para hoje. Escreva a frase em {_names(langs)} (? mostra uma dica). Ctrl+C sai.\n")
     score = 0
     try:
         for i, c in enumerate(queue, 1):
-            ok = _ask(study.random_phrase(c), f"[{i}/{len(queue)}]")
+            ok = _ask(study.random_phrase(c), f"[{i}/{len(queue)}]", langs)
             score += ok
             study.record(progress, c.name, ok)
     except (KeyboardInterrupt, EOFError):
@@ -99,17 +100,19 @@ def cmd_study(args) -> None:
     print(f"{c.pattern}\n{c.core}\n")
     if c.note:
         print(f"💡 {c.note}\n")
+    langs = [lang for lang in study.parse_langs(args.idioma) if lang == "en" or c.de]
     phrases = c.demos()
     print("Exemplos (leia em voz alta):")
     for p in phrases:
-        print(f"  • {p.en}\n    {p.pt}")
+        lines = [f"{lang.upper()}: {p.text(lang)}" for lang in langs] + [f"PT: {p.pt}"]
+        print("  • " + "\n    ".join(lines))
     input("\nEnter para começar o quiz deste chunk… ")
-    print("\nEscreva em inglês. Digite ? para ver uma dica.\n")
+    print(f"\nEscreva em {_names(langs)}. Digite ? para ver uma dica.\n")
     quiz = random.sample(phrases, len(phrases))
     score = 0
     try:
         for i, p in enumerate(quiz, 1):
-            score += _ask(p, f"[{i}/{len(quiz)}]")
+            score += _ask(p, f"[{i}/{len(quiz)}]", langs)
     except (KeyboardInterrupt, EOFError):
         print()
         return
@@ -120,20 +123,34 @@ def cmd_study(args) -> None:
         study.save_progress(progress)
 
 
-def _ask(p, label: str) -> bool:
-    """Mostra o português, lê a resposta (``?`` mostra a dica) e corrige."""
+def _ask(p, label: str, langs: list[str] = ("en",)) -> bool:
+    """Mostra o português e pede a frase em cada idioma (``?`` mostra a dica).
+
+    Só conta como acerto se acertar em todos os idiomas pedidos.
+    """
     print(f"{label} {p.pt}")
-    answer = input("  > ")
-    if answer.strip() == "?":
-        print(f"  dica: {p.blanks}")
-        answer = input("  > ")
-    ok = study.check(answer, p)
-    print("  ✔ Correto!\n" if ok else f"  ✘ {p.en}\n    chunk: {p.chunk.core}\n")
-    return ok
+    all_ok = True
+    for lang in langs:
+        if not p.text(lang):
+            continue
+        answer = input(f"  {lang.upper()} > ")
+        if answer.strip() == "?":
+            print(f"  dica: {p.blanks_for(lang)}")
+            answer = input(f"  {lang.upper()} > ")
+        ok = study.check(answer, p, lang)
+        all_ok &= ok
+        core = p.chunk.core_de if lang == "de" else p.chunk.core
+        print("  ✔ Correto!" if ok else f"  ✘ {p.text(lang)}\n    chunk: {core}")
+    print()
+    return all_ok
+
+
+def _names(langs: list[str]) -> str:
+    return " e ".join(study.LANGS[lang] for lang in langs)
 
 
 def cmd_anki(args) -> None:
-    n = study.anki_export(Path(args.file), args.category)
+    n = study.anki_export(Path(args.file), args.category, study.parse_langs(args.idioma))
     print(f"{n} cards exportados para {args.file}.")
     print("No Anki: Arquivo > Importar > escolha o arquivo (tipo de nota: Cloze).")
 
@@ -236,15 +253,18 @@ def main(argv: list[str] | None = None) -> None:
 
     p = sub.add_parser("list"); p.add_argument("category", nargs="?"); p.set_defaults(fn=cmd_list)
     p = sub.add_parser("show"); p.add_argument("chunk"); p.set_defaults(fn=cmd_show)
-    p = sub.add_parser("estudar"); p.add_argument("chunk"); p.set_defaults(fn=cmd_study)
+    lang_help = "idioma: en (inglês, padrão), de (alemão) ou en+de (os dois)"
+    p = sub.add_parser("estudar"); p.add_argument("chunk")
+    p.add_argument("--idioma", default="en", help=lang_help); p.set_defaults(fn=cmd_study)
     p = sub.add_parser("run"); p.add_argument("chunk"); p.add_argument("values", nargs="*")
     p.set_defaults(fn=cmd_run)
     p = sub.add_parser("play"); p.add_argument("chunk"); p.set_defaults(fn=cmd_play)
     p = sub.add_parser("search"); p.add_argument("term"); p.set_defaults(fn=cmd_search)
     p = sub.add_parser("quiz"); p.add_argument("category", nargs="?")
-    p.add_argument("-n", type=int, default=10); p.set_defaults(fn=cmd_quiz)
+    p.add_argument("-n", type=int, default=10); p.add_argument("--idioma", default="en", help=lang_help)
+    p.set_defaults(fn=cmd_quiz)
     p = sub.add_parser("anki"); p.add_argument("file"); p.add_argument("category", nargs="?")
-    p.set_defaults(fn=cmd_anki)
+    p.add_argument("--idioma", default="en", help=lang_help); p.set_defaults(fn=cmd_anki)
     p = sub.add_parser("json"); p.add_argument("folder", nargs="?", default=str(WEB_DATA))
     p.set_defaults(fn=cmd_json)
     p = sub.add_parser("vaga", help="gera uma entrevista para qualquer vaga com o Ollama")
@@ -264,7 +284,7 @@ def main(argv: list[str] | None = None) -> None:
             stream.reconfigure(errors="replace")
     try:
         args.fn(args)
-    except KeyError as e:
+    except (KeyError, ValueError) as e:
         sys.exit(e.args[0])
     except BrokenPipeError:
         # Saída cortada (ex.: `chunks list | head`): sai em silêncio.

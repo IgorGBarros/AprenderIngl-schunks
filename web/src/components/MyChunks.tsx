@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { ankiText, downloadText } from "../lib/anki";
-import { type Chunk, type ExampleValue, demos, exampleValues, nameFrom, render, slotsOf } from "../lib/chunks";
+import {
+  type Chunk,
+  type ExampleValue,
+  demos,
+  exampleValues,
+  langText,
+  nameFrom,
+  render,
+  slotsOf,
+} from "../lib/chunks";
+import { useLangs } from "../lib/langs";
 import { PhraseText } from "./PhraseText";
 
 interface Props {
@@ -11,17 +21,20 @@ interface Props {
   onResetProgress: () => void;
 }
 
-type DraftExample = Record<string, { en: string; pt: string }>;
+type DraftExample = Record<string, { en: string; pt: string; de: string }>;
 
-const MAX_EXAMPLES = 3;
-const EMPTY = { template: "", pt: "", examples: [{}] as DraftExample[], note: "" };
+const MAX_EXAMPLES = 10;
+const EMPTY = { template: "", pt: "", de: "", examples: [{}] as DraftExample[], note: "" };
 
 /** Criar os próprios chunks (como em chunks/library/my_chunks.py). */
 export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props) {
   const [draft, setDraft] = useState(EMPTY);
   const [copied, setCopied] = useState(false);
+  const langs = useLangs();
   const slots = slotsOf(draft.template);
   const ptSlots = slotsOf(draft.pt);
+  const deSlots = slotsOf(draft.de);
+  const withDe = draft.de.trim() !== "";
 
   const candidate: Chunk = {
     name: uniqueName(nameFrom(draft.template), all),
@@ -29,20 +42,22 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
     pt: draft.pt,
     category: "mine",
     slots,
-    // Exemplos completos viram ["inglês", "português"]; sem tradução, a variável fica só em inglês.
+    // Exemplos completos viram ["inglês", "português", "alemão"]; o que faltar repete o inglês.
     examples: draft.examples
       .filter((ex) => slots.every((s) => ex[s]?.en.trim()))
       .map((ex) =>
         Object.fromEntries(
           slots.map((s): [string, ExampleValue] => {
             const en = ex[s].en.trim();
-            const pt = ex[s].pt.trim();
-            return [s, pt ? [en, pt] : en];
+            const pt = ex[s].pt.trim() || en;
+            const de = ex[s].de.trim();
+            return [s, withDe && de ? [en, pt, de] : pt !== en ? [en, pt] : en];
           }),
         ),
       ),
     defaults: {},
     note: draft.note.trim(),
+    de: withDe ? draft.de.trim() : undefined,
   };
 
   const errors: string[] = [];
@@ -52,17 +67,21 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
   if (draft.pt.trim() && missing.length) errors.push(`Use na tradução: ${missing.map((s) => `{${s}}`).join(", ")}`);
   const extra = ptSlots.filter((s) => !slots.includes(s));
   if (extra.length) errors.push(`A tradução usa variáveis que não existem: ${extra.join(", ")}`);
+  if (withDe && !/\[\[.+?\]\]/.test(draft.de)) errors.push("Marque a parte fixa do alemão com [[ ]].");
+  if (withDe && (deSlots.length !== slots.length || deSlots.some((s) => !slots.includes(s)))) {
+    errors.push(`O alemão precisa das mesmas variáveis do inglês: ${slots.map((s) => `{${s}}`).join(", ")}`);
+  }
   if (slots.length && candidate.examples.length === 0) errors.push("Preencha pelo menos um exemplo completo.");
   const partial = draft.examples.some(
     (ex) => slots.some((s) => ex[s]?.en.trim()) && !slots.every((s) => ex[s]?.en.trim()),
   );
   if (partial) errors.push("Complete (ou apague) os exemplos pela metade.");
 
-  const setSlot = (i: number, slot: string, field: "en" | "pt", value: string) =>
+  const setSlot = (i: number, slot: string, field: "en" | "pt" | "de", value: string) =>
     setDraft({
       ...draft,
       examples: draft.examples.map((ex, j) =>
-        j === i ? { ...ex, [slot]: { ...(ex[slot] ?? { en: "", pt: "" }), [field]: value } } : ex,
+        j === i ? { ...ex, [slot]: { ...(ex[slot] ?? { en: "", pt: "", de: "" }), [field]: value } } : ex,
       ),
     });
 
@@ -114,6 +133,20 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
           placeholder="Acho que devíamos considerar {option}."
         />
 
+        <label htmlFor="de">
+          Frase em alemão <span className="optional">opcional</span>
+        </label>
+        <input
+          id="de"
+          value={draft.de}
+          onChange={(e) => setDraft({ ...draft, de: e.target.value })}
+          placeholder="[[Ich finde, wir sollten]] {option} [[in Betracht ziehen]]."
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck={false}
+          lang="de"
+        />
+
         {slots.length > 0 &&
           draft.examples.map((ex, i) => (
             <fieldset key={i} className="example-set">
@@ -138,6 +171,17 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
                     placeholder={i === 0 ? "usar um cache" : "tradução, com artigo (o, a, do…)"}
                     aria-label={`Tradução de ${slot}, exemplo ${i + 1}`}
                   />
+                  {withDe && (
+                    <input
+                      id={`ex-${i}-${slot}-de`}
+                      className="pt-input"
+                      value={ex[slot]?.de ?? ""}
+                      onChange={(e) => setSlot(i, slot, "de", e.target.value)}
+                      placeholder={i === 0 ? "den Einsatz eines Caches" : "em alemão, com artigo (den, die, das…)"}
+                      aria-label={`Alemão de ${slot}, exemplo ${i + 1}`}
+                      lang="de"
+                    />
+                  )}
                 </div>
               ))}
             </fieldset>
@@ -166,8 +210,13 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
             {(candidate.examples.length ? demos(candidate) : [preview]).map((p) => (
               <div key={p.en} className="preview-item">
                 <p className="phrase">
-                  <PhraseText phrase={p} />
+                  <PhraseText text={p} />
                 </p>
+                {p.de && (
+                  <p className="phrase" lang="de">
+                    <PhraseText text={p.de} />
+                  </p>
+                )}
                 <p className="pt">{p.pt}</p>
               </div>
             ))}
@@ -196,7 +245,7 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
                 <button className="mine-open" onClick={() => onOpen(c)}>
                   <code className="fn">{c.name}</code>
                   <span className="en">
-                    <PhraseText phrase={render(c, exampleValues(c))} />
+                    <PhraseText text={langText(render(c, exampleValues(c)), "en")!} />
                   </span>
                 </button>
                 <ConfirmButton
@@ -216,15 +265,15 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
         <h2 className="section-title">Exportar para o Anki</h2>
         <p className="hint">Arquivo para o tipo de nota Cloze. No Anki: Arquivo › Importar.</p>
         <div className="row">
-          <button className="secondary" onClick={() => downloadText("chunks-anki.txt", ankiText(all))}>
+          <button className="secondary" onClick={() => downloadText("chunks-anki.txt", ankiText(all, langs))}>
             Baixar ({all.length})
           </button>
-          <button className="secondary" onClick={() => copyText(ankiText(all), setCopied)}>
+          <button className="secondary" onClick={() => copyText(ankiText(all, langs), setCopied)}>
             {copied ? "Copiado ✓" : "Copiar"}
           </button>
         </div>
         {mine.length > 0 && (
-          <button className="secondary" onClick={() => downloadText("meus-chunks-anki.txt", ankiText(mine))}>
+          <button className="secondary" onClick={() => downloadText("meus-chunks-anki.txt", ankiText(mine, langs))}>
             Baixar só os meus ({mine.length})
           </button>
         )}

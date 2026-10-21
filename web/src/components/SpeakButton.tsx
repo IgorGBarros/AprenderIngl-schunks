@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import type { Phrase } from "../lib/chunks";
+import { LANG_NAMES, type Lang, type Phrase, langText } from "../lib/chunks";
+import { LANG_OPTIONS, setLangs, useLangs } from "../lib/langs";
 import { RATES, canSpeak, setRate, speak, speakWords, stopSpeaking, tokenize, useRate } from "../lib/speech";
 import { PhraseText } from "./PhraseText";
 
@@ -8,6 +9,8 @@ const SPEAKER =
 
 interface SpeakButtonProps {
   text: string;
+  /** Idioma da voz (inglês por padrão). */
+  lang?: Lang;
   /** Recebe a palavra que está tocando (-1 quando para), para a tela destacá-la. */
   onWord?: (index: number) => void;
   /** false esconde o "palavra por palavra" (ex.: respostas longas). */
@@ -15,7 +18,7 @@ interface SpeakButtonProps {
 }
 
 /** Ouvir a frase inteira ou palavra por palavra, na velocidade escolhida. */
-export function SpeakButton({ text, onWord, words = true }: SpeakButtonProps) {
+export function SpeakButton({ text, lang = "en", onWord, words = true }: SpeakButtonProps) {
   const [word, setWord] = useState(-1);
   const playing = useRef(false);
   playing.current = word >= 0;
@@ -38,8 +41,8 @@ export function SpeakButton({ text, onWord, words = true }: SpeakButtonProps) {
     <div className="speak">
       <button
         className="icon-btn"
-        onClick={() => speak(text)}
-        aria-label={`Ouvir a frase (${rate}x)`}
+        onClick={() => speak(text, lang)}
+        aria-label={`Ouvir a frase em ${LANG_NAMES[lang].toLowerCase()} (${rate}x)`}
         title={`Ouvir (${rate}x)`}
       >
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>
@@ -49,7 +52,7 @@ export function SpeakButton({ text, onWord, words = true }: SpeakButtonProps) {
       {words && (
         <button
           className={word >= 0 ? "icon-btn words active" : "icon-btn words"}
-          onClick={() => (word >= 0 ? stopSpeaking() : speakWords(text, report))}
+          onClick={() => (word >= 0 ? stopSpeaking() : speakWords(text, report, lang))}
           aria-label={word >= 0 ? "Parar" : "Ouvir palavra por palavra"}
           title="Palavra por palavra"
         >
@@ -60,15 +63,25 @@ export function SpeakButton({ text, onWord, words = true }: SpeakButtonProps) {
   );
 }
 
+interface SpokenPhraseProps {
+  phrase: Phrase;
+  lang?: Lang;
+  /** Mostra "EN"/"DE" antes da frase (quando há mais de um idioma na tela). */
+  label?: boolean;
+}
+
 /** Frase do chunk com os botões de áudio; a palavra que está tocando fica destacada. */
-export function SpokenPhrase({ phrase }: { phrase: Phrase }) {
+export function SpokenPhrase({ phrase, lang = "en", label = false }: SpokenPhraseProps) {
   const [word, setWord] = useState(-1);
+  const t = langText(phrase, lang);
+  if (!t) return null;
   return (
-    <div className="output-en">
+    <div className="output-en" lang={lang}>
       <p className="phrase">
-        <PhraseText phrase={phrase} activeWord={word} />
+        {label && <span className="lang-tag">{lang.toUpperCase()}</span>}
+        <PhraseText text={t} activeWord={word} />
       </p>
-      <SpeakButton text={phrase.en} onWord={setWord} />
+      <SpeakButton text={t.text} lang={lang} onWord={setWord} />
     </div>
   );
 }
@@ -92,6 +105,27 @@ export function SpokenText({ text, className = "phrase" }: { text: string; class
             )}
       </p>
       <SpeakButton text={text} onWord={setWord} />
+    </div>
+  );
+}
+
+/** Seletor de idioma: inglês, alemão ou os dois (vale para o app todo). */
+export function LangControl() {
+  const langs = useLangs();
+  const id = langs.join("+");
+  return (
+    <div className="speed lang-control" role="radiogroup" aria-label="Idioma que você está estudando">
+      {LANG_OPTIONS.map((o) => (
+        <button
+          key={o.id}
+          role="radio"
+          aria-checked={id === o.id}
+          className={id === o.id ? "speed-btn active" : "speed-btn"}
+          onClick={() => setLangs(o.id)}
+        >
+          {o.label}
+        </button>
+      ))}
     </div>
   );
 }
