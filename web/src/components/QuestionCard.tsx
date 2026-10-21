@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { type Chunk, type Phrase, blanks, core, normalizeAnswer } from "../lib/chunks";
-import { PhraseText } from "./PhraseText";
-import { SpeakButton } from "./SpeakButton";
+import { SpokenPhrase } from "./SpeakButton";
 
 interface Props {
   chunk: Chunk;
@@ -81,12 +80,7 @@ export function QuestionCard({ chunk, phrase, onAnswer, nextLabel = "Próximo" }
       {checked !== null && (
         <section className={checked ? "card feedback ok" : "card feedback wrong"} aria-live="polite">
           <p className="verdict">{checked ? "✔ Correto!" : "✘ Resposta:"}</p>
-          <div className="output-en">
-            <p className="phrase">
-              <PhraseText phrase={phrase} />
-            </p>
-            <SpeakButton text={phrase.en} />
-          </div>
+          <SpokenPhrase phrase={phrase} />
           <p className="pt">
             Chunk: <strong>{core(chunk)}</strong>
           </p>

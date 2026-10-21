@@ -258,8 +258,12 @@ Um app em React + TypeScript + Vite com a mesma biblioteca e o mesmo motor:
 
 - **Biblioteca:** busca (com ou sem acento), filtro por categoria e a parte
   fixa de cada chunk destacada.
-- **Chunk:** você digita as variáveis e vê a frase montada na hora, com
-  tradução, pronúncia (🔊, voz do próprio celular) e o card do Anki para copiar.
+- **Chunk:** 3 exemplos com tradução, "Monte a sua" (você digita as variáveis e
+  vê a frase montada na hora) e o card do Anki para copiar. No final, um quiz
+  dos exemplos, que abre em tela cheia para as respostas não ficarem à vista.
+- **Áudio:** voz do próprio celular, em 0.75x por padrão (dá para trocar para
+  1x ou 0.5x; a escolha fica salva). O botão **A·B** lê palavra por palavra e
+  destaca na frase a palavra que está tocando.
 - **Treinar:** o mesmo quiz com repetição espaçada. O progresso fica salvo no
   celular.
 - **Entrevista:** simulação da entrevista. O app lê a pergunta em voz alta, você

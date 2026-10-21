@@ -808,10 +808,6 @@ mark.fixed {
 }
 
 .follow-up {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
   padding: 10px 10px 10px 16px;
 }
 
@@ -1062,4 +1058,123 @@ mark.fixed {
 .preview-item + .preview-item {
   padding-top: 8px;
   border-top: 1px solid var(--border);
+}
+
+/* ------------------------------------------------------------------ áudio */
+.speak {
+  position: relative;
+  flex: none;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+
+.icon-btn.words {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.icon-btn.words.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.speaking {
+  border-radius: 4px;
+  background: var(--accent);
+  color: var(--accent-text);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.follow-up-text {
+  margin: 0;
+  min-width: 0;
+}
+
+.speed {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  justify-self: start;
+}
+
+.speed-label {
+  padding: 0 6px 0 8px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.speed-btn {
+  min-width: 44px;
+  min-height: 32px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.speed-btn.active {
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 700;
+}
+
+.examples-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.interviewer .speed {
+  margin-top: 12px;
+}
+
+/* ------------------------------------------------------------------ modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg);
+}
+
+.modal-panel {
+  display: grid;
+  gap: 12px;
+  max-width: 640px;
+  margin: 0 auto;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  outline: none;
+}
+
+.modal-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h2 {
+  min-width: 0;
+  font-size: 1.05rem;
+  overflow-wrap: anywhere;
+}
+
+.modal .result .row {
+  width: 100%;
 }

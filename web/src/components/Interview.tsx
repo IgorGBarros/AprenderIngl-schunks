@@ -1,9 +1,8 @@
 import { useMemo, useState } from "react";
 import { type Question, type Session, SESSIONS, parseAnswer, speakable } from "../lib/interviews";
-import { canSpeak, speak } from "../lib/speech";
 import { load, save } from "../lib/storage";
 import { NewJob } from "./NewJob";
-import { SpeakButton } from "./SpeakButton";
+import { SpeakButton, SpeedControl, SpokenText } from "./SpeakButton";
 
 type Practiced = Record<string, number>;
 
@@ -204,10 +203,8 @@ function Practice({ question: q, stageTitle, position, onReveal, onPrev, onNext,
 
       <section className="card interviewer">
         <p className="label">O entrevistador pergunta</p>
-        <div className="output-en">
-          <p className="phrase">{q.en}</p>
-          <SpeakButton text={q.en} />
-        </div>
+        <SpokenText text={q.en} />
+        <SpeedControl />
       </section>
 
       {!revealed ? (
@@ -238,11 +235,7 @@ function Practice({ question: q, stageTitle, position, onReveal, onPrev, onNext,
           <section className="card answer" aria-live="polite">
             <div className="answer-head">
               <h2>Resposta modelo</h2>
-              {canSpeak && (
-                <button className="link" onClick={() => speak(speakable(q.answer), 0.85)}>
-                  🔊 Ouvir (shadowing)
-                </button>
-              )}
+              <SpeakButton text={speakable(q.answer)} words={false} />
             </div>
             <p className="answer-text">
               {parseAnswer(q.answer).map((p, i) =>
@@ -278,8 +271,7 @@ function Practice({ question: q, stageTitle, position, onReveal, onPrev, onNext,
               <ul className="list">
                 {q.follow_ups.map((f) => (
                   <li key={f} className="card follow-up">
-                    <span>{f}</span>
-                    <SpeakButton text={f} />
+                    <SpokenText text={f} className="follow-up-text" />
                   </li>
                 ))}
               </ul>

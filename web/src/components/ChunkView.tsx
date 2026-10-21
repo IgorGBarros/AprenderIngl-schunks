@@ -9,8 +9,7 @@ import {
   render,
 } from "../lib/chunks";
 import { ChunkQuiz } from "./ChunkQuiz";
-import { PhraseText } from "./PhraseText";
-import { SpeakButton } from "./SpeakButton";
+import { SpeedControl, SpokenPhrase } from "./SpeakButton";
 
 interface Props {
   chunk: Chunk;
@@ -55,18 +54,16 @@ export function ChunkView({ chunk, onBack, onQuizDone }: Props) {
       </code>
 
       <section className="examples" aria-labelledby="examples-title">
-        <h2 id="examples-title">
-          {examples.length > 1 ? `${examples.length} exemplos` : "Exemplo"}
-        </h2>
+        <div className="examples-head">
+          <h2 id="examples-title">
+            {examples.length > 1 ? `${examples.length} exemplos` : "Exemplo"}
+          </h2>
+          <SpeedControl />
+        </div>
         <ul className="list">
           {examples.map((p, i) => (
             <li key={p.en} className="card example">
-              <div className="output-en">
-                <p className="phrase">
-                  <PhraseText phrase={p} />
-                </p>
-                <SpeakButton text={p.en} />
-              </div>
+              <SpokenPhrase phrase={p} />
               <p className="pt">{p.pt}</p>
               {chunk.slots.length > 0 && examplesOf(chunk).length > 1 && (
                 <button
@@ -96,12 +93,7 @@ export function ChunkView({ chunk, onBack, onQuizDone }: Props) {
           </div>
 
           <div className="card output" aria-live="polite">
-            <div className="output-en">
-              <p className="phrase">
-                <PhraseText phrase={phrase} />
-              </p>
-              <SpeakButton text={phrase.en} />
-            </div>
+            <SpokenPhrase phrase={phrase} />
             <p className="pt">{phrase.pt}</p>
           </div>
 
