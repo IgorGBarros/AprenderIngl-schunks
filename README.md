@@ -37,15 +37,57 @@ A analogia:
 
 ## Instalação
 
-Só precisa de Python 3.10+, sem nenhuma dependência.
+### O que você precisa
+
+| Para usar | Precisa de | Como conferir |
+|---|---|---|
+| Biblioteca e terminal (`python -m chunks`) | Python 3.10 ou mais novo | `python --version` |
+| App web (`web/`) | Node.js 20.19 ou mais novo | `node --version` |
+| Gerar entrevistas de qualquer vaga | [Ollama](https://ollama.com/download) e um modelo | `ollama --version` |
+
+O Python não precisa de nenhum pacote externo: tudo usa a biblioteca padrão.
+
+### 1. Python
 
 ```bash
-git clone <este repositório>
+git clone https://github.com/IgorGBarros/AprenderIngl-schunks.git
 cd AprenderIngl-schunks
-pip install -e .        # opcional: habilita o comando `chunks`
+
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+
+pip install -r requirements.txt  # instala o projeto e o comando `chunks`
+chunks list                      # testa: lista os chunks
 ```
 
-Sem instalar, use `python -m chunks` no lugar de `chunks`.
+Sem instalar nada, `python -m chunks` funciona direto da pasta do projeto, e
+faz o mesmo que o comando `chunks`.
+
+### 2. App web (opcional)
+
+```bash
+cd web
+npm ci            # instala as dependências (versões exatas do package-lock.json)
+npm run dev       # abre em http://localhost:5173
+```
+
+Se o `npm ci` falhar com `Cannot read properties of null (reading 'edgesOut')`,
+é um bug do npm 10: atualize com `npm install -g npm@11` e rode de novo.
+
+### 3. Ollama (opcional, para entrevistas de qualquer vaga)
+
+1. Baixe e instale em https://ollama.com/download (Windows, macOS ou Linux).
+2. Baixe um modelo (uns 4,7 GB; 8 GB de RAM ou mais):
+
+   ```bash
+   ollama pull qwen2.5:7b
+   ```
+
+   Com pouca memória, use `llama3.2:3b` (2 GB), que é mais rápido mas erra mais.
+3. Confira: `ollama list` deve mostrar o modelo. O Ollama fica rodando em
+   segundo plano depois de instalado (se não estiver, rode `ollama serve`).
+
+Para rodar os testes: `python -m unittest` (Python) e `cd web && npm test` (app).
 
 ## Usando no Python (REPL / Jupyter)
 

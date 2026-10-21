@@ -1,0 +1,3 @@
+# O projeto usa só a biblioteca padrão do Python 3.10+: não há pacotes externos.
+# Esta linha instala o próprio projeto (modo editável) e habilita o comando `chunks`.
+-e .

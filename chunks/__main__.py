@@ -226,10 +226,17 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("stage", nargs="?"); p.set_defaults(fn=cmd_interview)
 
     args = parser.parse_args(argv)
+    # Terminais sem UTF-8 (ex.: Windows antigo) não quebram com acentos ou emojis.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="replace")
     try:
         args.fn(args)
     except KeyError as e:
         sys.exit(e.args[0])
+    except BrokenPipeError:
+        # Saída cortada (ex.: `chunks list | head`): sai em silêncio.
+        sys.stderr.close()
 
 
 if __name__ == "__main__":
