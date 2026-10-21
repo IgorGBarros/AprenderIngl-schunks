@@ -107,8 +107,10 @@ h2 {
 .screen {
   max-width: 640px;
   margin: 0 auto;
-  padding: calc(env(safe-area-inset-top) + 16px) 16px
-    calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 24px);
+  padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 24px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 
 .header {
@@ -145,7 +147,9 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
   background: var(--surface);
   border-top: 1px solid var(--border);
 }
@@ -620,9 +624,25 @@ mark.fixed {
   cursor: pointer;
 }
 
-.mine-row .icon-btn {
-  background: none;
+.confirm-btn {
+  flex: none;
+  min-height: 44px;
+  padding: 0 12px;
   border: 0;
+  border-radius: 10px;
+  background: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.armed {
+  background: var(--bad-bg);
+}
+
+.link.armed {
+  padding-inline: 12px;
+  border-radius: 10px;
 }
 
 .hint {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ankiText, downloadText } from "../lib/anki";
 import { type Chunk, exampleValues, nameFrom, render, slotsOf } from "../lib/chunks";
 import { PhraseText } from "./PhraseText";
@@ -16,6 +16,7 @@ const EMPTY = { template: "", pt: "", example: {} as Record<string, string>, not
 /** Criar os próprios chunks (como em chunks/library/my_chunks.py). */
 export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props) {
   const [draft, setDraft] = useState(EMPTY);
+  const [copied, setCopied] = useState(false);
   const slots = slotsOf(draft.template);
   const ptSlots = slotsOf(draft.pt);
 
@@ -147,15 +148,13 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
                     <PhraseText phrase={render(c, exampleValues(c))} />
                   </span>
                 </button>
-                <button
-                  className="icon-btn danger"
-                  aria-label={`Apagar ${c.name}`}
-                  onClick={() => {
-                    if (confirm(`Apagar "${c.name}"?`)) onChange(mine.filter((m) => m !== c));
-                  }}
-                >
-                  ✕
-                </button>
+                <ConfirmButton
+                  className="confirm-btn danger"
+                  label="Apagar"
+                  confirmLabel="Apagar?"
+                  ariaLabel={`Apagar ${c.name}`}
+                  onConfirm={() => onChange(mine.filter((m) => m !== c))}
+                />
               </li>
             ))}
           </ul>
@@ -165,25 +164,66 @@ export function MyChunks({ all, mine, onChange, onOpen, onResetProgress }: Props
       <section className="form">
         <h2 className="section-title">Exportar para o Anki</h2>
         <p className="hint">Arquivo para o tipo de nota Cloze. No Anki: Arquivo › Importar.</p>
-        <button className="secondary" onClick={() => downloadText("chunks-anki.txt", ankiText(all))}>
-          Baixar todos ({all.length})
-        </button>
+        <div className="row">
+          <button className="secondary" onClick={() => downloadText("chunks-anki.txt", ankiText(all))}>
+            Baixar ({all.length})
+          </button>
+          <button className="secondary" onClick={() => copyText(ankiText(all), setCopied)}>
+            {copied ? "Copiado ✓" : "Copiar"}
+          </button>
+        </div>
         {mine.length > 0 && (
           <button className="secondary" onClick={() => downloadText("meus-chunks-anki.txt", ankiText(mine))}>
             Baixar só os meus ({mine.length})
           </button>
         )}
-        <button
+        <ConfirmButton
           className="link danger"
-          onClick={() => {
-            if (confirm("Zerar todo o progresso do treino?")) onResetProgress();
-          }}
-        >
-          Zerar progresso do treino
-        </button>
+          label="Zerar progresso do treino"
+          confirmLabel="Toque de novo para zerar o progresso"
+          onConfirm={onResetProgress}
+        />
       </section>
     </>
   );
+}
+
+/** Ação destrutiva em dois toques (confirm() não funciona em todo navegador embutido). */
+function ConfirmButton(props: {
+  className: string;
+  label: string;
+  confirmLabel: string;
+  ariaLabel?: string;
+  onConfirm: () => void;
+}) {
+  const [armed, setArmed] = useState(false);
+  useEffect(() => {
+    if (!armed) return;
+    const t = setTimeout(() => setArmed(false), 3000);
+    return () => clearTimeout(t);
+  }, [armed]);
+  return (
+    <button
+      className={armed ? `${props.className} armed` : props.className}
+      aria-label={props.ariaLabel}
+      onClick={() => {
+        if (armed) props.onConfirm();
+        setArmed(!armed);
+      }}
+    >
+      {armed ? props.confirmLabel : props.label}
+    </button>
+  );
+}
+
+async function copyText(text: string, setCopied: (v: boolean) => void) {
+  try {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  } catch {
+    // sem acesso à área de transferência: o botão "Baixar" continua disponível
+  }
 }
 
 function uniqueName(base: string, all: Chunk[]): string {
